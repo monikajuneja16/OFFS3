@@ -7,7 +7,7 @@ var mysql=require('mysql');
 var con = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
-	password: '',
+	password: '9630',
 	database: 'sdc'
 });
 con.connect(function(err) {

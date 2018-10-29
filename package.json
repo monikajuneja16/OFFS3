@@ -16,11 +16,13 @@
   },
   "homepage": "https://github.com/SDC-USICT/OFFS3_Backend#readme",
   "dependencies": {
+    "asn1": "^0.2.4",
     "async": "^2.6.0",
     "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
+    "ecc-jsbn": "^0.2.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-myconnection": "^1.0.4",
@@ -32,6 +34,7 @@
     "node-ses": "^2.0.5",
     "nodemailer": "^4.6.4",
     "request": "^2.83.0",
-    "sshpk": "^1.14.1"
+    "sshpk": "^1.14.1",
+    "tweetnacl": "^1.0.0"
   }
 }

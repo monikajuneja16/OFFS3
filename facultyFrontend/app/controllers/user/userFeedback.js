@@ -148,6 +148,7 @@ faculty.controller('feedbackCtrl',function($scope, $rootScope, $uibModal, $log, 
 
 		if (foundTeacher) {
 			if (foundTeacher.score[$scope.pointer2] == null) {
+
 				foundTeacher.score.push($scope.feedbackGivenByTheUser[index]);
 			} else {
 				foundTeacher.score[$scope.pointer2] = $scope.feedbackGivenByTheUser[index];

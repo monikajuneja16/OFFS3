@@ -48,7 +48,7 @@ module.exports = {
 	},
 
 	getSubjects: function(req, res) {
-		console.log('Get Subjects')
+		console.log('Get Subjects');
 		console.log (req.query)
 		var college_name = req.query.college;
 		var course = req.query.course;
@@ -64,8 +64,6 @@ module.exports = {
 			console.log(subjectList)
 			res.json(subjectList);
 		})
-
-
 	},
 
 
@@ -73,10 +71,11 @@ module.exports = {
 		//console.log(req.query.data);
 		var details =req.query;
 		console.log(details);
-		async.each(details.data,function(detail,callback){
+
+		async.each(details.data,function(detail,callback) {
 
 			detail=JSON.parse(detail);
-			if(detail.teacher_name){
+			if(detail.teacher_name) {
 			//console.log(typeof detail.teacher_name);
 			//console.log(typeof detail);
 			var teacherName=detail.teacher_name.toString();

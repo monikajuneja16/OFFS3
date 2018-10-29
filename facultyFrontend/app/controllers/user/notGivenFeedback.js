@@ -92,6 +92,7 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $rootScope, $locati
 		if (!singleCollege) {
 			return;
 		}
+
 		if (!$scope.semester) {
 			alert("Please fill the semester block first");
 			return;

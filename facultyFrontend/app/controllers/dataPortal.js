@@ -1,4 +1,4 @@
-faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, $location) {
+	faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, $location) {
 
 	$scope.disabled = false;
 
@@ -109,7 +109,7 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 				data_value[val.name + ' ' + val.instructor_id] = null;
 
 				// init autocomplete
-				$(document).ready(function(){
+				$(document).ready(function() {
 					 $('input.autocomplete').autocomplete({
 						 data : data_value,
 					 });
@@ -137,9 +137,6 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 				})
 
 				$scope.getTeachers();
-
-
-
 			}
 		})
 	}

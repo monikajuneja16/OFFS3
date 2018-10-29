@@ -19,7 +19,6 @@ module.exports = {
       console.log("Not all Fields Set");
       res.send("400");
       return;
-
     }
 
     var type          = req.query.type;
@@ -427,8 +426,8 @@ module.exports = {
     var course  = req.query.course;
     var stream  = req.query.stream;
 
-    var year = 2017 - (semester + odd_even )/2;
-
+    var year = 2017 - (semester + Number(process.env.odd_even))/2;
+    console.log(year);
 
 
     var query = "select enrollment_no, name, s_" + semester + " from "  + collegeName + "_student_" + year + " where" +
@@ -456,7 +455,8 @@ module.exports = {
 
     var collegeName = req.query.collegeName;
     var semester = parseInt(req.query.semester);
-    var year = 2017 - (semester + odd_even )/2;
+
+    var year = 2017 - (semester + Number(process.env.odd_even))/2;
 
     var userDetails = {
       stream:[],
