@@ -60,6 +60,10 @@ window.faculty = angular.module('faculty', ['ngAnimate', 'ngRoute', 'ui.bootstra
         .when('/dataPortal', {
             controller: 'dataPortalCtrl',
             templateUrl: './app/templates/dataPortal/dataPortal.html'
+        })
+        .when('/studentData', {
+            controller: 'studentDataCtrl',
+            templateUrl: './app/templates/studentData/studentData.html'
         });
 
     }

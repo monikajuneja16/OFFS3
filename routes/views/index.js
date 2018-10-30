@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var con         = require("../../models/mysql"),
     ses         = require('node-ses'),
     async       = require('async'),
@@ -318,36 +319,59 @@ module.exports = {
 
               }
             })
+          } else if (result.length == 8 && feedback.feedbackId != null) {
+            var query =
+              "update " +
+              tablename +
+              " set" +
+              " at_1 = concat(at_1,?),  at_2 = concat(at_2,?),  at_3 = concat(at_3,?), " +
+              " at_4 = concat(at_4,?),  at_5 = concat(at_5,?),  at_6 = concat(at_6,?), " +
+              " at_7 = concat(at_7,?),  at_8 = concat(at_8,?), " +
+              " no_of_students_evaluated =  no_of_students_evaluated + 1 ," +
+              " total = total + ? " +
+              "where feedback_id = " +
+              feedback.feedbackId;
+            // console.log("nothing");
+            var query2 =
+              "insert into " +
+              dumptable +
+              " (enrollment_no,subject_code,instructor_id,attribute_1,attribute_2," +
+              "attribute_3,attribute_4,attribute_5,attribute_6,attribute_7,attribute_8) " +
+              "values ( " +
+              req.session.student.enrollment_no +
+              " , ? , ? ," +
+              result[0] +
+              "," +
+              result[1] +
+              "," +
+              result[2] +
+              "," +
+              result[3] +
+              "," +
+              result[4] +
+              "," +
+              result[5] +
+              "," +
+              result[6] +
+              "," +
+              result[7] +
+              ")";
 
+            // console.log(query2);
 
-              }
-              else if(result.length==8&&feedback.feedbackId!=null)
-              {
-                var query='update '+ tablename+' set'+
-                   ' at_1 = concat(at_1,?),  at_2 = concat(at_2,?),  at_3 = concat(at_3,?), '  +
-                   ' at_4 = concat(at_4,?),  at_5 = concat(at_5,?),  at_6 = concat(at_6,?), '  +
-                   ' at_7 = concat(at_7,?),  at_8 = concat(at_8,?), '+
-                   ' no_of_students_evaluated =  no_of_students_evaluated + 1 ,'+
-                   ' total = total + ? ' +
-                      'where feedback_id = ' +feedback.feedbackId;
-               // console.log("nothing");
-             var query2 =   'insert into ' + dumptable +' (enrollment_no,subject_code,instructor_id,attribute_1,attribute_2,'+
-          'attribute_3,attribute_4,attribute_5,attribute_6,attribute_7,attribute_8) '+
-          'values ( ' + req.session.student.enrollment_no +' , ? , ? ,'+
-           result[0]+','+ result[1]+','+ result[2]+','+ result[3]+','+result[4] +','+result[5] +
-          ','+ result[6]+','+result[7] + ')';
+            // console.log("Something");
 
-                // console.log(query2);
-
-                // console.log("Something");
-
-            var sum=0;
-            for(i=0;i<=7;i++)    //check;
-            {   result[i]=Math.round(Number(result[i]));
-              if(result[i]>5&&result[i]<1)
-              {
+            var sum = 0;
+            for (
+              i = 0;
+              i <= 7;
+              i++ //check;
+            ) {
+              result[i] = Math.round(Number(result[i]));
+              if (result[i] > 5 && result[i] < 1) {
                 res.send("Incorrect Data");
               } else {
+<<<<<<< HEAD
                 sum=sum+Number(result[i]);
               }
             };
@@ -407,20 +431,113 @@ module.exports = {
                     } else {
                       console.log('Email sent: ' + info.response);
                       res.send("200");
-                    }
-                  });
-
-                  });
+=======
+                sum = sum + Number(result[i]);
               }
+            }
+            //coo
 
-            })
+            con.query(
+              query,
+              [
+                result[0],
+                result[1],
+                result[2],
+                result[3],
+                result[4],
+                result[5],
+                result[6],
+                result[7],
+                sum
+              ],
+              function(err, Result) {
+                if (err) console.log(err);
+                else {
+                  // console.log("practical query 1", Result);
+                  con.query(
+                    query2,
+                    [
+                      feedback.subject_code,
+                      feedback.instructor_code.toString()
+                    ],
+                    function(err3, result3) {
+                      if (err3) {
+                        console.log(err3);
+                      } else {
+                        //console.log("feedback id " +feedback.feedbackId + ' of length '+ result.length +' updated ')
+                        //  console.log("practical query 2" , result3);
+                        con.query(
+                          query3,
+                          [Number(req.session.student.enrollment_no)],
+                          function(err4, res4) {
+                            if (err4) {
+                              console.log(err4);
+                            } else {
+                              //console.log(res4);
+                              //  console.log("practical query 3 ", res4);
+                              console.log(
+                                "Practical feedback id " +
+                                  feedback.feedbackId +
+                                  " of length " +
+                                  result.length +
+                                  " updated "
+                              );
+                            }
+                          }
+                        );
+                      }
+>>>>>>> remotes/origin/Student_Data_Portal
+                    }
+                  );
+                }
+              }
+            );
+          } else {
+          }
 
+          callback();
+        },
+        function(err) {
+          if (err || hanu == 1) {
+            console.error(err);
+            res.status(err);
+          } else {
+            // nodemailer.createTestAccount((err, account) => {
+            //   var transporter = nodemailer.createTransport({
+            //     service: 'gmail',
+            //     auth: {
+            //       user: process.env.email,
+            //       pass: process.env.password,
+            //     }
+            //   });
+
+            //   var mailOptions = {
+            //     from: process.env.email,
+            //     to: req.session.student.email, //Require user email at last as well
+            //     subject: 'Noreply@ffs',
+            //     text: 'Thank You For Your feedback. Your feedback has been recorded .'
+            //   };
+
+            //   transporter.sendMail(mailOptions, function (error, info) {
+            //     if (error) {
+            //       console.log(error);
+            //       res.send("400")
+            //     } else {
+            //       console.log('Email sent: ' + info.response);
+            //       res.send("200");
+            //     }
+            //   });
+
+            // });
+            console.log("Email not sent: ");
+            res.send("200");
+          }
         }
-    },
-
+      );
+    }
+  },
 
   getStudentStatus: function(req, res) {
-
     var collegeName = req.query.collegeName;
     var semester = parseInt(req.query.semester);
     var course  = req.query.course;
@@ -433,8 +550,6 @@ module.exports = {
     var query = "select enrollment_no, name, s_" + semester + " from "  + collegeName + "_student_" + year + " where" +
      " course='" + course + "' AND stream='" + stream + "'";
 
-    console.log(query);
-
     con.query(query, function(err, userStatus) {
       if (err) {
         console.log(err);
@@ -443,28 +558,25 @@ module.exports = {
         return;
       }
 
-
       //console.log(userStatus)
       res.json(userStatus);
       return;
-
-    })
+    });
   },
 
   getStudentDetails: function(req, res) {
-
     var collegeName = req.query.collegeName;
     var semester = parseInt(req.query.semester);
-
     var year = 2017 - (semester + Number(process.env.odd_even))/2;
 
     var userDetails = {
-      stream:[],
-      course:[]
-    }
+      stream: [],
+      course: []
+    };
 
     if (process.env.year) {
-      var query = "select distinct stream from " + collegeName + "_student_" + year;
+      var query =
+        "select distinct stream from " + collegeName + "_student_" + year;
     }
 
     console.log(query);
@@ -476,7 +588,8 @@ module.exports = {
       }
       userDetails.stream = stream;
 
-      var query2 = "select distinct course from " + collegeName + "_student_" + year;
+      var query2 =
+        "select distinct course from " + collegeName + "_student_" + year;
       con.query(query2, function(err, course) {
         if (err) {
           console.error(err);
@@ -490,7 +603,130 @@ module.exports = {
 
         res.json(userDetails);
         return;
-      })
-    })
- }
-}
+      });
+    });
+  },
+
+  // {
+  //   "college_name":"usict",
+  //   "course":"BTECH",
+  //   "stream":"CSE",
+  //   "data":[{
+  //     "enrollment_no":123345,
+  //     "name": "Divyansh",
+  //     "email": "divyansh2998@icloud.com",
+  //     "phone":"12378274"
+  //   }]
+  // }
+
+  studentData: function(req, res) {
+    if (process.env.year == 2018) {
+      var tableName = `${req.body.college_name}_student_${process.env.year}`;
+      var initQuery =
+        "CREATE TABLE IF NOT EXISTS ? (`enrollment_no` bigint(20) NOT NULL,`name` varchar(100) NOT NULL,`email` varchar(100) DEFAULT NULL,`phone` varchar(100) DEFAULT NULL,`year_of_admission` int(4) NOT NULL,`password` varchar(600) NOT NULL,`course` varchar(100) NOT NULL,`stream` varchar(100) NOT NULL,`s_1` int(11) DEFAULT '0',`s_9` int(11) DEFAULT '0',`s_8` int(11) DEFAULT '0',`s_5` int(11) DEFAULT '0',`s_6` int(11) DEFAULT '0',`s_4` int(11) DEFAULT '0',`s_3` int(11) DEFAULT '0',`s_2` int(11) DEFAULT '0',`s_7` int(11) DEFAULT '0',`s_10` int(11) DEFAULT '0') ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+      con.query(initQuery, [tableName], err => {
+        if (err) {
+          res.status(500).send(
+            JSON.stringify({
+              err,
+              dataInserted: false,
+              message: "Init Query Failed"
+            })
+          );
+        }
+      });
+      async.each(
+        req.body.data,
+        (student, callback) => {
+          var query =
+            "INSERT INTO ? (`enrollment_no`, `name`, `email`, `phone`, `year_of_admission`, `password`, `course`, `stream`, `s_1`, `s_9`, `s_8`, `s_5`, `s_6`, `s_4`, `s_3`, `s_2`, `s_7`, `s_10`) VALUES " +
+            "(?,?,?,?,?,0000,?,?)";
+          con.query(
+            query,
+            [
+              tableName,
+              student.enrollment_no,
+              student.name,
+              student.email,
+              student.phone,
+              process.env.year,
+              req.body.course,
+              req.body.stream
+            ],
+            err => {
+              if (err) {
+                callback(err);
+              } else {
+                callback();
+              }
+            }
+          );
+        },
+        err => {
+          if (err) {
+            console.log(err);
+            res.status(500).send("Query Insertion Failed");
+          } else {
+            console.log("Insertion Complete");
+            res.status(200).json({
+              dataInserted: true,
+              message: "Success"
+            });
+          }
+        }
+      );
+    } else {
+      res.status(500).send("Server Down");
+    }
+  },
+
+  updateStudent: function(req, res) {
+    var course = "MCA";
+    var stream = "SE";
+    var college = "usict";
+    var year = 2018;
+    // var course= req.body.course;
+    // var stream= req.body.stream;
+    // var college= req.body.college;
+    // var year=Number(req.body.year);
+
+    if (course == null || stream == null || college == null || year == null) {
+      console.log("Not all Fields Set");
+      var obj = {
+        status: 400,
+        message: "something went wrong"
+      };
+      res.json(obj);
+    } else {
+      year = year.toString();
+      var query =
+        "select * from " +
+        college +
+        "_student_" +
+        year +
+        " where" +
+        " course='" +
+        course +
+        "' AND stream='" +
+        stream +
+        "'";
+
+      console.log(query);
+
+      con.query(query, function(err, userStatus) {
+        if (err) {
+          console.log("query didn't run");
+          console.log(err);
+          res.json("400");
+
+          return;
+        } else {
+          //console.log(userStatus);
+          res.send(userStatus);
+          //res.json(userStatus);
+          return;
+        }
+      });
+    }
+  }
+};
