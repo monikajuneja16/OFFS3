@@ -36,16 +36,65 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
 
 		{ collegeName :"University School of Management Studies",
 		collegeCode: "usms" },
-	];
+  ];
+  
+  
+  var autocomp=false;
+
+  var autocompleteFields=function(school,category){
+    
+    if(!autocomp){
+      if(category!='student' && (school!="" ||school!=undefined) ){
+        console.log(school+"  =  "+category);
+        $http({
+          method:"GET",
+          url:BACKEND+"/tgetTeacherData",
+          params:{
+            school: school,
+            designation:category
+          }
+        })
+        .then(function(res){
+            var data=res.data;
+            //console.log(data);
+            $(document).ready(function(){
+              
+                var data_val={};
+
+                $('input#userName').autocomplete({
+                  data:data_val         
+                });
+
+                data.forEach(function(val){
+                    data_val[`${val.name} - ${val.instructor_id}`]=null;
+                    $('input#userName').autocomplete({
+                        data:data_val         
+                    });
+                })
+
+               // console.log($('input#userName')[0]);
+                
+            });
+        },function(err){
+            console.log(err);   
+        }) 
+        
+      }
+      autocomp=true;
+  }
+}
 
   $scope.userCategoryList = ["Vice Chancellor", "Pro Vice Chancellor", "Dean", "Teacher", "Student"];
 
   $scope.setCollege = function(singleCollege) {
     $scope.college = singleCollege;
+    var scul=$scope.college.collegeCode;
+    console.log(scul);
     $localStorage.college = singleCollege;
+    autocomp=!autocomp;
+    autocompleteFields(scul,$scope.user.category);
   };
 
-  var autocomp=false;
 
   $scope.setUserCategory = function(userCategory) {
     console.log(userCategory);
@@ -62,36 +111,11 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     else {
       $scope.user.category = userCategory;
     }
-    if(!autocomp){
-      if($scope.user.category!='student'){
-        $http({
-          method:"GET",
-          url:BACKEND+"/getTeacher",
-        })
-        .then(function(res){
-            var data=res.data;
-            $(document).ready(function(){
-              
-                var data_val={};
 
-                data.forEach(function(val){
-                    data_val[`${val.name} - ${val.instructor_id}`]=null;
-                    $('input#userName').autocomplete({
-                        data:data_val         
-                    });
-                })
-
-                console.log($('input#userName')[0]);
-                
-            });
-        },function(err){
-            console.log(err);   
-        }) 
-        
-      }
-      autocomp=true;
-    }
-
+    scul=$scope.college.collegeCode;
+    autocomp=!autocomp;
+    autocompleteFields(scul,$scope.user.category);
+    
     //to be disabled later
    // $scope.user.category='student';
   };

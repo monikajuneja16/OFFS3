@@ -26,8 +26,9 @@ faculty.controller('dashboardCtrl',function($scope, $location, $rootScope, userS
 		console.log(enrollment_no + ' ' + tablename);
 		userService.getUser(enrollment_no, tablename, function(response) {
 			$scope.user = response[0];
+			$scope.user.school=$scope.tablename.split('_')[0].toUpperCase();
 			$localStorage.userInfo = response[0];
-			console.log($localStorage);
+			console.log($scope);
 		})
 	}
 

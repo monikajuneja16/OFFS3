@@ -64,6 +64,7 @@ router.post("/tupload_photo", routes.views.teacher.upload_photo);
 router.post("/tupdateInfo",routes.views.teacher.updateTeacherInfo);
 router.post("/taddNewTeacher",routes.views.teacher.addNewTeacher);
 router.post("/tremovePrefixes",routes.views.teacher.removePrefixes);
+router.get("/tgetTeacherData",routes.views.teacher.getTeacherData);
 
 router.get("/getTeacher", routes.views.dataportal.getTeacher);
 router.get("/getCourse", routes.views.dataportal.getCourse);

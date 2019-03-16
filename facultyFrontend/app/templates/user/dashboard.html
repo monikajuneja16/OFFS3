@@ -15,6 +15,7 @@
         <!-- <div class="col s4">
             <center>
                 <img height=100 width=149 id="stud-img" class="student-main-image" src="http://placehold.it/180x200">
+                
                 <div style="margin-bottom: 0px !important;" class="row">
                     
                     <form name="name" action="savefile" method="post" enctype="multipart/form-data">
@@ -29,6 +30,9 @@
                 </div> 
             </center>
         </div>  -->
+        <div class="col s4 right" style="margin-top:75px;">
+            <a class="logout btn waves-effect waves-light right" ng-click="logout()">LOG OUT </a>
+        </div>
     </div>
 
     <div class="card-action">
@@ -37,7 +41,7 @@
             <div class="col s3">
                 <div class="small-title">USS</div>
 
-                <div class="small-content school">{{ user.college_name }}</div>
+                <div class="small-content school">{{ user.school }}</div>
 
             </div>
 

@@ -13,7 +13,30 @@ module.exports = {
 	 */
 	index: function(req, res) {},
 
-	
+	getTeacherData:function(req,res){
+		var {school,designation}=req.query;
+		designation=designation.toLowerCase();
+		console.log("Returning teachers");
+		if(designation=='dean' || designation=="pro vc" || designation=="vc"){
+				con.query("SELECT name,instructor_id from ?? where school=? and designation=? order by name",
+							['employee',school,designation],(err,resp)=>{
+								if(err){
+									res.status(400).json({'message':'Server failure'});
+									return;
+								}
+								res.status(200).json(resp);
+							});
+		}else{
+				con.query("SELECT name,instructor_id from ?? where school=? order by name",
+							['employee',school],(err,resp)=>{
+								if(err){
+									res.status(400).json({'message':'Server failure'});
+									return;
+								}
+								res.status(200).json(resp);
+							});
+		}
+	},
 
 	/**
 	 * [initials description]
