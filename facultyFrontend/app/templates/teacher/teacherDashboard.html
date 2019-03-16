@@ -2,7 +2,7 @@
 <div class="row">
     <form>
     <div id="grad" class="container student-card card">
-        <div style="font-size:20px;color:blue; margin: 20px">**Please hover over the input fields to check for formats of information</div>
+        <div style="font-size:20px;color:blue; margin: 20px">**Please check for formats of information given below the respective fields before updating changes</div>
     
         <div class=" card-content row">
 
@@ -58,6 +58,8 @@
 
                 <div class="small-content stream">
                     <input type="text" ng-model="teacher.room_no" ng-required="true" ng-disabled="editRoom" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
+                    <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter in the pattern: Name of block followed by 3 digit room number</span>
+
                     <a href="" ng-click="editRoom==false ? editRoom=true:editRoom=false">
                         <span ng-show="editRoom">Edit Field</span><span ng-show="!editRoom">Done</span>    
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -69,7 +71,9 @@
                 <div class="small-title">DATE OF JOINING</div>
 
                 <div class="small-content date">
-                    <input type="date" name="date" ng-required="true" value="{{teacher.date_of_joining}}" ng-model="teacher.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
+                    <input type="date" name="date" id="dateofj" ng-required="true" min="1999-01-01" max="2020-16-03" value="{{teacher.date_of_joining}}" ng-model="teacher.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
+                    <span  style="color:blue; display: block;font-size:12px;margin:10px;">Please select date from the dropdown button that appears on extreme right of this field</span>
+
                     <a href="" ng-click="editDoj==false ? editDoj=true:editDoj=false">
                         <span ng-show="editDoj">Edit Field</span><span ng-show="!editDoj">Done</span>
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -90,6 +94,8 @@
                 <div class="small-title">EMAIL ID</div>
                 <div class="input-field col s6">
                     <input placeholder="Email-Id" name="email" nameid="last_name" type="email" ng-required="true" class="validate editField email-id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email Id" ng-disabled="editEmail" ng-model="teacher.email">
+                    <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter only a valid email id</span>
+
                     <a href="" ng-click="editEmail==false ? editEmail=true:editEmail=false">
                         <span ng-show="editEmail">Edit Field</span><span ng-show="!editEmail">Done</span>
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -101,7 +107,9 @@
 
                 <div class="small-title">PHONE NUMBER</div>
                 <div class="input-field col s6">
-                    <input placeholder="phone number" id="last_name" type="text" ng-required="true" class="validate editField phone" pattern="[789][0-9]{9}" title="Enter 10 digit mobile number" ng-disabled="editPhone" ng-model="teacher.phone">
+                    <input placeholder="phone number" id="last_name" type="tel" ng-required="true" class="validate editField phone" pattern="[789][0-9]{9}" title="Enter 10 digit mobile number" ng-disabled="editPhone" ng-model="teacher.phone">
+                    <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter 10 digit Indian mobile number</span>
+
                     <a href="" ng-click="editPhone==false ? editPhone=true:editPhone=false">                        
                         <span ng-show="editPhone">Edit Field</span><span ng-show="!editPhone">Done</span>
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -141,6 +149,7 @@
 </script>
 
 <script>
+    $("#dateofj").validate();
 
    $("#file").on('change', function () {
         console.log("image change section");
