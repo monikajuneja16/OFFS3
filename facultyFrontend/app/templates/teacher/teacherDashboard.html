@@ -61,7 +61,7 @@
                 <div class="small-content stream">
                     <span style="color:blue; display: block;font-size:12px;margin:10px;">Enter room in the pattern: Name of block followed by '-' then 3 digit room number. Ex:- E-412</span>
                     <input type="text" ng-model="teacher.room_no" ng-required="true" ng-disabled="editRoom" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
-                    <span class="rght" ng-show="teacher.room_no!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Room Number entered correctly</span>
+                    <span class="right" ng-show="teacher.room_no!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Room Number entered correctly</span>
                     <span ng-show="teacher.room_no==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Wrong room entered. Blocks available are A/B/C/D/E and 6 floors are present</span>
                     <a href="" ng-click="editRoom==false ? editRoom=true:editRoom=false">
                         <span ng-show="editRoom">Edit Field</span><span ng-show="!editRoom">Done</span>    
@@ -74,9 +74,9 @@
                 <div class="small-title">DATE OF JOINING</div>
 
                 <div class="small-content date">
-                    <span style="color:blue; display: block;font-size:12px;margin:10px;">Please select date from the dropdown button that appears on extreme right of this field. Limits of date : 01-01-1999 till today</span>
-                    <input type="date" name="date" id="dateofj" ng-required="true" min="1999-01-01" max="2020-16-03" value="{{teacher.date_of_joining}}" ng-model="teacher.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
-                    <span class="rght" ng-show="teacher.date_of_joining!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Date of joining entered correctly</span>
+                    <span style="color:blue; display: block;font-size:12px;margin:10px;">Please select date from the dropdown button that appears on extreme right of this field. Limits of date : 01-01-1999 till 01-01-2019</span>
+                    <input type="date" name="date" id="dateofj" ng-required="true" min="1999-01-01" max="2019-01-01" value="{{teacher.date_of_joining}}" ng-model="teacher.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
+                    <span class="right" ng-show="teacher.date_of_joining!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Date of joining entered correctly</span>
                     <span ng-show="teacher.date_of_joining==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Date of Joining. Select date from dropdown menu.</span>
                     <a href="" ng-click="editDoj==false ? editDoj=true:editDoj=false">
                         <span ng-show="editDoj">Edit Field</span><span ng-show="!editDoj">Done</span>
@@ -96,7 +96,7 @@
                 <div class="input-field col s6">
                     <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter only a valid email id</span>
                     <input placeholder="Email-Id" name="email" nameid="last_name" type="email" ng-required="true" class="validate editField email-id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email Id" ng-disabled="editEmail" ng-model="teacher.email">
-                    <span class="rght" ng-show="teacher.email!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Email id format entered correctly</span>
+                    <span class="right" ng-show="teacher.email!=undefined"  ><i class="fa fa-check" aria-hidden="true"></i> Email id format entered correctly</span>
                     <span ng-show="teacher.email==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Wrong email-id entered. Format is abc123@xyz.com</span>
                     
                     <a href="" ng-click="editEmail==false ? editEmail=true:editEmail=false">
@@ -110,7 +110,7 @@
                 <div class="input-field col s6">
                     <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter 10 digit Indian mobile number starting with 7/8/9</span>
                     <input placeholder="phone number" id="last_name" type="tel" ng-required="true" class="validate editField phone" pattern="[789][0-9]{9}" maxlength="10" title="Enter 10 digit mobile number" ng-disabled="editPhone" ng-model="teacher.phone">
-                    <span class="rght" ng-show="teacher.phone!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Mobile number entered correctly</span>
+                    <span class="right" ng-show="teacher.phone!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Mobile number entered correctly</span>
                     <span ng-show="teacher.phone==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Mobile number entered</span>
                     
                     <a href="" ng-click="editPhone==false ? editPhone=true:editPhone=false">                        
@@ -213,14 +213,14 @@
         font-size: 16px;
     }
 
-    .rght{
+    .right{
         color:rgb(97, 161, 54);
         display: block;
         font-size:12px;
         margin:10px;
     }
 
-    .rght>i{
+    .right>i{
         font-size: 16px;
     }
 </style>
