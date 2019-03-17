@@ -11,7 +11,7 @@
             <div class='greeting'>HELLO</div>
 
             <div class="student-name">
-                <input type="text" pattern="[a-zA-Z ]*$" class="validate editField name" ng-pattern-restrict title="Please enter alphanets only" ng-model="teacher.name" ng-disabled="editName" style="font-size:25px;" ng-required="true"><br>
+                <input type="text" pattern="[a-zA-Z ]*$" class="validate editField name" maxlength="35" ng-pattern-restrict title="Please enter alphanets only" ng-model="teacher.name" ng-disabled="editName" style="font-size:25px;" ng-required="true"><br>
             </div>
             <span ng-show="teacher.name==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Teacher name should contain only alphabets and spaces</span>
                     
@@ -151,6 +151,7 @@
      );
 
      $(".phone").keypress(function(e){
+         console.log("crekmc");
         if(e.which<48 || e.which>57){
             e.preventDefault();
         }

@@ -139,8 +139,15 @@ module.exports = {
 		/*  This route is just to check if sessions are working .
 			Hit this url once you have logged in.	*/
 		if (req.session.dean) {	
-			console.log(req.session.dean);
-			res.json(req.session.dean);
+			con.query('SELECT * FROM ?? where instructor_id=? and password=?',
+				['employee',req.session.dean.instructor_id,req.session.dean.password],function(err,resp){
+					if(resp){
+						req.session.dean=resp[0];
+						res.json(req.session.dean);
+					}else if(err){
+						console.log("No session detected");
+					}
+				})
 		} else {
 			console.log('No session detected');
 			var obj = { status: 200, message: 'No session detected' };

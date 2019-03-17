@@ -1,5 +1,5 @@
 faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'userService', 'facultyService', 'vcService', 'pvcService', 'teacherService','$localStorage','$window',function($scope, $http, $rootScope, $location, userService, facultyService, vcService, pvcService, teacherService,$localStorage,$window) {
-  $scope.user = {};
+  $scope.user = {};  
   $scope.name = "";
   $scope.user.category='student';
   $scope.displayed = 'Student';

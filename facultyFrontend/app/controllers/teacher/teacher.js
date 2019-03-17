@@ -49,8 +49,11 @@ faculty.controller("tCtrl", function($scope, $rootScope,$localStorage, $location
 	}
 
 	$scope.logout = function(req,res) {
-		teacherService.logout(function(response) {		
-			if(response){$location.path("/");alert(response.message);}
+		teacherService.logout(function(response){		
+			if(response){
+				$location.path("/");
+				alert(response.message);
+			}
 		})
 	}	
 	

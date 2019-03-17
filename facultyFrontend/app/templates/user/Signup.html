@@ -45,7 +45,9 @@
             <form class="col s12">
               <div class="row">
                 <div class="input-field col s12" ng-if="user.category=='student'">
-                  <input id="rollno" type="text" class="validate" title="Length of Roll Number should be between 9-11" ng-model="user.rollno" pattern="[0-9]{9,11}"ng-blur="findSemister()">
+                  <input id="rollno" type="text" class="roll validate" title="Length of Roll Number should be between 9-11" ng-model="user.rollno" pattern="[0-9]{9,11}" maxlength="11" ng-blur="findSemister()">
+                  <span ng-show="user.rollno==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Roll Number should be minimum 11 digits long and free of alphabets</span>
+                  <span class="rght" ng-show="user.rollno!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Roll number entered correctly</span>
                   <label for="rollno"> Your 11 Digit Enrollment Number</label>
                 </div>
 
@@ -68,6 +70,9 @@
                 <div class="input-field col s12">
                   <input id="email" type="email" class="validate" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ng-model="user.email">
                   <label for="email"> Email </label>
+                  <span ng-show="user.email==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Enter email in the correct format</span>
+                  <span class="rght" ng-show="user.email!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Email entered correctly</span>
+  
                 </div>
               </div>
 
@@ -125,6 +130,13 @@
       stopPropagation: false // Stops event propagation
     }
   );
+
+  $(".roll").eq(0).keypress(function(e){
+    alert("crekcr");    
+    if(e.which<48 || e.which>57){   
+          e.preventDefault();
+        }
+     })
 </script>
 <!-- <style>
   #disableSome:nth-child(2),#disableSome:nth-child(3),#disableSome:nth-child(4),#disableSome:nth-child(5){
@@ -134,3 +146,26 @@
   }
 </style>  -->
 <script src='https://www.google.com/recaptcha/api.js'></script>
+<style>
+  .wrong{
+      color:red;
+      display: block;
+      font-size:12px;
+      margin:10px;
+  }
+
+  .wrong>i{
+      font-size: 16px;
+  }
+
+  .rght{
+      color:rgb(97, 161, 54);
+      display: block;
+      font-size:12px;
+      margin:10px;
+  }
+
+  .rght>i{
+      font-size: 16px;
+  }
+</style>
