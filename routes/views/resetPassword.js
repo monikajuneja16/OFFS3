@@ -98,8 +98,8 @@ module.exports = {
                         to: result[0].email,
                         subject: "PasswordReset@FacultyFeedbackSystem",
                         text:
-                          "Hi, Here is your Reset Password OTP [CAUTION: It will expire in 1 hour]  -> " +
-                          otp + "If you did not request this, kindly ignore this mail."
+                          "Hi, Here is your Reset Password OTP [CAUTION: It will expire in 1 hour]  ->  " +
+                          otp + "  If you did not request this, kindly ignore this mail."
                       };
 
                       transporter.sendMail(mailOptions, function(error, info) {
