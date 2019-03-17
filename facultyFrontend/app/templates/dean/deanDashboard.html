@@ -68,7 +68,7 @@
                 <div class="small-title">DATE OF JOINING</div>
 
                 <div class="small-content date">
-                    <input type="date" name="date" ng-required="true" value="{{dean.date_of_joining}}" ng-model="dean.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
+                    <input type="date" name="date" id="dateField" min="1999-01-01" max="2019-12-30" ng-required="true" value="{{dean.date_of_joining}}" ng-model="dean.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
                     <a href="" ng-click="editDoj==false ? editDoj=true:editDoj=false">
                         <span ng-show="editDoj">Edit Field</span><span ng-show="!editDoj">Done</span>
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -145,6 +145,15 @@
         
     });
 
+    $(".phone").keypress(function(e){
+        if(e.which<48 || e.which>57){
+            e.preventDefault();
+        }
+     })
+
+    
+    // $('#dateField').attr({'max':new Date().toISOString().split('T')[0]});
+    // console.log($("#dateField").attr("max"));
 
    $('.uploadImage').submit(function(e){
      e.preventDefault();
