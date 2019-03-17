@@ -27,11 +27,11 @@
     <div id="grad" class="container student-card card">
     <div class=" card-content row">
         <div class="col s1">
-          <center ng-if="pointer < attributesList.theory.length">
-            <h3>#{{ pointer + 1}}/{{attributesList.theory.length }}</h3>
-          </h3>
-          <center style="color: #26a69a" ng-if="pointer2 < attributesList.practicals.length && pointer2 >=0">
-            <h3>#{{ pointer2  + 1}}/{{attributesList.practicals.length }}</h3>
+          <center style="color: #26a69a" ng-if="pointer < attributesList.theory.length">
+            <h3>#{{pointer+1}}/{{attributesList.theory.length }}</h3>
+           </center> 
+          <center style="color: #26a69a" ng-if="(pointer2 < attributesList.practicals.length) && (pointer2 >=0)">
+            <h3>#{{pointer2+1}}/{{attributesList.practicals.length }}</h3>
           </center>
         </div>
         <div class="col s11" style="color:black;">

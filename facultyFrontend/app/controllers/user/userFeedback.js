@@ -244,6 +244,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 
 	$scope.increasePointer = function() {
 		$scope.pointer += 1;
+		$scope.disablenextattributes = true;
 		
 		for(var x=0;x<$scope.teacherFeedback.length;x++) {
 			if ($scope.teacherFeedback[x].type=="Theory") {
@@ -320,6 +321,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 
 	$scope.increasePointer2 = function() {
 		$scope.pointer2 += 1;
+		$scope.disablenextattributes = true;
 		
 		for(var x=0;x<$scope.teacherFeedback.length;x++) {
 			if ($scope.teacherFeedback[x].type=="Practical") {
