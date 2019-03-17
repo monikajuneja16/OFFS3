@@ -17,13 +17,13 @@
 
       <div class="login_dropdown">
         <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown2' style="background-color: white !important;color: black; width: 34em">
-            {{ displayed.charAt(0).toUpperCase() + displayed.slice(1) || 'CHOOSE AUTHENTICATION MODE' }} <span class="caret pull-right">▼</span>
+            {{ displayed || 'CHOOSE AUTHENTICATION MODE' }} <span class="caret pull-right">▼</span>
         </button>
 
 
         <div id='dropdown2' class='dropdown-content' style="background-color: white;color: black; width: 34em">
           <ul class="school_list">
-            <li ng-repeat="userCategory in userCategoryList" id="disableSome"><a class="single_school" ng-click="setUserCategory(userCategory)"> {{userCategory }}</a></li>
+            <li ng-repeat="userCategory in userCategoryList" id="disableSome"><a class="single_school" ng-click="setUserCategory(userCategory)"> {{userCategory | uppercase}}</a></li>
           </ul>
         </div>
       </div>

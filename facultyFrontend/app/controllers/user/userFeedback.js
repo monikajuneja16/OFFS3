@@ -264,6 +264,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 
 	$scope.decreasePointer = function() {
 		$scope.pointer -=1;
+		$scope.disablenextattributes = false;
 		$rootScope.tLength--;
 		console.log("Practical decrease : "+$rootScope.tLength);
 		var foundTeacher = $scope.teacherFeedback[$scope.pointer];
@@ -275,6 +276,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 
 	$scope.decreasePointer2 = function() {
 		$scope.pointer2 -= 1;
+		$scope.disablenextattributes = false;
 		$rootScope.pLength--;
 		var foundTeacher = $scope.teacherFeedback[$scope.pointer + $scope.pointer2];
 		
