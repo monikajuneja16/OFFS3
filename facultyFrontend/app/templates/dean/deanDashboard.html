@@ -77,8 +77,8 @@
                 <div class="small-content date">
                     <span style="color:blue; display: block;font-size:12px;margin:10px;">Please select date from the dropdown button that appears on extreme right of this field. Limits of date : 01-01-1999 till 01-01-2019</span>
                     <input type="date" name="date" id="dateofj" ng-focus="fieldTouch[1]=true" ng-required="true" min="1999-01-01" max="2019-01-01" value="{{dean.date_of_joining}}" ng-model="dean.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
-                    <span class="rght right" ng-show="dean.date_of_joining && dean.date_of_joining.length!=0 && fieldTouch[1] && teacher.date_of_joining!='0000-00-00'"><i class="fa fa-check" aria-hidden="true"></i> Date of joining entered correctly</span>
-                    <span ng-show="dean.date_of_joining==undefined || dean.date_of_joining.length==0 || teacher.date_of_joining=='0000-00-00' && fieldTouch[1]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Date of Joining. Select date from dropdown menu.</span>
+                    <span class="rght right" ng-show="dean.date_of_joining && dean.date_of_joining.length!=0 && fieldTouch[1] && dean.date_of_joining!='0000-00-00'"><i class="fa fa-check" aria-hidden="true"></i> Date of joining entered correctly</span>
+                    <span ng-show="dean.date_of_joining==undefined || dean.date_of_joining.length==0 || dean.date_of_joining=='0000-00-00' && fieldTouch[1]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Date of Joining. Select date from dropdown menu.</span>
                     <a href="" ng-click="editDoj==false ? editDoj=true:editDoj=false">
                         <span ng-show="editDoj">Edit Field</span><span ng-show="!editDoj">Done</span>
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -111,8 +111,8 @@
                 <div class="input-field col s6">
                     <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter 10 digit Indian mobile number starting with 7/8/9</span>
                     <input placeholder="phone number" id="last_name" ng-focus="fieldTouch[3]=true" type="tel" ng-required="true" class="validate editField phone" pattern="[789][0-9]{9}" maxlength="10" title="Enter 10 digit mobile number" ng-disabled="editPhone" ng-model="dean.phone">
-                    <span class="rght right" ng-show="dean.phone && dean.phone.length!=0 && fieldTouch[3] && teacher.phone!=0"><i class="fa fa-check" aria-hidden="true"></i> Mobile number entered correctly</span>
-                    <span ng-show="dean.phone==undefined || dean.phone.length==0 && fieldTouch[3] || teacher.phone==0 " class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Mobile number entered</span>
+                    <span class="rght right" ng-show="dean.phone && dean.phone.length!=0 && fieldTouch[3] && dean.phone!=0"><i class="fa fa-check" aria-hidden="true"></i> Mobile number entered correctly</span>
+                    <span ng-show="dean.phone==undefined || dean.phone.length==0 && fieldTouch[3] || dean.phone==0 " class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Mobile number entered</span>
                     
                     <a href="" ng-click="editPhone==false ? editPhone=true:editPhone=false">                        
                         <span ng-show="editPhone">Edit Field</span><span ng-show="!editPhone">Done</span>
