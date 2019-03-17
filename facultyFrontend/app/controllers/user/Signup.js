@@ -3,6 +3,7 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
   $scope.name = "";
   $scope.user.category='student';
   $scope.displayed = 'Student';
+  $scope.fieldTouch=[false,false,false,false];
   
   $scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
 		collegeCode : "usap"},
@@ -135,6 +136,10 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     //for students with more than 8 sems MTECH
     if($scope.user.semister>8){
       $scope.user.semister-=8;
+    }
+
+    if($scope.user.semister>8 || $scope.user.semister<1){
+      $scope.user.semister='---';
     }
     $localStorage.semester = $scope.user.semister;
     console.log($scope.user.semister);

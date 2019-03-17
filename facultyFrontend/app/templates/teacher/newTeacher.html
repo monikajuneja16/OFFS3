@@ -26,35 +26,35 @@
 
     <div class="col l6 m10 s10">
         <div class="input-field col s12"> 
-          <input id="instructor_email" name="instructorEmail" class="validate" type="email" ng-model="email"  ng-required="true" placeholder="Enter the Email ID of instructor" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"><br>
-          <span ng-show="email==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Invalid email <address></address></span>
-          <span class="rght" ng-show="email!=undefined"><i class="fa fa-check" aria-hidden="true"></i> email entered correctly</span>
+          <input id="instructor_email" name="instructorEmail" class="validate" ng-focus="fieldTouch[0]=true" type="email" ng-model="email"  ng-required="true" placeholder="Enter the Email ID of instructor" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"><br>
+          <span ng-show="email==undefined && fieldTouch[0]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Invalid email <address></address></span>
+          <span class="rght" ng-show="email!=undefined && fieldTouch[0]"><i class="fa fa-check" aria-hidden="true"></i> email entered correctly</span>
         </div>
     </div>
 
     <div class="col l6 m10 s10">
         <div class="input-field col s12">
-          <input id="instructor_phone" name="instructorPhone" type="text" class="validate" ng-model="phone" ng-required="true" placeholder="Enter the phone number of instructor" pattern="[789][0-9]{9}" title="Enter 10 digit mobile number" ><br>
-          <span ng-show="phone==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Enter a valid Indian Phone number <address></address></span>
-          <span class="rght" ng-show="phone!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Phone number entered correctly</span>
+          <input id="instructor_phone" name="instructorPhone" ng-focus="fieldTouch[1]=true" type="text" class="validate" ng-model="phone" ng-required="true" placeholder="Enter the phone number of instructor" pattern="[789][0-9]{9}" title="Enter 10 digit mobile number" ><br>
+          <span ng-show="phone==undefined && fieldTouch[1]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Enter a valid Indian Phone number <address></address></span>
+          <span class="rght" ng-show="phone!=undefined && fieldTouch[1]"><i class="fa fa-check" aria-hidden="true"></i> Phone number entered correctly</span>
         </div>
     </div> 
     
     <div class="col l6 m10 s10">
         <div class="input-field col s12">
-          <input id="instructor_room" name="instructorRoom" type="text" class="validate" ng-model="room_no" ng-required="true" placeholder="Enter the room number of instructor" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
+          <input id="instructor_room" name="instructorRoom" ng-focus="fieldTouch[2]=true" type="text" class="validate" ng-model="room_no" ng-required="true" placeholder="Enter the room number of instructor" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
           <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter in the pattern: Name of block followed by 3 digit room number</span>
-          <span ng-show="room_no==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Invalid room no <address></address></span>
-          <span class="rght" ng-show="room_no!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Room no entered in correct format</span>
+          <span ng-show="room_no==undefined && fieldTouch[2]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Invalid room no <address></address></span>
+          <span class="rght" ng-show="room_no!=undefined && fieldTouch[2]"><i class="fa fa-check" aria-hidden="true"></i> Room no entered in correct format</span>
         </div>
     </div>
 
     <div class="col l6 m10 s10">
         <div class="input-field col s12">  
-            <input id="instructor_newPassword" type="password" ng-model="password" class="validate"  ng-required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="The password must contain at least one number,one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Enter the password of instructor"><br>
+            <input id="instructor_newPassword" type="password" ng-focus="fieldTouch[3]=true" ng-model="password" class="validate"  ng-required="true" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="The password must contain at least one number,one uppercase and lowercase letter, and at least 8 or more characters" placeholder="Enter the password of instructor"><br>
             <span  style="color:blue; display: block;font-size:12px;margin:10px;">The password must contain at least one number,one uppercase and lowercase letter, and at least 8 or more characters</span>
-            <span ng-show="password==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Invalid password  <address></address></span>
-          <span class="rght" ng-show="password!=undefined"><i class="fa fa-check" aria-hidden="true"></i> Password entered in correct format</span>
+            <span ng-show="password==undefined && fieldTouch[3]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Invalid password  <address></address></span>
+          <span class="rght" ng-show="password!=undefined && fieldTouch[3]"><i class="fa fa-check" aria-hidden="true"></i> Password entered in correct format</span>
 
         </div>
     </div>

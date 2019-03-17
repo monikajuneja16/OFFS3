@@ -7,6 +7,7 @@ faculty.controller('resetPasswordCtrl' ,['$route','$scope','$http', '$rootScope'
     $scope.disableSentEmail = false;
     $scope.item={};
 
+    $scope.fieldTouch=[false,false,false,false];
     // init autocomplete
     $http({
         method:"GET",

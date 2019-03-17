@@ -1,5 +1,6 @@
 faculty.controller('newTeacherCtrl', ['$http', '$scope', 'teacherService', '$window', '$location',function($http, $scope, teacherService, $window, $location) {
 
+	$scope.fieldTouch=[false,false,false,false];
 	$scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
 		collegeCode : "usap"},
 
