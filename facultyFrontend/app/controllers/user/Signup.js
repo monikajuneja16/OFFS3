@@ -122,6 +122,7 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
   };
 
   $scope.findSemister = function() {
+    console.log("Roll : "+typeof $scope.user.rollno);
     var roll = (_.clone($scope.user.rollno)).toString();
     
     //var roll=$scope.user.rollno;

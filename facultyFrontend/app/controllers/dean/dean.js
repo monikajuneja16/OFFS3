@@ -1,7 +1,7 @@
 faculty.controller("deanCtrl", function($scope, $rootScope, $location, facultyService) {
 	$scope.dean  = [];
 	$scope.editCollege=$scope.editRoom=$scope.editDoj=$scope.editEmail=$scope.editPhone=$scope.editName=true;
-
+	$scope.fieldTouch=[false,false,false,false];
 	
 	$scope.getDetails = function() {
 		console.log('Get Details');

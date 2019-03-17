@@ -60,9 +60,9 @@
 
                 <div class="small-content stream">
                     <span style="color:blue; display: block;font-size:12px;margin:10px;">Enter room in the pattern: Name of block followed by '-' then 3 digit room number. Ex:- E-412</span>
-                    <input type="text" ng-model="dean.room_no" ng-required="true" ng-disabled="editRoom" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
-                    <span class="rght right" ng-show="dean.room_no"><i class="fa fa-check" aria-hidden="true"></i> Room Number entered correctly</span>
-                    <span ng-show="dean.room_no==undefined" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong room entered. Blocks available are A/B/C/D/E and 6 floors are present</span>
+                    <input type="text" ng-model="dean.room_no" ng-focus="fieldTouch[0]=true" ng-required="true" ng-disabled="editRoom" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
+                    <span class="rght right" ng-show="dean.room_no && dean.room_no.length!=0 && fieldTouch[0]"><i class="fa fa-check" aria-hidden="true"></i> Room Number entered correctly</span>
+                    <span ng-show="dean.room_no==undefined || dean.room_no.length==0 && fieldTouch[0]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong room entered. Blocks available are A/B/C/D/E and 6 floors are present</span>
                     <a href="" ng-click="editRoom==false ? editRoom=true:editRoom=false">
                         <span ng-show="editRoom">Edit Field</span><span ng-show="!editRoom">Done</span>    
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -76,9 +76,9 @@
 
                 <div class="small-content date">
                     <span style="color:blue; display: block;font-size:12px;margin:10px;">Please select date from the dropdown button that appears on extreme right of this field. Limits of date : 01-01-1999 till 01-01-2019</span>
-                    <input type="date" name="date" id="dateofj" ng-required="true" min="1999-01-01" max="2019-01-01" value="{{dean.date_of_joining}}" ng-model="dean.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
-                    <span class="rght right" ng-show="dean.date_of_joining"><i class="fa fa-check" aria-hidden="true"></i> Date of joining entered correctly</span>
-                    <span ng-show="dean.date_of_joining==undefined" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Date of Joining. Select date from dropdown menu.</span>
+                    <input type="date" name="date" id="dateofj" ng-focus="fieldTouch[1]=true" ng-required="true" min="1999-01-01" max="2019-01-01" value="{{dean.date_of_joining}}" ng-model="dean.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
+                    <span class="rght right" ng-show="dean.date_of_joining && dean.date_of_joining.length!=0 && fieldTouch[1] && teacher.date_of_joining!='0000-00-00'"><i class="fa fa-check" aria-hidden="true"></i> Date of joining entered correctly</span>
+                    <span ng-show="dean.date_of_joining==undefined || dean.date_of_joining.length==0 || teacher.date_of_joining=='0000-00-00' && fieldTouch[1]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Date of Joining. Select date from dropdown menu.</span>
                     <a href="" ng-click="editDoj==false ? editDoj=true:editDoj=false">
                         <span ng-show="editDoj">Edit Field</span><span ng-show="!editDoj">Done</span>
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
@@ -97,9 +97,9 @@
                 <div class="small-title">EMAIL ID</div>
                 <div class="input-field col s6">
                     <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter only a valid email id</span>
-                    <input placeholder="Email-Id" name="email" nameid="last_name" type="email" ng-required="true" class="validate editField email-id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email Id" ng-disabled="editEmail" ng-model="dean.email">
-                    <span class="rght right" ng-show="dean.email"><i class="fa fa-check" aria-hidden="true"></i> Email id format entered correctly</span>
-                    <span ng-show="dean.email==undefined" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong email-id entered. Format is abc123@xyz.com</span>
+                    <input placeholder="Email-Id" name="email" ng-focus="fieldTouch[2]=true" nameid="last_name" type="email" ng-required="true" class="validate editField email-id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email Id" ng-disabled="editEmail" ng-model="dean.email">
+                    <span class="rght right" ng-show="dean.email && dean.email.length!=0 && fieldTouch[2]"><i class="fa fa-check" aria-hidden="true"></i> Email id format entered correctly</span>
+                    <span ng-show="dean.email==undefined || dean.email.length==0 && fieldTouch[2]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong email-id entered. Format is abc123@xyz.com</span>
                     
                     <a href="" ng-click="editEmail==false ? editEmail=true:editEmail=false">
                         <span ng-show="editEmail">Edit Field</span><span ng-show="!editEmail">Done</span>
@@ -110,9 +110,9 @@
                 <div class="small-title">PHONE NUMBER</div>
                 <div class="input-field col s6">
                     <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter 10 digit Indian mobile number starting with 7/8/9</span>
-                    <input placeholder="phone number" id="last_name" type="tel" ng-required="true" class="validate editField phone" pattern="[789][0-9]{9}" maxlength="10" title="Enter 10 digit mobile number" ng-disabled="editPhone" ng-model="dean.phone">
-                    <span class="rght right" ng-show="dean.phone"><i class="fa fa-check" aria-hidden="true"></i> Mobile number entered correctly</span>
-                    <span ng-show="dean.phone==undefined" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Mobile number entered</span>
+                    <input placeholder="phone number" id="last_name" ng-focus="fieldTouch[3]=true" type="tel" ng-required="true" class="validate editField phone" pattern="[789][0-9]{9}" maxlength="10" title="Enter 10 digit mobile number" ng-disabled="editPhone" ng-model="dean.phone">
+                    <span class="rght right" ng-show="dean.phone && dean.phone.length!=0 && fieldTouch[3] && teacher.phone!=0"><i class="fa fa-check" aria-hidden="true"></i> Mobile number entered correctly</span>
+                    <span ng-show="dean.phone==undefined || dean.phone.length==0 && fieldTouch[3] || teacher.phone==0 " class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Mobile number entered</span>
                     
                     <a href="" ng-click="editPhone==false ? editPhone=true:editPhone=false">                        
                         <span ng-show="editPhone">Edit Field</span><span ng-show="!editPhone">Done</span>
