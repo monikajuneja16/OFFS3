@@ -82,7 +82,7 @@ module.exports = {
 				res.json(obj);
 
 			} else if(result[0] == null) {
-				var obj = { status:400 , message :"'Wrong credentials entered for VC'"};
+				var obj = { status:400 , message :"'Wrong credentials entered for Vice Chancellor'"};
 				res.json(obj);  		// Invalid Password or username
 
 			} else {

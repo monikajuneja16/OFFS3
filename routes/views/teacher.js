@@ -69,7 +69,7 @@ module.exports = {
 					res.json(obj);
 				} else if (result[0] == null) {
 					console.log("No Teacher Found")
-					var obj = { status: 400, message: 'Wrong credentials entered for the teacher. Kindly select name from the dropdown and enter correct password. Fill up the new employee entry if issues still faced.' };
+					var obj = { status: 400, message: 'Wrong credentials entered. Kindly select name from the dropdown and enter correct password. Please contact us at sdcusict@ipu.ac.in if you still face any issues.' };
 					res.json(obj); // Invalid Password or username
 				} else {
 					req.session.ins = result[0];
