@@ -177,8 +177,9 @@
 
         <div class="center">
             <div class="large-title">PERCENTAGE</div>
-            <div ng-if="value.type=='Theory'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 75)) * 100 ).toFixed(2)}}</div>
-            <div ng-if="value.type=='Practical'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 40)) * 100 ).toFixed(2)}}</div>
+            <span class="small-title"> (Total Marks Obtained X 100)/Maximum Marks </span> 
+            <div ng-if="value.type=='Theory'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 75)) * 100 ).toFixed(2)}}%</div>
+            <div ng-if="value.type=='Practical'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 40)) * 100 ).toFixed(2)}}%</div>
         </div>
     </div>
 </div>
