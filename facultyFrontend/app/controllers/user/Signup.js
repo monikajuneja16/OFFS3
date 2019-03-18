@@ -45,7 +45,7 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
   var autocompleteFields=function(school,category){
     
     if(!autocomp){
-      if(category!='student' && (school!="" ||school!=undefined) ){
+      if(category=='Teacher' && (school!="" ||school!=undefined) ){
         console.log(school+"  =  "+category);
         $http({
           method:"GET",
@@ -57,7 +57,7 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
         })
         .then(function(res){
             var data=res.data;
-            //console.log(data);
+            console.log(data[0]);
             $(document).ready(function(){
               
                 var data_val={};
@@ -78,8 +78,23 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
             });
         },function(err){
             console.log(err);   
-        }) 
-        
+        })  
+      }
+      else if(category!='Teacher' && category!="student" && (school!="" ||school!=undefined) ) {
+        $http({
+          method:"GET",
+          url:BACKEND+"/tgetTeacherData",
+          params:{
+            school: school,
+            designation:category
+          }
+        })
+        .then(function(res){
+            $scope.user.name = res.data[0].name;
+            $scope.user.rollno = res.data[0].instructor_id;
+        },function(err){
+            console.log(err);   
+        })
       }
       autocomp=true;
   }
@@ -98,6 +113,8 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
 
 
   $scope.setUserCategory = function(userCategory) {
+    $scope.user.name = "";
+    $scope.user.rollno = "";
     console.log(userCategory);
     $scope.displayed = userCategory;
     if(userCategory == 'Student') {

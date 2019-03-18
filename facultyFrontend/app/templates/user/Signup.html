@@ -46,17 +46,26 @@
               <div class="row">
                 <div class="input-field col s12" ng-if="user.category=='student'">
                   <input id="rollno" type="text" class="roll validate" ng-focus="fieldTouch[0]=true" title="Length of Roll Number should be 11" ng-model="user.rollno" pattern="[0-9]{10}[1-9]{1}" maxlength="11" ng-blur="findSemister()">
-                  <span ng-show="(user.rollno==undefined || user.rollno.length==0) && fieldTouch[0]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Roll Number should be 11 digits long and free of alphabets</span>
+                  <span ng-show="(user.rollno==undefined || user.rollno.length==0) && fieldTouch[0]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Roll Number should be 11 digits long</span>
                   <span class="rght" ng-show="(user.rollno!=undefined && user.rollno.length!=0) && fieldTouch[0]"><i class="fa fa-check" aria-hidden="true"></i> Roll number entered correctly</span>
                   <label for="rollno"> Your 11 Digit Enrollment Number</label>
                 </div>
 
-                <span  ng-if="user.category=='Teacher'" style="color:blue; display: block;font-size:12px;margin:10px;">***Kindly select the teacher name from the dropdown which appears after typing initials</span>
-                
-                <div class="input-field col s12" ng-if="user.category!='student'">
-                    <input id="userName" type="text" class="validate" ng-model="user.name" ng-blur="getNameId(user.name)">
-                    <label for="rollno"> {{ $scope.audience || 'Type initials of your name' }}</label>
+                <div ng-if="user.category=='Teacher'" >
+                  <span style="color:blue; display: block;font-size:12px;margin:10px;">Kindly select the teacher name from the dropdown which appears after typing initials</span>
+                  
+                  <div class="input-field col s12" ng-if="user.category!='student'">
+                      <input id="userName" type="text" class="validate" ng-model="user.name" ng-blur="getNameId(user.name)">
+                      <label for="rollno"> {{ $scope.audience || 'Type initials of your name' }}</label>
                   </div>
+                </div>
+
+                <div ng-if="user.category!='Teacher' && user.category!='student'">
+                    <div class="input-field col s12" ng-if="user.category!='student'">
+                        <input id="userName" type="text" class="validate" ng-model="user.name" ng-disabled="true" ng-blur="getNameId(user.name)">
+                        <label for="rollno"> {{ $scope.audience }}</label>
+                    </div>
+                </div>
 
                 <div class="input-field col s12" ng-if="user.category!='student'">
                     <input id="rollno" type="text" class="validate" ng-model="user.rollno" ng-disabled="true" placeholder="UserId">

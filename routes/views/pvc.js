@@ -67,7 +67,7 @@ module.exports = {
 					var obj = { status: 400, message: 'There is error in query!' };
 					res.json(obj);
 				} else if (result[0] == null) {
-					var obj = { status: 400, message: 'Wrong credentials entered for Pro VC' };
+					var obj = { status: 400, message: 'Wrong credentials entered for Pro Vice Chancellor' };
 					res.json(obj); // Invalid Password or username
 				} else {
 					req.session.pvc = result[0];

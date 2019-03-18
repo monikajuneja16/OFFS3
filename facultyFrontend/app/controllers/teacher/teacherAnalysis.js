@@ -3,6 +3,7 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 	$scope.teacher = [];
 	$scope.selectedYear = '2018';
 	$scope.searching = false;
+	$scope.searched = false;
 	//$scope.steacher=$rootScope.teacher.instrctor_id;
 
 	$scope.populate = function() {
@@ -65,7 +66,7 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 			"The experiments generated enough interest and helped in developing/strengthening your concepts.",
 		    "Created sufficient opportunity for students to practice their skill.",
 		    "Adequate time was devoted to interactive sessions to discuss analyze the results and clarify doubts of students.",
-			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically",
+			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically.",
 			"Encourages and makes you feel comfortable about asking questions.",
 			"Provides enthusiastic, clear and satisfactory response to student s questions."
 		]
@@ -143,6 +144,7 @@ $scope.semesterList = function() {
 	$scope.search = function () {
 
 		$scope.searching = true;
+
 		var course 	= $scope.selectedCourse;
 		var sem 	= $scope.selectedSem;
 		var stream 	= $scope.selectedStream;
@@ -227,6 +229,7 @@ $scope.semesterList = function() {
 		});
 
 		$scope.searching = false;
+		$scope.searched = true;
 
 		if (final_res.length == 0) {
 			$scope.final_res = null;
@@ -371,7 +374,7 @@ $scope.semesterList = function() {
  }
 
     $scope.yearChange = function () {
-		$scope.selectedYear = $scope.year.slice(0,4);
+		$scope.selectedYear = $scope.year.slice(7,11);
  	    console.log('changed');
  	    $scope.populate();
     }
