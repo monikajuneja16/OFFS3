@@ -102,6 +102,31 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 		})
 	}
 
+$scope.semesterList = function() {
+	var arr=[2];
+	arr[0] = {course: $scope.selectedCourse}
+	arr[1] = {stream:$scope.selectedStream}
+	console.log("in semester");
+        console.log(arr[0],arr[1]);
+		var	semesterDetails = _.clone($scope.teacherfb.data);
+		console.log(semesterDetails);
+
+		for (var x =0;x<arr.length;x++) {
+			var key = Object.keys(arr[x]);
+			var val = key[0];
+			if (arr[x][key[0]] !=undefined){
+				console.log(arr[x][key[0]]);
+				semesterDetails = _.where(semesterDetails, { [val]: arr[x][key[0]]  } )
+			  }
+			}
+			 console.log(semesterDetails);
+		$scope.semester =  _.chain(semesterDetails).pluck('semester').uniq().value().sort();
+
+		$(document).ready(function () {
+			$('select').material_select();
+		})
+			 
+		}
 
 
 	$scope.streamList = function() {

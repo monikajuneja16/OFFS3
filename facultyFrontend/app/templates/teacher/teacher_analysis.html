@@ -7,12 +7,12 @@
         </select>
     </div>
     <div class="col s2">
-         <select ng-model="selectedCourse" ng-options="option for option in course" ng-change="streamList();subjectLists()">
+         <select ng-model="selectedCourse" ng-options="option for option in course" ng-change="streamList();subjectLists();semesterList()">
             <option value=""  selected>All Course</option>
         </select>
     </div>
     <div class="col s2">
-        <select ng-model="selectedStream" ng-options="option for option in stream" ng-change="subjectLists()">
+        <select ng-model="selectedStream" ng-options="option for option in stream" ng-change="subjectLists();semesterList()">
             <option value=""  selected>All Stream</option>
         </select>
     </div>
