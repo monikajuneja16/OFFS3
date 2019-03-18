@@ -3,7 +3,7 @@
 <br>
 <div class="row">
     <div class="col m4 offset-m1">
-        <select ng-model="year" ng-options="option for option in ['2017-2018', '2018-2019']" ng-change="yearChange()">
+        <select ng-model="year" ng-options="option for option in ['August 2017 - May 2018', 'August 2018 - May 2019']" ng-change="yearChange()">
             <option value="" disabled selected>Choose Academic Year</option>
         </select>
     </div>
@@ -45,7 +45,9 @@
 <br><br>
     <!--<a class="waves-effect white black-text btn" ng-click="print()">Print as PDF</a>-->
     <button  ng-click="print()" ng-hide="hidebutton" class="waves-effect white black-text btn" id="form_button" type="submit" name="action">Print as PDF</button>
- </div>  
+<br><br>
+    <a class="btn waves-effect waves-light center-align" ng-click="logout()">LOG OUT </a>
+</div>  
                 
 </div>
 
@@ -60,6 +62,12 @@
 <div class="" style="padding: 2em;">
     <div class="card" ng-repeat="(key, value) in final_res" style="padding: 1em;margin-bottom: 100px;" >
         <div class="row inforow">
+            <div class="infoelement">
+                <div class="small-title">
+                    ACADEMIC YEAR
+                </div>
+                <p>{{year}}</p>
+            </div>
             <div class="infoelement">
                 <div class="small-title">
                     INSTRUCTOR CODE
@@ -124,7 +132,7 @@
             </thead>
             <tbody>
                 <tr ng-if="value.type=='Theory'" ng-repeat="(k, v) in attributesList.theory">
-                    <td>{{v}}</td>
+                    <td>{{$index+1}}. {{v}}</td>
                     <td>{{value['at_' + (+k+1)]['1']}}</td>
                     <td>{{value['at_' + (+k+1)]['2']}}</td>
                     <td>{{value['at_' + (+k+1)]['3']}}</td>
@@ -135,7 +143,7 @@
                 value['at_' + (+k+1)]['5']*5 }}</td>
                 </tr>
                 <tr ng-if="value.type=='Practical'" ng-repeat="(k, v) in attributesList.practicals">
-                    <td>{{v}}</td>
+                    <td>{{$index+1}}. {{v}}</td>
                     <td>{{value['at_' + (+k+1)]['1']}}</td>
                     <td>{{value['at_' + (+k+1)]['2']}}</td>
                     <td>{{value['at_' + (+k+1)]['3']}}</td>
@@ -167,7 +175,7 @@
     </div>
 </div>
 </div>
-<div>
+<div ng-show="searched">
     <center>
         <a class="logout btn waves-effect waves-light center-align" ng-click="logout()">LOG OUT </a>
     </center>

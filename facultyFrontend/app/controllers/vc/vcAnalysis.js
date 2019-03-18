@@ -34,6 +34,8 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 		collegeCode: "usms" },
 	];
 
+	$scope.searched = false;
+
 	$scope.getFeedback = function() {
 
 		vcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(response) {
@@ -130,7 +132,7 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 	}
 
 	$scope.yearChange = function () {
-		$scope.selectedYear = $scope.year.slice(0,4);
+		$scope.selectedYear = $scope.year.slice(7,11);
 		$scope.final_res = {};
 		console.log('changed');
 		if($scope.selectedSchool) {
@@ -177,9 +179,9 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 			"The experiments generated enough interest and helped in developing/strengthening your concepts.",
 		    "Created sufficient opportunity for students to practice their skill.",
 		    "Adequate time was devoted to interactive sessions to discuss analyze the results and clarify doubts of students.",
-			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically",
+			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically.",
 			"Encourages and makes you feel comfortable about asking questions.",
-			"Provides enthusiastic, clear and satisfactory response to student s questions."
+			"Provides enthusiastic, clear and satisfactory response to student's questions."
 		]
 
 	}
@@ -335,6 +337,7 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 		});
 
 		$scope.searching = false;
+		$scope.searched = true;
 
 		if (final_res.length == 0) {
 			$scope.final_res = null;

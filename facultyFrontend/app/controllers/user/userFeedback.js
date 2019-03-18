@@ -35,9 +35,9 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 			"The experiments generated enough interest and helped in developing/strengthening your concepts.",
 		    "Created sufficient opportunity for students to practice their skill.",
 		    "Adequate time was devoted to interactive sessions to discuss analyze the results and clarify doubts of students.",
-			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically",
+			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically.",
 			"Encourages and makes you feel comfortable about asking questions.",
-			"Provides enthusiastic, clear and satisfactory response to student s questions."
+			"Provides enthusiastic, clear and satisfactory response to student's questions."
 		]
 
 	}
