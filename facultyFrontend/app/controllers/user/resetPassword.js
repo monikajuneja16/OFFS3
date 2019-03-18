@@ -1,4 +1,4 @@
-faculty.controller('resetPasswordCtrl' ,['$route','$scope','$http', '$rootScope', '$location','resetService',function($route,$scope, $http,$rootScope, $location, resetService){
+faculty.controller('resetPasswordCtrl' ,['$route','$scope','$http', '$window', '$rootScope', '$location','resetService',function($route,$scope, $http, $window,$rootScope, $location, resetService){
     $scope.check=0; 
     $scope.disableGif1=true;
     $scope.disableGif2=true;
@@ -50,7 +50,7 @@ faculty.controller('resetPasswordCtrl' ,['$route','$scope','$http', '$rootScope'
                 $scope.disableGif1=true;
                 $scope.secondSect=true; 
                 var hider = "x";
-                var masked = item.instructor_email.replace(item.instructor_email.substring(3, item.instructor_email.indexOf('@')), hider.repeat(item.instructor_email.substring(3, item.instructor_email.indexOf('@')).length));
+                var masked = res.data.email.replace(res.data.email.substring(3, res.data.email.indexOf('@')), hider.repeat(res.data.email.substring(3, res.data.email.indexOf('@')).length));
                 alert("OTP sent to registered email id : " + masked);
             }
             else {

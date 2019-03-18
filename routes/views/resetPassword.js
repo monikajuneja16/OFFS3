@@ -113,7 +113,8 @@ module.exports = {
                           console.log("Email sent: " + info.response);
                           //res.send("200");
                           res.status(200).json({
-                            response: 'sentMail'
+                            response: 'sentMail',
+                            email: result[0].email
                           });
                         }
                       });
