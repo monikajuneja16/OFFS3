@@ -80,7 +80,23 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
             console.log(err);   
         })  
       }
-      else if(category!='Teacher' && category!="student" && (school!="" ||school!=undefined) ) {
+      else if(category=='Dean' && (school!="" ||school!=undefined) ) {
+        $http({
+          method:"GET",
+          url:BACKEND+"/tgetTeacherData",
+          params:{
+            school: school,
+            designation:category
+          }
+        })
+        .then(function(res){
+            $scope.user.name = res.data[0].name;
+            $scope.user.rollno = res.data[0].instructor_id;
+        },function(err){
+            console.log(err);   
+        })
+      }
+      else if(category=='VC' || category=='Pro VC') {
         $http({
           method:"GET",
           url:BACKEND+"/tgetTeacherData",
@@ -128,6 +144,15 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     }
     else {
       $scope.user.category = userCategory;
+    }
+
+    if ($scope.user.category == 'VC' || $scope.user.category == 'Pro VC' && ($scope.college==undefined || $scope.college=="")) {
+      var checker = 
+      {
+        collegeName: "University School of Info.,Comm. and Technology",
+        collegeCode: "usict"
+      }
+      $scope.setCollege(checker);
     }
 
     scul=$scope.college.collegeCode;
@@ -194,15 +219,6 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
   $scope.LoginUser = function() {
     $scope.hidebutton = true;
     $scope.showSpinner = true;
-
-    if ($scope.user.category == 'VC' || $scope.user.category == 'Pro VC' && ($scope.college==undefined || $scope.college=="")) {
-      var checker = 
-      {
-        collegeName: "University School of Info.,Comm. and Technology",
-        collegeCode: "usict"
-      }
-      $scope.setCollege(checker);
-    }
 
     console.log(`data : ${$scope.college}, ${$scope.user.category}, ${$scope.user.rollno}, ${$scope.user.email}`)
     if ($scope.college==undefined || $scope.college=="" || $scope.user.category==undefined || $scope.user.category=="" || $scope.user.rollno==undefined || $scope.user.rollno=="" /*|| $scope.user.email==undefined*/ || $scope.user.email=="") {
