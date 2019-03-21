@@ -121,8 +121,10 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
   $scope.setCollege = function(singleCollege) {
     $scope.college = singleCollege;
     var scul=$scope.college.collegeCode;
-    console.log(scul);
     $localStorage.college = singleCollege;
+    if($scope.user.category!=undefined && $scope.user.category!="" && $scope.user.category!="student") {
+      autocomp=!autocomp;
+    }
     autocomp=!autocomp;
     autocompleteFields(scul,$scope.user.category);
   };
@@ -155,12 +157,14 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
       $scope.setCollege(checker);
     }
 
-    scul=$scope.college.collegeCode;
-    autocomp=!autocomp;
-    autocompleteFields(scul,$scope.user.category);
-    
-    //to be disabled later
-   // $scope.user.category='student';
+    if($scope.college==undefined || $scope.college=="") {
+      return;
+    }
+    else{
+      scul=$scope.college.collegeCode;
+      autocomp=!autocomp;
+      autocompleteFields(scul,$scope.user.category);
+    }
   };
 
   $scope.findSemister = function() {
