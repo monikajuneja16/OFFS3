@@ -28,7 +28,7 @@ module.exports = {
         if (result[0].resetVarExpires > Date.now()) {
 
           con.query(
-            "UPDATE employee SET resetVar='test',password=? where instructor_id=?",
+            "UPDATE employee SET resetVar='test', password=? WHERE instructor_id=?",
             [newPassword, instructorId],
             function(error, complete) {
               //res.send("Password has been reset");
