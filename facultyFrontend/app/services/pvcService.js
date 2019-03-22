@@ -1,5 +1,6 @@
-faculty.factory('pvcService', ['$http', '$timeout', '$rootScope', function($http, $timeout, $rootScope) {
-	return {
+faculty.factory('pvcService',['$http','$localStorage', '$timeout', '$rootScope', function($http, $localStorage,$timeout, $rootScope) {
+	return  {
+
 		send_details : function(college, user, callback) {
 			$http({
 				method: "POST",
@@ -21,7 +22,7 @@ faculty.factory('pvcService', ['$http', '$timeout', '$rootScope', function($http
 				}
 			})
 		},
-logout : function(){
+        logout : function(){
 		 	$http({
 		 		method:"GET",
 		 		url: BACKEND + "/pvclogout",
@@ -49,6 +50,21 @@ logout : function(){
 					console.error(response.data);
 					callback(data);
 				}
+			})
+		},
+
+		updatePvcInfo:function(teacherData,callback){
+			$http({
+				method:"POST",
+				url:BACKEND + "/pvcupdateInfo",
+				data:{
+					pvcInfo:pvcData
+				}
+			})
+			.then(function(response){
+				if(callback){callback(response.data)}
+			},function(error){
+				if(callback){callback(error.data)}
 			})
 		},
 

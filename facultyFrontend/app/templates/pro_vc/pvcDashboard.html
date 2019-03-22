@@ -1,19 +1,27 @@
 <br>
-
 <!-- <button class="btn waves-effect waves-light btn__back" onclick="history.back()">Back
-        <i class="material-icons">arrow_back</i>
-    </button> -->
-    
+    <i class="material-icons">arrow_back</i>
+</button> -->
 <div class="row">
-    <div>
+    <form>
     <div id="grad" class="container student-card card">
-    <div class=" card-content row">
+        <div style="font-size:20px;color:blue; margin: 20px">**Please check for formats of information given below the respective fields before updating changes</div>
+    
+        <div class=" card-content row">
 
         <div class="col s4">
 
             <div class='greeting'>HELLO</div>
 
-            <div class="student-name"> {{ pvc.name }}</div>
+            <div class="student-name">
+                <input type="text" pattern="[a-zA-Z ]*$" class="validate editField name" maxlength="35" ng-pattern-restrict title="Please enter alphanets only" ng-model="pvc.name" ng-disabled="editName" style="font-size:25px;" ng-required="true"><br>
+            </div>
+            <span ng-show="pvc.name==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> pvc name should contain only alphabets and spaces</span>
+                    
+            <a href="" ng-click="editName==false ? editName=true:editName=false" style="text-transform: uppercase">
+                <span ng-show="editName">Edit Field</span><span ng-show="!editName">Done</span> 
+                <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
+            </a>
 
         </div>
         <div class="col s4">
@@ -44,21 +52,42 @@
 
             <div class="col s4">
                 <div class="small-title">USS</div>
-
-                <div class="small-content school">{{ pvc.college_name }}</div>
+                
+                <div class="small-content school">
+                    {{pvc.school | uppercase}}<br>
+                </div> 
 
             </div>
 
             <div class="col s4">
                 <div class="small-title">ROOM NO</div>
 
-                <div class="small-content stream">{{ pvc.room_no }}</div>
+                <div class="small-content stream">
+                    <span style="color:blue; display: block;font-size:12px;margin:10px;">Enter room in the pattern: Name of block followed by '-' then 3 digit room number. Ex:- E-412</span>
+                    <input type="text" ng-model="pvc.room_no" ng-required="true" ng-focus="fieldTouch[0]=true" ng-disabled="editRoom" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
+                    <span class="rght" ng-show="pvc.room_no!=undefined && pvc.room_no.length!=0 && fieldTouch[0]"><i class="fa fa-check" aria-hidden="true"></i> Room Number entered correctly</span>
+                    <span ng-show="pvc.room_no==undefined || pvc.room_no.length==0 && fieldTouch[0]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Wrong room entered. Blocks available are A/B/C/D/E and 6 floors are present</span>
+                    <a href="" ng-click="editRoom==false ? editRoom=true:editRoom=false">
+                        <span ng-show="editRoom">Edit Field</span><span ng-show="!editRoom">Done</span>    
+                        <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
+                    </a>
+                </div>
 
             </div>
             <div class="col s4">
                 <div class="small-title">DATE OF JOINING</div>
 
-                <div class="small-contenty yoa">{{ pvc.date_of_joining }}</div>
+                <div class="small-content date">
+                    <span style="color:blue; display: block;font-size:12px;margin:10px;">Please select date from the dropdown button that appears on extreme right of this field. Limits of date : 01-01-1999 till 01-01-2019</span>
+                    <input type="date" name="date" id="dateofj" ng-focus="fieldTouch[1]=true" ng-required="true" min="1999-01-01" max="2019-01-01" value="{{pvc.date_of_joining}}" ng-model="pvc.date_of_joining" ng-disabled="editDoj" title="Please select date from the dropdown button that appears on extreme right of this field"><br>
+                    <span class="rght right" ng-show="pvc.date_of_joining!=undefined && fieldTouch[1] && pvc.date_of_joining.length!=0 && pvc.date_of_joining!='0000-00-00'"><i class="fa fa-check" aria-hidden="true"></i> Date of joining entered correctly</span>
+                    <span ng-show="pvc.date_of_joining==undefined || pvc.date_of_joining.length==0 || pvc.date_of_joining=='0000-00-00' && fieldTouch[1]" class="right wrong"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Date of Joining. Select date from dropdown menu.</span>
+                    <a href="" ng-click="editDoj==false ? editDoj=true:editDoj=false">
+                        <span ng-show="editDoj">Edit Field</span><span ng-show="!editDoj">Done</span>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
+                    </a>
+
+                </div>
 
             </div>
         </div>
@@ -67,16 +96,41 @@
     <div class="card-action">
         <div class="row">
             <div class="col s12">
+                <div class="small-title">EMAIL ID</div>
                 <div class="input-field col s6">
-                    <input placeholder="Email-Id" id="last_name" type="text" class="validate editField email-id" disabled ng-model="pvc.email">
+                    <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter only a valid email id</span>
+                    <input placeholder="Email-Id" name="email" ng-focus="fieldTouch[2]=true" nameid="last_name" type="email" ng-required="true" class="validate editField email-id" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="Enter valid email Id" ng-disabled="editEmail" ng-model="pvc.email">
+                    <span class="rght right" ng-show="pvc.email!=undefined && pvc.email.length!=0 && fieldTouch[2]"><i class="fa fa-check" aria-hidden="true"></i> Email id format entered correctly</span>
+                    <span ng-show="pvc.email==undefined || pvc.email.length==0 && fieldTouch[2]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong email-id entered. Format is abc123@xyz.com</span>
+                    
+                    <a href="" ng-click="editEmail==false ? editEmail=true:editEmail=false">
+                        <span ng-show="editEmail">Edit Field</span><span ng-show="!editEmail">Done</span>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
+                    </a>
+                    
                 </div>
 
+                <div class="small-title">PHONE NUMBER</div>
                 <div class="input-field col s6">
-                    <input placeholder="phone number" id="last_name" type="text" class="validate editField phone" disabled ng-model="pvc.phone">
+                    <span  style="color:blue; display: block;font-size:12px;margin:10px;">Enter 10 digit Indian mobile number starting with 7/8/9</span>
+                    <input placeholder="phone number" id="last_name" ng-focus="fieldTouch[3]=true" type="tel" ng-required="true" class="validate editField phone" pattern="[789][0-9]{9}" maxlength="10" title="Enter 10 digit mobile number" ng-disabled="editPhone" ng-model="pvc.phone">
+                    <span class="rght right" ng-show="pvc.phone!=undefined && pvc.phone.length!=0 && pvc.phone!=0 && fieldTouch[3]"><i class="fa fa-check" aria-hidden="true"></i> Mobile number entered correctly</span>
+                    <span ng-show="pvc.phone==undefined || pvc.phone.length==0 || pvc.phone==0 && fieldTouch[3]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong format of Mobile number entered</span>
+                    
+                    <a href="" ng-click="editPhone==false ? editPhone=true:editPhone=false">                        
+                        <span ng-show="editPhone">Edit Field</span><span ng-show="!editPhone">Done</span>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="card-action">
+           Edited fields can be saved by pressing &nbsp&nbsp&nbsp 
+            <input  type="submit" class="btn waves-effect waves-light" ng-click="updatePvcInfo()" value="update information" type="submit"/ ng-disabled="!editName || !editRoom || !editDoj || !editPhone || !editEmail">
+        </div>
+    
 
     <div class="card-action">
         <a class="check-status btn waves-effect waves-light" ng-click="checkStatus()">
@@ -84,11 +138,38 @@
         </a>
     </div>
 </div>
+</form>
 </div>
 </div>
-<script>
 
-    $("#file").on('change', function () {
+<script type="text/javascript">
+    $('.dropdown-button').dropdown({
+         inDuration: 300,
+         outDuration: 225,
+         constrainWidth: false, // Does not change width of dropdown to that of the activator
+         gutter: 0, // Spacing from edge
+         belowOrigin: false, // Displays dropdown below the button
+         alignment: 'left', // Displays dropdown with edge aligned to the left of button
+         stopPropagation: false // Stops event propagation
+       }
+     );
+
+     $(".phone").keypress(function(e){
+         console.log("crekmc");
+        if(e.which<48 || e.which>57){
+            e.preventDefault();
+        }
+     })
+
+     $('input[type="date"]').attr({'max':new Date().toISOString().split('T')[0]});
+    // console.log($("#dateField").attr("max"));
+
+</script>
+
+<script>
+    $("#dateofj").validate();
+
+   $("#file").on('change', function () {
         console.log("image change section");
         var countFiles = $(this)[0].files.length;
         var imgPath = $(this)[0].value;
@@ -108,7 +189,7 @@
          }    
         
     });
-    
+
    $('.uploadImage').submit(function(e){
      e.preventDefault();
     
@@ -126,17 +207,41 @@
 });
 </script>
 <script>
-        var today = new Date();
-        var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
-        var yyyy = today.getFullYear();
-        if(dd<10){
-                dd='0'+dd
-            } 
-            if(mm<10){
-                mm='0'+mm
-            } 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+            dd='0'+dd
+        } 
+        if(mm<10){
+            mm='0'+mm
+        } 
+
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("datefield").setAttribute("max", today);
+</script>
+<style>
     
-        today = yyyy+'-'+mm+'-'+dd;
-        document.getElementById("datefield").setAttribute("max", today);
-    </script>
+    .wrong{
+        color:red;
+        display: block;
+        font-size:12px;
+        margin:10px;
+    }
+
+    .wrong>i{
+        font-size: 16px;
+    }
+
+    .rght{
+        color:rgb(97, 161, 54);
+        display: block;
+        font-size:12px;
+        margin:10px;
+    }
+
+    .rght>i{
+        font-size: 16px;
+    }
+</style>

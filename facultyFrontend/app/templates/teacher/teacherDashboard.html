@@ -64,8 +64,8 @@
                 <div class="small-content stream">
                     <span style="color:blue; display: block;font-size:12px;margin:10px;">Enter room in the pattern: Name of block followed by '-' then 3 digit room number. Ex:- E-412</span>
                     <input type="text" ng-model="teacher.room_no" ng-required="true" ng-focus="fieldTouch[0]=true" ng-disabled="editRoom" maxlength="5" pattern="[ABCDE]-[1-6][\d]{2}" title="Pattern should be {Block-Room_no}. Ex:- E-109. Available blocks : A,B,C,D,E"><br>
-                    <span class="rght right" ng-show="teacher.room_no!=undefined && teacher.room_no.length!=0 && fieldTouch[0]"><i class="fa fa-check" aria-hidden="true"></i> Room Number entered correctly</span>
-                    <span ng-show="teacher.room_no==undefined || teacher.room_no.length==0 && fieldTouch[0]" class="wrong right"><i class="fa fa-times" aria-hidden="true"></i> Wrong room entered. Blocks available are A/B/C/D/E and 6 floors are present</span>
+                    <span class="rght" ng-show="teacher.room_no!=undefined && teacher.room_no.length!=0 && fieldTouch[0]"><i class="fa fa-check" aria-hidden="true"></i> Room Number entered correctly</span>
+                    <span ng-show="teacher.room_no==undefined || teacher.room_no.length==0 && fieldTouch[0]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Wrong room entered. Blocks available are A/B/C/D/E and 6 floors are present</span>
                     <a href="" ng-click="editRoom==false ? editRoom=true:editRoom=false">
                         <span ng-show="editRoom">Edit Field</span><span ng-show="!editRoom">Done</span>    
                         <i class="fa fa-pencil-square-o" aria-hidden="true" style="font-size:22px"></i>

@@ -37,6 +37,20 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 			})
 		},
     
+    updateVcInfo:function(teacherData,callback){
+			$http({
+				method:"POST",
+				url:BACKEND + "/vupdateInfo",
+				data:{
+					vcInfo:vcData
+				}
+			})
+			.then(function(response){
+				if(callback){callback(response.data)}
+			},function(error){
+				if(callback){callback(error.data)}
+			})
+		},
 
 		getDetails: function(callback) {
 			$http({

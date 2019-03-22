@@ -48,12 +48,14 @@ router.get("/vchecksession", routes.views.vc.checksession); //This is a temporar
 router.get("/vdashboard", routes.views.vc.dashboard); // To get details of a BACH .
 router.get("/vlogout", routes.views.vc.logout);
 router.post("/vupload_photo", routes.views.vc.upload_photo);
+router.post("/vupdateInfo",routes.views.vc.updateVcInfo);
 
 router.post("/pvinitials", routes.views.pvc.initials); //To authenticate the dean
 router.get("/pvchecksession", routes.views.pvc.checksession); //This is a temporary route.
 router.get("/pvdashboard", routes.views.pvc.dashboard); // To get details of a BACH .
 router.get("/pvclogout", routes.views.pvc.logout);
 router.post("/pvcupload_photo", routes.views.pvc.upload_photo);
+router.post("/pvcupdateInfo",routes.views.pvc.updatePvcInfo);
 
 router.post("/tinitials", routes.views.teacher.initials); //To authenticate the teacher
 router.get("/tchecksession", routes.views.teacher.checksession); //This is a temporary route: profile details
