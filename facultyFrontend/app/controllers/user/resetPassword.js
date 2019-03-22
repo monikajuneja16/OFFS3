@@ -34,7 +34,7 @@ faculty.controller('resetPasswordCtrl' ,['$route','$scope','$http', '$window', '
     $scope.changeFlag = function(info) {
         if(info==undefined){return};
         var infoParsed = info.split(' - ');
-        //$scope.user.name = infoParsed[0];
+        $scope.info = infoParsed[0];
         $scope.item.instructor_id = infoParsed[1];
        
 	}
