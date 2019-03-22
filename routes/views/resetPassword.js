@@ -70,8 +70,9 @@ module.exports = {
             response: 'serverFailure'
           });
         } else {
-          if (result.length != 0) {
-              crypto.randomBytes(20, function(err, buf) {
+          if (result.length != 0 && !(result[0].email=="" || result[0].email==undefined)) {
+            console.log();
+            crypto.randomBytes(20, function(err, buf) {
                 var token = buf.toString("hex");
                 var otp=token.slice(token.length-3,token.length)+token.slice(0,3);
                 console.log(otp);
@@ -122,6 +123,12 @@ module.exports = {
                   }
                 );
               });
+          }
+          else{
+            res.status(200).json({
+              response: 'noEmail',
+              name: result[0].name
+            });
           }
         }
       }
