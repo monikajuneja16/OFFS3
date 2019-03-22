@@ -1,5 +1,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
+<button class="btn waves-effect waves-light btn__back" onclick="history.back()">Back
+    <i class="material-icons">arrow_back</i>
+</button>
+
+
 <div class="row">
     <div class="col m2">
         <select ng-model="year" ng-options="option for option in ['August 2017 - May 2018', 'August 2018 - May 2019']" ng-change="yearChange()">
@@ -240,6 +245,8 @@ th:nth-child(7), td:nth-child(7) {
     font-size: 24px;
     font-weight: 700;
 }
+
+
 </style>
 <script type="text/javascript">
     $(document).ready(function () {
