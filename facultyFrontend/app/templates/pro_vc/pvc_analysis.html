@@ -1,8 +1,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
-<button class="btn waves-effect waves-light btn__back" onclick="history.back()">Back
-        <i class="material-icons">arrow_back</i>
+<div class= "row">
+   <button style="float:left;" class="btn waves-effect waves-light btn__back" onclick="history.back()"><i class="fas fa-arrow-alt-circle-left"></i>  &nbspGo Back
+   </button>
+
+   <button style="float:right; margin: 10px 10px; " class="btn waves-effect waves-light center-align" ng-click="logout()">    LOG OUT   
+       <i class="fas fa-sign-out-alt"></i>
     </button>
+</div>
         
 <div class="row">
 <div class="row">
@@ -63,9 +68,6 @@
     <a class="waves-effect white black-text btn" ng-click="search(selectedCourse, selectedStream, selectedSem, selectedTeacher, selectedSubject)">SEARCH</a>
 <br><br>
     <a class="waves-effect white black-text btn" ng-click="print()">Print as PDF</a>
-<br><br>
-    <a class="btn waves-effect waves-light center-align" ng-click="logout()">LOG OUT </a>
-</div>
 </section>
 
 <div class="center" ng-show="searching">

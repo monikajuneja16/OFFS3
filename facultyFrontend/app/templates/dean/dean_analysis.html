@@ -1,10 +1,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<div class= "row">
+   <button style="float:left;" class="btn waves-effect waves-light btn__back" onclick="history.back()"><i class="fas fa-arrow-alt-circle-left"></i>  &nbspGo Back
+   </button>
 
-<button class="btn waves-effect waves-light btn__back" onclick="history.back()">Back
-        <i class="material-icons">arrow_back</i>
+   <button style="float:right; margin: 10px 10px; " class="btn waves-effect waves-light center-align" ng-click="logout()">    LOG OUT   
+       <i class="fas fa-sign-out-alt"></i>
     </button>
-
-<br>
+</div>
 <div class="row">
     <div class="col m4 offset-m1">
         <select ng-model="year" ng-options="option for option in ['August 2017 - May 2018', 'August 2018 - May 2019']" ng-change="yearChange()">
@@ -49,9 +51,7 @@
 <br><br>
     <!--<a class="waves-effect white black-text btn" ng-click="print()">Print as PDF</a>-->
     <button  ng-click="print()" ng-hide="hidebutton" class="waves-effect white black-text btn" id="form_button" type="submit" name="action">Print as PDF</button>
-<br><br>
-    <a class="btn waves-effect waves-light center-align" ng-click="logout()">LOG OUT </a>
-</div>  
+
                 
 </div>
 
@@ -180,12 +180,7 @@
     </div>
 </div>
 </div>
-<div ng-show="searched">
-    <center>
-        <a class="logout btn waves-effect waves-light center-align" ng-click="logout()">LOG OUT </a>
-    </center>
-    <br><br>
-</div>
+
 
 <style type="text/css">
     .select-wrapper input.select-dropdown {
