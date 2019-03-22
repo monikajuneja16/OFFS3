@@ -20,7 +20,7 @@ faculty.controller('dataPortalCtrl', ['$http', '$scope', 'dataPortalService', '$
 		{collegeName :"University School of Environment Management",
 	    collegeCode : "usem"},
 
-		{collegeName :"University School of Humanities and Social Sciences",
+		{collegeName :"University School of Humanities and Soc Sciences",
 		collegeCode : "ushss"},
 
 		{collegeName :"University School of Info.,Comm. and Technology",
