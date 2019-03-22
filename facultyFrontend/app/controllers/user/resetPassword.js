@@ -53,6 +53,11 @@ faculty.controller('resetPasswordCtrl' ,['$route','$scope','$http', '$window', '
                 var masked = res.data.email.replace(res.data.email.substring(3, res.data.email.indexOf('@')), hider.repeat(res.data.email.substring(3, res.data.email.indexOf('@')).length));
                 alert("OTP sent to registered email id : " + masked);
             }
+            else if(res.data.response=="noEmail") {
+                $scope.disableGif1=true;
+                alert("No registered email id for "+ res.data.name + ". Please contact us at sdcusict@ipu.ac.in for help.");
+                location.reload();
+            }
             else {
                 $scope.disableGif1=true;
                 alert("Server Failure. Please try again");
