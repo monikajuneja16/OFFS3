@@ -94,10 +94,10 @@ module.exports = {
 		if(date_of_joining==undefined || date_of_joining=="" || date_of_joining=="0000-00-00"){wrong_info+=", Date of Joining";}
 		if(designation==undefined){wrong_info+=", Designation";}
 		if(room_no==undefined || room_no==""){wrong_info+=", Room Number";}
-		if(school==undefined || school==""){wrong_info+=", USS";}
 		if(instructor_id==undefined){wrong_info+="Instructor Id"}
 		
 		if(wrong_info.length>2){
+			        console.log(wrong_info);
 					console.log("Wrong PVC information");
 					res.status(400).json({'message' : 'Please provide valid input for'+wrong_info.substr(1)+' to record information. Please hover over the input fields to check for format of information.'});
 					return;

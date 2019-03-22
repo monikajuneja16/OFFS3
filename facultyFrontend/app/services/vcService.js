@@ -21,7 +21,7 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 				}
 			})
 		},
-		logout : function(){
+		logout : function(callback){
 		 	$http({
 		 		method:"GET",
 		 		url: BACKEND + "/vlogout",
@@ -37,7 +37,7 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 			})
 		},
     
-    updateVcInfo:function(teacherData,callback){
+    updateVcInfo:function(vcData,callback){
 			$http({
 				method:"POST",
 				url:BACKEND + "/vupdateInfo",

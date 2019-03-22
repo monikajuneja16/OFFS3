@@ -8,9 +8,10 @@ faculty.controller("pvcCtrl", function($scope, $rootScope, $location,$localStora
 
 	pvcService.getDetails(function(response) {
 		//esponse.date_of_joining=response.date_of_joining.split('T')[0];
-		$scope.pvc = response;
-		console.log($scope.pvc);
-		});
+		response.date_of_joining=response.date_of_joining.split('T')[0];
+			console.log(response);
+			$scope.pvc = response;
+		})
 	
 
 	$scope.checkStatus = function() {
@@ -25,6 +26,7 @@ faculty.controller("pvcCtrl", function($scope, $rootScope, $location,$localStora
 			}
 		})
 	}	
+			
 	$scope.updatePvcInfo=function(){	
 		//console.log($scope.teacher);
 		pvcService.updatePvcInfo($scope.pvc,function(resp){

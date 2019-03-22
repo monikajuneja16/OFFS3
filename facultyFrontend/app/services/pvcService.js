@@ -22,7 +22,7 @@ faculty.factory('pvcService',['$http','$localStorage', '$timeout', '$rootScope',
 				}
 			})
 		},
-        logout : function(){
+        logout : function(callback){
 		 	$http({
 		 		method:"GET",
 		 		url: BACKEND + "/pvclogout",
@@ -53,7 +53,7 @@ faculty.factory('pvcService',['$http','$localStorage', '$timeout', '$rootScope',
 			})
 		},
 
-		updatePvcInfo:function(teacherData,callback){
+		updatePvcInfo:function(pvcData,callback){
 			$http({
 				method:"POST",
 				url:BACKEND + "/pvcupdateInfo",
