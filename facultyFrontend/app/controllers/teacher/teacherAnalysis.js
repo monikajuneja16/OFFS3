@@ -17,6 +17,20 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 			$scope.subjects = _.chain($scope.teacherfb.data).pluck('subject_name').uniq().value();
 			$scope.course 	= _.chain($scope.teacherfb.data).pluck('course').uniq().value();
 			
+			//for BTECH MTECH problem
+			$scope.bmtech=['B. TECH','M. TECH'];
+			$scope.course=$scope.course.map((course)=>{
+				if(course=='MTECH'){
+					$scope.bmtech[1]=course;
+					return 'M. TECH'
+				}else if(course=='BTECH'){
+					$scope.bmtech[0]=course;
+					return 'B. TECH'
+				}else{
+					return course;
+				}
+			})
+			console.log("Courses : "+$scope.course);
 			var c=$scope.course;
 			//if(c==='BTECH')
 			//c='B.Tech';
@@ -80,6 +94,11 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 		var arr = [3];
 		arr[0] = {semester: $scope.selectedSem}
 		arr[1] = {course: $scope.selectedCourse}
+		
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 		arr[2] = {stream:$scope.selectedStream}
         console.log("in subject");
         console.log(arr[0],arr[1],arr[2]);
@@ -106,6 +125,11 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 $scope.semesterList = function() {
 	var arr=[2];
 	arr[0] = {course: $scope.selectedCourse}
+	
+	//Only to resolve MTECH and BTECH problem aaawwww!!!
+	if(arr[0].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[0].course=$scope.bmtech[0];}
+	else if(arr[0].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[0].course=$scope.bmtech[1];}
+
 	arr[1] = {stream:$scope.selectedStream}
 	console.log("in semester");
         console.log(arr[0],arr[1]);
@@ -132,6 +156,12 @@ $scope.semesterList = function() {
 
 	$scope.streamList = function() {
 		var course = $scope.selectedCourse;
+		
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
+		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
+
+
 		var StreamDetails = _.where($scope.teacherfb.data, {course:course});
 		console.log(StreamDetails);
 		$scope.stream =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
@@ -146,6 +176,11 @@ $scope.semesterList = function() {
 		$scope.searching = true;
 
 		var course 	= $scope.selectedCourse;
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
+		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
+
 		var sem 	= $scope.selectedSem;
 		var stream 	= $scope.selectedStream;
 		var subject = $scope.selectedSubject;
@@ -191,6 +226,12 @@ $scope.semesterList = function() {
 				val.type="Theory"
 			} else {
 				val.type="Practical"
+			}
+			
+			if(val.course=='BTECH'){
+				val.course='B. TECH';
+			}else if(val.course=='MTECH'){
+				val.course='M. TECH';
 			}
 
 

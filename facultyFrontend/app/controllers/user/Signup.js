@@ -123,10 +123,9 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     var scul=$scope.college.collegeCode;
     $localStorage.college = singleCollege;
     if($scope.user.category!=undefined && $scope.user.category!="" && $scope.user.category!="student") {
+      autocompleteFields(scul,$scope.user.category);
       autocomp=!autocomp;
     }
-    autocomp=!autocomp;
-    autocompleteFields(scul,$scope.user.category);
   };
 
 
@@ -162,8 +161,9 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     }
     else{
       scul=$scope.college.collegeCode;
-      autocomp=!autocomp;
       autocompleteFields(scul,$scope.user.category);
+      autocomp=!autocomp;
+        
     }
   };
 

@@ -28,6 +28,12 @@
         </div>
       </div>
 
+      <div ng-if="user.category===undefined && college===undefined" style="margin-top:50px;">
+          <h4>
+            Please select <b>USS</b> and <b>Authentication mode</b> from dropdowns to use the Faculty Feedback System.
+          </h4>
+        </div>
+
     <div class="card" id="Signup" ng-hide="user.category==undefined">
         <div class="Signup_head" style="height: 3em">
           <div class="row">
@@ -41,9 +47,11 @@
         </div>
 
         <div class="Signup_body">
+          
           <div class="row">
             <form class="col s12">
               <div class="row">
+                
                 <div class="input-field col s12" ng-if="user.category=='student'">
                   <input id="rollno" type="text" class="roll validate" ng-focus="fieldTouch[0]=true" title="Length of Roll Number should be 11" ng-model="user.rollno" pattern="[0-9]{10}[1-9]{1}" maxlength="11" ng-blur="findSemister()">
                   <span ng-show="(user.rollno==undefined || user.rollno.length==0) && fieldTouch[0]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Roll Number should be 11 digits long</span>

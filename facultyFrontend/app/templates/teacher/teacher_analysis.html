@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col m2">
-        <select ng-model="year" ng-options="option for option in ['August 2017 - May 2018', 'August 2018 - May 2019']" ng-change="yearChange()">
+        <select ng-model="year" ng-options="option for option in ['August 2018 - May 2019']" ng-change="yearChange()">
             <option value="" disabled selected>Choose Academic Year</option>
         </select>
     </div>
@@ -42,9 +42,9 @@
 </div>
 
 <div class="center" ng-hide="searching">
-    <a class="waves-effect white black-text btn" ng-click="search()">SEARCH</a>
-<br><br>
-    <a class="waves-effect white black-text btn" ng-click="print()">Print as PDF</a>
+    <a class="waves-effect white black-text btn" ng-click="search()" style="margin-right:20px">SEARCH</a>
+
+    <a class="waves-effect white black-text btn" ng-click="print()" style="margin-left:20px">Print as PDF</a>
 </div>
 <div class="center" ng-show="searching">
     <p><h4><b>Data is being searched ... </b></h4></p>

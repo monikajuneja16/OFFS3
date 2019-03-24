@@ -262,11 +262,11 @@ module.exports = {
 		console.log("tables");
 		console.log(tables);
 		var query =` select * from  ${tables.subject_allocation}  as s  inner join  ${tables.batch_allocation}
-			   		as b on s.batch_id = b.batch_id  where s.instructor_code = ${ins_id} ` ;
+			   		as b on s.batch_id = b.batch_id  where s.instructor_code = ?` ;
 		console.log("Query");
 		console.log(query);
 
-		con.query(query, function(error, result) {
+		con.query(query,[ins_id], function(error, result) {
 			console.log("Result of query");
 			console.log(result);
 			if (error) {
@@ -385,9 +385,9 @@ f.no_of_students_evaluated`
 				' as e on s.instructor_code =e.instructor_id ' +
 				' inner join  ' +
 				tables.feedback +
-				' as f on s.feedback_id = f.feedback_id where f.no_of_students_evaluated !=0 and s.instructor_code =' + ins_id;
+				' as f on s.feedback_id = f.feedback_id where f.no_of_students_evaluated !=0 and s.instructor_code = ?';
 			console.log(query);
-			con.query(query, function(error, result) {
+			con.query(query,[ins_id], function(error, result) {
 				console.log(result);
 				if (error) {
 					console.log(error);
