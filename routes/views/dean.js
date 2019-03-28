@@ -104,7 +104,7 @@ module.exports = {
 		var password = req.query.password;
 		var query =
 			/*'select * from ' + college_name + '_dean where instructor_id = ? and password = ?';*/
-			'select * from employee where instructor_id = ? and password = ? and designation="dean"'
+			'select * from employee where instructor_id = ? and password = ? and designation like "%dean%"'
 		console.log(college_name, dean_id, password);
 		if (college_name != null && dean_id != null && password != null) {
 			//Check For all fields

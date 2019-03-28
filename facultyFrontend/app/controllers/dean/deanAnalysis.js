@@ -17,6 +17,21 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 			$scope.teacherlist = _.chain($scope.deanfb).pluck('name').uniq().value().sort();
 			$scope.subjects = _.chain($scope.deanfb).pluck('subject_name').uniq().value();
 			$scope.course = _.chain($scope.deanfb).pluck('course').uniq().value();
+			
+			//for BTECH MTECH problem
+			$scope.bmtech=['B. TECH','M. TECH'];
+			$scope.course=$scope.course.map((course)=>{
+				if(course=='MTECH'){
+					$scope.bmtech[1]=course;
+					return 'M. TECH'
+				}else if(course=='BTECH'){
+					$scope.bmtech[0]=course;
+					return 'B. TECH'
+				}else{
+					return course;
+				}
+			});
+
 			$scope.stream = _.chain($scope.deanfb).pluck('stream').uniq().value();
 			$scope.semester = _.chain($scope.deanfb).pluck('semester').uniq().value();
 
@@ -34,6 +49,11 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		 arr[0] = {semester: $scope.selectedSem}
 		 arr[1] =  {course: $scope.selectedCourse}
 		arr[2] = {stream: $scope.selectedStream}
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 
 		var teacherWithDetails = _.clone($scope.deanfb);
 
@@ -62,6 +82,11 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		arr[1] = {course: $scope.selectedCourse}
 		arr[2] = {stream: $scope.selectedStream}
 		arr[3] = {name: $scope.selectedTeacher}
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 		var	subjectDetails = _.clone($scope.deanfb);
 		console.log(subjectDetails);
 
@@ -85,6 +110,11 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 
 	$scope.streamList = function() {
 		var course = $scope.selectedCourse;
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
+		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
+
 
 		var StreamDetails = _.where($scope.deanfb, {course:course});
 		$scope.stream =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
@@ -344,6 +374,11 @@ const filename  = 'ThisIsYourPDFFilename.pdf';
 		var subject = $scope.selectedSubject;
 		var teacher = $scope.selectedTeacher;
 
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
+		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
+
+
 		console.log(sem)
 		console.log(course)
 		console.log(stream)
@@ -384,6 +419,11 @@ const filename  = 'ThisIsYourPDFFilename.pdf';
 				val.type="Practical"
 			}
 
+			if(val.course=='BTECH'){
+				val.course='B. TECH';
+			}else if(val.course=='MTECH'){
+				val.course='M. TECH';
+			}
 
 			if(val.type=="Theory") {
 				var atts = []

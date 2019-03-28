@@ -133,9 +133,10 @@ module.exports = {
 		/*  This route is just to check if sessions are working .
 			Hit this url once you have logged in.	*/
 			console.log("sssssssssssssssssssss");
-			if(req.session.vc) {
-				console.log(req.session.vc);
-				res.json(req.session.vc);
+			var vcSession=req.session.vc;
+			if(vcSession) {
+				console.log(vcSession);
+				res.status(200).json(vcSession);
 			}
 
 			else

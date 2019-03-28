@@ -48,7 +48,7 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 			.then(function(response){
 				if(callback){callback(response.data)}
 			},function(error){
-				if(callback){callback(error.data)}
+				if(error){callback(error.data)}
 			})
 		},
 
@@ -60,10 +60,10 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 				if (callback) {
 					callback(response.data);
 				}
-			}, function(response) {
+			}, function(error) {
 				if (callback) {
-					console.error(response.data);
-					callback(data);
+					console.error(error);
+					callback(error);
 				}
 			})
 		},

@@ -18,8 +18,8 @@ module.exports = {
 		designation=designation.toLowerCase();
 		console.log("Returning teachers");
 		if(designation=='dean'){
-				con.query("SELECT name,instructor_id from ?? where school=? and designation=? order by name",
-							['employee',school,designation],(err,resp)=>{
+				con.query("SELECT name,instructor_id from ?? where school=? and designation like ? order by name",
+							['employee',school,'%'+designation+'%'],(err,resp)=>{
 								if(err){
 									res.status(400).json({'message':'Server failure'});
 									return;
