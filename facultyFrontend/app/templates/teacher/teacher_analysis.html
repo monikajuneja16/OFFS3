@@ -118,7 +118,7 @@
                     <th>3</th>
                     <th>4</th>
                     <th>5</th>
-                    <th>Total</th>
+                    <th>*Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -146,7 +146,7 @@
                 </tr>
 
                 <tr>
-                    <td><span class="small-title">No of Students Who Gave Feedback  = </span>{{value. no_of_students_evaluated}}</td>
+                    <td><span class="small-title">No of Students Who gave Feedback  = </span>{{value. no_of_students_evaluated}}</td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -156,7 +156,10 @@
                 </tr>
             </tbody>
         </table>
-
+        <div class="center">
+           <b> *Total=(1 * no. of students who gave 1 out of 5 ) + (2 * no. of students who gave 2 out of 5 ) + (3 * no. of students who gave 3 out of 5 ) + (4 * no. of students who gave 4 out of 5 ) + (5 * no. of students who gave 5 out of 5 )</b>
+        </div>  
+        <br>          
         <div class="center">
             <div class="large-title">PERCENTAGE</div>
             <span class="small-title"> (Total Marks Obtained X 100)/Maximum Marks </span> 
