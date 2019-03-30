@@ -86,6 +86,7 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 		arr[0] = {semester: Sem}
 		arr[1] =  {course: Course}
 		arr[2] = {stream: Streams}
+		console.log(arr[0]);
 
 		var teacherWithDetails = _.clone($scope.pvcfb);
 

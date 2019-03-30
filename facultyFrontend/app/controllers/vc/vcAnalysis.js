@@ -1,5 +1,13 @@
 faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcService) {
 
+	$scope.vc = [];
+	$scope.viewElements = false;
+	$scope.selectedYear = '2018';
+	$scope.selected = {};
+	$scope.progress = false;
+	$scope.searching = false;
+	$scope.searched = false;
+
 	$scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
 		collegeCode : "usap"},
 
@@ -34,15 +42,12 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 		collegeCode: "usms" },
 	];
 
-	$scope.searched = false;
-
 	$scope.getFeedback = function() {
 
 		vcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(response) {
 
 			$scope.viewElements = true;
 			$scope.vcfb = response;
-			console.log($scope.vcfb);
 
 			//get unique teachers
 			$scope.teacherlist = _.chain($scope.vcfb).pluck('name').uniq().value().sort();
@@ -51,7 +56,7 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 			$scope.stream = _.chain($scope.vcfb).pluck('stream').uniq().value();
 			$scope.semester = _.chain($scope.vcfb).pluck('semester').uniq().value();
 
-	 	 	// init all selects
+			// init all selects
 			$(document).ready(function () {
 				$('select').material_select();
 			})
@@ -61,12 +66,27 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 		})
 	}
 
+	$scope.yearChange = function () {
+		$scope.selectedYear = $scope.year.slice(7,11);
+		$scope.final_res = {};
+		console.log('changed');
+		if($scope.selectedSchool) {
+			//hide stuff
+			$scope.viewElements = false;
+			// show preloader
+			$scope.progress = true;
+			$scope.getFeedback();
+		}
+	}
+
+
 	$scope.teacherList = function(Sem, Course, Streams) {
 
 		var arr = [3];
 		arr[0] = {semester: Sem}
 		arr[1] =  {course: Course}
 		arr[2] = {stream: Streams}
+		console.log(arr[0]);
 
 		var teacherWithDetails = _.clone($scope.vcfb);
 
@@ -81,7 +101,7 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 
 		}
 
-		// var teacherWithDetails = _.where($scope.pvcfb, {semester:null});
+		// var teacherWithDetails = _.where($scope.vcfb, {semester:null});
 		$scope.teacherlist =  _.chain(teacherWithDetails).pluck('name').uniq().value().sort();
 		console.log($scope.teacherList);
 
@@ -115,88 +135,14 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 		})
 	}
 
-
-
-	$scope.streamList = function(course) {
-		if (!course) {
-			return;
-		}
-
-		var StreamDetails = _.where($scope.vcfb, {course:course});
-		console.log(StreamDetails);
-		$scope.stream =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
-
-		$(document).ready(function () {
-			$('select').material_select();
-		})
-	}
-
-	$scope.yearChange = function () {
-		$scope.selectedYear = $scope.year.slice(7,11);
-		$scope.final_res = {};
-		console.log('changed');
-		if($scope.selectedSchool) {
-			//hide stuff
-			$scope.viewElements = false;
-			// show preloader
-			$scope.progress = true;
-			$scope.getFeedback();
-		}
-	}
-
-	$scope.schoolChange = function () {
-		$scope.final_res = {}
-		if ($scope.selectedYear) {
-			// hide it
-			$scope.viewElements = false;
-			// show preloader
-			$scope.progress = true;
-			$scope.getFeedback();
-		}
-	}
-
-	$rootScope.attributesList = {
-		theory: [
-			"Coverage of all the topics prescribed in the syllabus, with adequate depth and detail.",
-			"Compliance with the number of teaching hours allotted and actual hours taught.",
-			"Clarity of speech, pace of teaching, logical flows as well as continuity of thought and expression in lectures.",
-			"Ability to explain the concepts clearly.",
-	    	"Teaching methodology and the use of teaching aids (blackboard/power point presentation/OHP) adequately served your learning needs.",
-	    	"Knowledge of the teacher in the subject.",
-	    	"The extent of interaction students involvement students participation in discussing the subject matter.",
-			"Encourages and makes you feel comfortable about asking questions. ",
-			"Provides enthusiastic, clear and satisfactory response to students questions.",
-			"Teacher generated enough interest and stimulated your intellectual curiosity.",
-			"Teacher enhanced your capability to critically analyze and scrutinize scientific information.",
-			"Stimulates and maintains interest and attention of students throughout the course.",
-			"Because of the teacher you felt enthusiastic about studying the subject.",
-			"How much enriched did you feel at the end of the course.",
-			"Teaching helped you to develop an independent thinking/perspective about the subject."
-		],
-		practicals: [
-			"The extent of direct supervision by the teacher throughout the practical.",
-			"The theoretical basis technical considerations related to the experimental practical exercises were explained well.",
-			"The experiments generated enough interest and helped in developing/strengthening your concepts.",
-		    "Created sufficient opportunity for students to practice their skill.",
-		    "Adequate time was devoted to interactive sessions to discuss analyze the results and clarify doubts of students.",
-			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically.",
-			"Encourages and makes you feel comfortable about asking questions.",
-			"Provides enthusiastic, clear and satisfactory response to student's questions."
-		]
-
-	}
-
-	$scope.updateSubjects = function () {
-
-	}
-
-     $scope.logout = function(req,res) {
+$scope.logout = function(req,res) {
 		vcService.logout(function(response) {
 			
 		})
 		$location.path("/");
 	}
-	$scope.print = function (){
+
+$scope.print = function (){
 	alert("PDF is getting downloaded,it may take some Time.");
      var quotes = document.getElementById('mycanvas');
 
@@ -244,20 +190,81 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 
                     }
                  //! after the for loop is finished running, we save the pdf.
-                pdf.save('feedback_report.pdf');         
+                pdf.save('feedback_report.pdf');        
            });
     }
 
 
+	$scope.streamList = function(course) {
+		if (!course) {
+			return;
+		}
 
-	
+		var StreamDetails = _.where($scope.vcfb, {course:course});
+		console.log(StreamDetails);
+		$scope.stream =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
+
+		$(document).ready(function () {
+			$('select').material_select();
+		})
+	}
+
+
+
+
+	$scope.schoolChange = function () {
+		$scope.final_res = {}
+		if ($scope.selectedYear) {
+			// hide it
+			$scope.viewElements = false;
+			// show preloader
+			$scope.progress = true;
+			$scope.getFeedback();
+		}
+	}
+
+	$rootScope.attributesList = {
+		theory: [
+			"Coverage of all the topics prescribed in the syllabus, with adequate depth and detail.",
+			"Compliance with the number of teaching hours allotted and actual hours taught.",
+			"Clarity of speech, pace of teaching, logical flows as well as continuity of thought and expression in lectures.",
+			"Ability to explain the concepts clearly.",
+	    	"Teaching methodology and the use of teaching aids (blackboard/power point presentation/OHP) adequately served your learning needs.",
+	    	"Knowledge of the teacher in the subject.",
+	    	"The extent of interaction students involvement students participation in discussing the subject matter.",
+			"Encourages and makes you feel comfortable about asking questions. ",
+			"Provides enthusiastic, clear and satisfactory response to students questions.",
+			"Teacher generated enough interest and stimulated your intellectual curiosity.",
+			"Teacher enhanced your capability to critically analyze and scrutinize scientific information.",
+			"Stimulates and maintains interest and attention of students throughout the course.",
+			"Because of the teacher you felt enthusiastic about studying the subject.",
+			"How much enriched did you feel at the end of the course.",
+			"Teaching helped you to develop an independent thinking/perspective about the subject."
+		],
+		practicals: [
+			"The extent of direct supervision by the teacher throughout the practical.",
+			"The theoretical basis technical considerations related to the experimental practical exercises were explained well.",
+			"The experiments generated enough interest and helped in developing/strengthening your concepts.",
+		    "Created sufficient opportunity for students to practice their skill.",
+		    "Adequate time was devoted to interactive sessions to discuss analyze the results and clarify doubts of students.",
+			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically.",
+			"Encourages and makes you feel comfortable about asking questions.",
+			"Provides enthusiastic, clear and satisfactory response to student's questions."
+		]
+
+	}
+
+	$scope.updateSubjects = function () {
+
+	}
 	$scope.t = function () {
 		console.log($scope.selected.Teacher);
 	}
-
 	$scope.search  = function (selectedCourse, selectedStream, selectedSem, selectedTeacher, selectedSubject) {
 
-		$scope.searching = true;
+		console.log($scope.vcfb);
+
+		$scope.searching = true;		
 		var course = selectedCourse;
 		var sem = selectedSem;
 		var stream = selectedStream;
