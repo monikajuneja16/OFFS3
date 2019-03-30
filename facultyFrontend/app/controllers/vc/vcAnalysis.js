@@ -116,6 +116,10 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 		arr[1] = { course: Course }
 		arr[2] = { stream: Streams }
 		arr[3] = { name: Teacher }
+		
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
 
 		var	subjectDetails = _.clone($scope.vcfb);
 
