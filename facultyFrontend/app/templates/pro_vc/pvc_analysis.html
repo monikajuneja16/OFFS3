@@ -184,6 +184,10 @@
         </table>
 
         <div class="center">
+            <b> *Total=(1 * no. of students who gave 1 out of 5 ) + (2 * no. of students who gave 2 out of 5 ) + (3 * no. of students who gave 3 out of 5 ) + (4 * no. of students who gave 4 out of 5 ) + (5 * no. of students who gave 5 out of 5 )</b>
+         </div> 
+
+        <div class="center">
             <div class="large-title">PERCENTAGE</div>
             <span class="small-title"> (Total Marks Obtained X 100)/Maximum Marks </span> 
             <div ng-if="value.type=='Theory'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 75)) * 100 ).toFixed(2)}}%</div>
