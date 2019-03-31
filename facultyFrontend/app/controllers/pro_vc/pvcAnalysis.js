@@ -3,6 +3,7 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 	$scope.pvc = [];
 	$scope.viewElements = false;
 	$scope.selectedYear = '2018';
+	$scope.year = 'August 2018 - May 2019';
 	$scope.selected = {};
 	$scope.progress = false;
 	$scope.searching = false;

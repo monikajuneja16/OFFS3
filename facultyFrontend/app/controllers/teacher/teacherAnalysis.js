@@ -2,13 +2,13 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 
 	$scope.teacher = [];
 	$scope.selectedYear = '2018';
+	$scope.year = 'August 2018 - May 2019';
 	$scope.searching = false;
 	$scope.searched = false;
 	//$scope.steacher=$rootScope.teacher.instrctor_id;
 
 	$scope.populate = function() {
 		console.log($localStorage);
-
 
 		teacherService.populate($scope.selectedYear, function(response) {
 			$scope.teacherfb = response;
