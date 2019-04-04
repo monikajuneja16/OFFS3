@@ -16,7 +16,7 @@
             <div class="student-name">
                 <input type="text" pattern="[a-zA-Z ]*$" class="validate editField name" maxlength="35" ng-pattern-restrict title="Please enter alphanets only" ng-model="pvc.name" ng-disabled="editName" style="font-size:25px;" ng-required="true"><br>
             </div>
-            <span ng-show="pvc.name==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> pvc name should contain only alphabets and spaces</span>
+            <span ng-show="pvc.name==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i>Name should contain only alphabets and spaces</span>
                     
             <a href="" ng-click="editName==false ? editName=true:editName=false" style="text-transform: uppercase">
                 <span ng-show="editName">Edit Field</span><span ng-show="!editName">Done</span> 

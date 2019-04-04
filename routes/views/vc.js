@@ -228,5 +228,15 @@ f.no_of_students_evaluated`;
 				}
 		    })
 		}
+	},
+
+	getInstructorImage: function(req,res){
+		var {school,id}=req.params;
+		console.log(req.params);
+		id=id.split('.')[0];
+		con.query('Select name from ?? where instructor_id=? and school=?',['employee',id,school],function(err,resp){
+			if(err){console.log(err);return;}
+			res.send(`Image does not exist for ${resp[0].name} of ${school.toUpperCase()}`);
+		})
 	}
 }

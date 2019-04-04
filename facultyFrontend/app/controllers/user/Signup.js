@@ -147,14 +147,15 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
       $scope.user.category = userCategory;
     }
 
-    if ($scope.user.category == 'VC' || $scope.user.category == 'Pro VC' && ($scope.college==undefined || $scope.college=="")) {
+    if ($scope.user.category == 'VC' || $scope.user.category == 'Pro VC') {
       var checker = 
       {
-        collegeName: "University School of Info.,Comm. and Technology",
-        collegeCode: "usict"
+        collegeName: "USS name not required",
+        collegeCode: "NR"
       }
       $scope.setCollege(checker);
-    }
+      $scope.notRequired=true;
+    }else{$scope.setCollege({});$scope.notRequired=false;}
 
     if($scope.college==undefined || $scope.college=="") {
       return;
