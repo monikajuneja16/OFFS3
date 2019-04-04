@@ -165,7 +165,8 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span class="small-title">Total Marks Obtained  = </span> {{getTotal(value)}}/{{value. no_of_students_evaluated*75}}</td>
+                    <td ng-if="value.type=='Theory'"><span class="small-title">Total Marks Obtained  = </span> {{getTotal(value)}}/{{value. no_of_students_evaluated*75}}</td>
+                    <td ng-if="value.type=='Practical'"><span class="small-title">Total Marks Obtained  = </span> {{getTotal(value)}}/{{value. no_of_students_evaluated*40}}</td>
                 </tr>
             </tbody>
         </table>
