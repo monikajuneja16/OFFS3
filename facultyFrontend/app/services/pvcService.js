@@ -78,12 +78,12 @@ faculty.factory('pvcService',['$http','$localStorage', '$timeout', '$rootScope',
 				}
 			}).then(function(response) {
 				if (callback) {
-					callback(response.data);
+					callback(null,response.data);
 				}
-			}, function(response) {
+			}, function(response){
 				if (callback) {
 					console.error(response.data);
-					callback(data);
+					callback(response.data);
 				}
 			})
 		}

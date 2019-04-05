@@ -213,8 +213,9 @@ f.no_of_students_evaluated`;
 			con.query(query, function(error, result) {
 				if (error) {
 					console.log(error);
-					var obj = { status: 400, message: 'There is error in query!' };
-					res.json(obj); // Connection Error
+					var obj = { message: 'Feedback not recorded for this year!' };
+					res.status(400).json(obj); // Connection Error
+					return;
 				} else if (result[0] == null) {
 					console.log('No pvc Found');
 					var obj = { status: 400, message: 'No Such User Found ! .' };

@@ -78,12 +78,12 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 				}
 			}).then(function(response) {
 				if (callback) {
-					callback(response.data);
+					callback(null,response.data);
 				}
 			}, function(response) {
 				if (callback) {
 					console.error(response.data);
-					callback(data);
+					callback(response.data);
 				}
 			})
 		},

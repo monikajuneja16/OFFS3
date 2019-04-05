@@ -45,8 +45,17 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 
 	$scope.getFeedback = function() {
 
-		vcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(response) {
+		vcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(error,response) {
 
+			if(error){
+				//console.log(error.message);
+				alert(error.message);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			
+			}
 			$scope.viewElements = true;
 			$scope.vcfb = response;
 
@@ -345,12 +354,13 @@ $scope.print = function (){
 
 					val[att] = tmp;
 				})
+				$scope.searching = false;
+		$scope.searched = true;
+
 			}
 		});
 
-		$scope.searching = false;
-		$scope.searched = true;
-
+		
 		if (final_res.length == 0) {
 			$scope.final_res = null;
 			alert("No feedback data exists");

@@ -45,8 +45,17 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 
 	$scope.getFeedback = function() {
 
-		pvcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(response) {
+		pvcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(error,response) {
 
+			if(error){
+				//console.log(error.message);
+				alert(error.message);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			
+			}
 			$scope.viewElements = true;
 			$scope.pvcfb = response;
 
@@ -54,6 +63,14 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 			$scope.teacherlist = _.chain($scope.pvcfb).pluck('name').uniq().value().sort();
 			$scope.subjects = _.chain($scope.pvcfb).pluck('subject_name').uniq().value();
 			$scope.course = _.chain($scope.pvcfb).pluck('course').uniq().value();
+
+			/*if($scope.course.length==0){
+				alert(`Feedback not given by any student for ${$scope.selectedSchool.collegeCode.toUpperCase()} for the period of ${$scope.selectedYear}`);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			}*/
 
 			//for BTECH MTECH problem
 			$scope.bmtech=['B. TECH','M. TECH'];
