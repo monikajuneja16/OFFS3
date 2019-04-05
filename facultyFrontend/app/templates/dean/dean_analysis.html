@@ -51,7 +51,38 @@
 <br><br>
     <!--<a class="waves-effect white black-text btn" ng-click="print()">Print as PDF</a>-->
     <button  ng-click="print()" ng-hide="hidebutton" class="waves-effect white black-text btn" id="form_button" type="submit" name="action">Print as PDF</button>
-    <a class="waves-effect white black-text btn" ng-click="">Feedback Calculation Example</a>              
+    <button data-target="modal1" class="btn modal-trigger">Feedback Calculation Example</button>
+    
+
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>Feedback score for each question is calculated as: </h4>
+        <p>Feedback Score = Summation of i*n </p>
+        <p>where i = score given for each question such that</p>
+        <p> i lies between 1 and 5, 1 being minimum and 5 being maximum</p>
+        <p>n = number of students who gave score i for that question</p>
+        <hr>
+        <p>Consider the following example:</p>
+        <p>Let's say 10 students gave feedback to a certain teacher for a partcular question such that </p>
+        <p>1 student gave 2 out of 5</p>
+        <p>2 students gave 3 out of 5</p>
+        <p>4 students gave 4 out of 5</p>
+        <p>3 students gave 5 out of 5</p>
+        <p>Feedback Score using the above mentioned formula=></p>
+        <p>For i=1 => n = 0 => i*n = 0</p>
+        <p>For i=2 => n = 1 => i*n = 2*1 = 2</p>
+        <p>For i=3 => n = 2 => i*n = 3*2 = 6</p>
+        <p>For i=4 => n = 4 => i*n = 4*4 = 16</p>
+        <p>For i=5 => n = 3 => i*n = 3*5 = 15</p>
+        <p>Feedback Score: 0 + 2 + 6 + 16 + 15 = 39 </p>
+        <p><b>Hence Feedback Score for that particular question is 39 </b></p>
+        <h4>Total Marks Obtained = Sum of Feedback Scores of all questions</h4>
+        
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>            
 </div>
 
 <div class="center" ng-show="searching">
