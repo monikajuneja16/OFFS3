@@ -39,6 +39,14 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 	$scope.listOfStudents = [];
 
 	$scope.searched = false;
+	$scope.selectedYear = '2018';
+	$scope.year = 'August 2018 - May 2019';
+
+	$scope.yearChange = function () {
+		$scope.selectedYear = $scope.year.slice(7,11);
+ 	    console.log('changed');
+ 	    $scope.populate();
+    }
 
 	$scope.collegeSelected = function() {
 		if (!$scope.selectedCollege) {
@@ -103,11 +111,7 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 
 	$scope.getStudentList = function() {
 		$scope.searched = true;
-		console.log($scope.selectedCollege);
-		console.log($scope.selectedSem);
-		console.log($scope.selectedCourse);
-		console.log($scope.selectedStream);
-		userService.getStudentStatus($scope.collegeCode, $scope.selectedSem, $scope.selectedCourse, $scope.selectedStream,  function(response) {
+		userService.getStudentStatus($scope.collegeCode, $scope.selectedSem, $scope.selectedCourse, $scope.selectedStream,$scope.selectedYear,  function(response) {
 			if (response == "400") {
 				alert("something wrong happened")
 				$location.path("/status");

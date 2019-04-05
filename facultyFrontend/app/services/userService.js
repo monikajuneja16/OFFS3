@@ -130,7 +130,7 @@ faculty.factory('userService', ['$http', '$timeout', '$rootScope','$location', f
             })
         },
 
-        getStudentStatus: function(collegeName, semester, course, stream,  callback) {
+        getStudentStatus: function(collegeName, semester, course, stream, year,  callback) {
             $http({
                 method: 'GET',
                 url: BACKEND + '/getStudentStatus',
@@ -138,7 +138,8 @@ faculty.factory('userService', ['$http', '$timeout', '$rootScope','$location', f
                     collegeName: collegeName,
                     semester: semester,
                     course: course,
-                    stream: stream
+                    stream: stream,
+                    year: year
                 }
             }).then(function(response) {
                 if (callback) {

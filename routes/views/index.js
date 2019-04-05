@@ -564,10 +564,11 @@ module.exports = {
     var semester = parseInt(req.query.semester);
     var course  = req.query.course;
     var stream  = req.query.stream;
+    var year = req.query.year;
     var result;
 
-    var year = process.env.year - (semester - process.env.odd_even)/2;
-    var masters_year  = Number('20'+(year-2000))-4;
+    //  = process.env.year - (semester - process.env.odd_even)/2;
+    // var masters_year  = Number('20'+(year-2000))-4;
     
 
 
@@ -587,32 +588,34 @@ module.exports = {
       
       result=userStatus;
       console.log(result);
-      if(course=="M. TECH"){
-        year=masters_year;
-        var query = "select enrollment_no, name, s_" + semester + " from "  + collegeName + "_student_" + year + " where" +
-     " course='" + course + "' AND stream='" + stream + "'";
+      res.json(result);
+      return; 
+    //   if(course=="M. TECH"){
+    //     year=masters_year;
+    //     var query = "select enrollment_no, name, s_" + semester + " from "  + collegeName + "_student_" + year + " where" +
+    //  " course='" + course + "' AND stream='" + stream + "'";
 
-        console.log(query);
-        con.query(query, function(err, userst) {
-          if (err) {
-            console.log(err);
-            res.json("400");
-            return;
-          }
-          console.log(userst);
-          userst.forEach(function(val){
-            result.push(val);           
-          });
-          console.log(result);
-          res.json(result);
-          return;
-      });
-    }else{
+    //     console.log(query);
+    //     con.query(query, function(err, userst) {
+    //       if (err) {
+    //         console.log(err);
+    //         res.json("400");
+    //         return;
+    //       }
+    //       console.log(userst);
+    //       userst.forEach(function(val){
+    //         result.push(val);           
+    //       });
+    //       console.log(result);
+    //       res.json(result);
+    //       return;
+    //   });
+    // }else{
 
-        res.json(result);
-        return; 
+    //     res.json(result);
+    //     return; 
         
-      }
+    //   }
     })
   },
 

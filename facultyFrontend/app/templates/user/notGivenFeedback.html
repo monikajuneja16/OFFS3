@@ -3,34 +3,45 @@
 <br>
 
 	<div class="row">
-
-    <div class="col m4 offset-m1">
+    <div class="row">
+    <div class="col m5 offset-m1">
         <select ng-model="selectedCollege" ng-change="collegeSelected()">
             <option value="" selected>Choose USS</option>
             <option ng-repeat = "college in collegeList">{{college.collegeName}}</option>
         </select>
     </div>
-    <div class="col s2">
+    <div class="col m5">
+        <select ng-model="year" ng-options="option for option in ['August 2016 - May 2017','August 2017 - May 2018','August 2018 - May 2019']" ng-change="yearChange()">
+            <option value="" disabled selected>Choose Academic Year</option>
+        </select>
+    </div>
+    </div>
+    <div class="row">
+            <div class="col s1">
+        
+            </div>
+    <div class="col s4">
          <select ng-model="selectedCourse" ng-change="courseSelected()">
             <option value="" selected>Choose Course</option>
             <option ng-repeat = "course in courseList">{{course.course}}</option>
         </select>
     </div>
-    <div class="col s2">
+    <div class="col s3">
         <select ng-model="selectedStream" ng-change="streamSelected()">
             <option value=""  selected>Choose Stream</option>
             <option ng-repeat="stream in streamList">{{stream.stream }}</option>
         </select>
     </div>
-    <div class="col s2">
+    <div class="col s3">
         <select ng-model="selectedSem" ng-change="semesterSelected()">
             <option value=""  selected>Choose Semester</option>
             <option ng-repeat="semester in [1,2,3,4,5,6,7,8,9,10]">{{semester}}</option>
         </select>
     </div>
+    </div>
 </div>
 <div class="center"> 
-    <a class="btn btn-success" ng-click="getStudentList()" ng-disabled="!selectedSem || !selectedCourse || !selectedStream || !selectedCollege">CHECK EVALUATION</a>
+    <a class="btn btn-success" ng-click="getStudentList()" ng-disabled="!selectedYear || !selectedSem || !selectedCourse || !selectedStream || !selectedCollege">CHECK EVALUATION</a>
 </div>
 	<br>
 
