@@ -152,6 +152,8 @@ $scope.print = function (){
 
                  //! MAKE YOUR PDF
                  var pdf = new jsPDF('l', 'pt','a4','true');
+                 pdf.text(360, 30, "Feedback Report");
+                 
                  for (var i = 0; i <= quotes.clientHeight/1300; i++) {
                      //! This is all just html2canvas stuff
                      var srcImg  = canvas;
