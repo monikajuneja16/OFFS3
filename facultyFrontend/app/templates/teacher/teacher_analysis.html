@@ -43,8 +43,9 @@
 
 <div class="center" ng-hide="searching">
     <a class="waves-effect white black-text btn" ng-click="search()" style="margin-right:20px">SEARCH</a>
-
     <a class="waves-effect white black-text btn" ng-click="print()" style="margin-left:20px">Print as PDF</a>
+    <a class="waves-effect white black-text btn" ng-click="">Feedback Calculation</a>
+
 </div>
 <div class="center" ng-show="searching">
     <p><h4><b>Data is being searched ... </b></h4></p>
@@ -157,9 +158,6 @@
                 </tr>
             </tbody>
         </table>
-        <div class="center">
-           <b> *Total=(1 * no. of students who gave 1 out of 5 ) + (2 * no. of students who gave 2 out of 5 ) + (3 * no. of students who gave 3 out of 5 ) + (4 * no. of students who gave 4 out of 5 ) + (5 * no. of students who gave 5 out of 5 )</b>
-        </div>  
         <br>          
         <div class="center">
             <div class="large-title">PERCENTAGE</div>
