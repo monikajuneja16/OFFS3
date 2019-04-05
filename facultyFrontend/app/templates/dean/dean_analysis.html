@@ -125,7 +125,7 @@
                     IMAGE LINK
                 </div>
                 <a ng-href="app/instructor_images/{{value.school}}/{{value.instructor_code}}.jpg" target="_blank">
-                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size:20px"></i>
+                    <img ng-src="app/instructor_images/{{value.school}}/{{value.instructor_code}}.jpg" onerror="this.src='http://placehold.it/180x200' "style="height: 70px; width: 80px;">
                 </a>
             </div>
         </div>
