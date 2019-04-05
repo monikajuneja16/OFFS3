@@ -16,7 +16,7 @@
             <div class="student-name">
                 <input type="text" pattern="[a-zA-Z ]*$" class="validate editField name" maxlength="35" ng-pattern-restrict title="Please enter alphanets only" ng-model="vc.name" ng-disabled="editName" style="font-size:25px;" ng-required="true"><br>
             </div>
-            <span ng-show="vc.name==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> vc name should contain only alphabets and spaces</span>
+            <span ng-show="vc.name==undefined" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Name should contain only alphabets and spaces</span>
                     
             <a href="" ng-click="editName==false ? editName=true:editName=false" style="text-transform: uppercase">
                 <span ng-show="editName">Edit Field</span><span ng-show="!editName">Done</span> 
@@ -25,7 +25,7 @@
 
         </div>
         <div class="col s4">
-           <img id="stud-img" class="student-main-image" ng-src="./app/instructor_images/vc/vc.jpg" onerror="this.src='http://placehold.it/180x200'"style="height: 200px; width: 200px;">
+           <img id="stud-img" class="student-main-image" ng-src="./app/instructor_images/vc/vc.jpg" onerror="this.src='http://placehold.it/180x200' "style="height: 200px; width: 200px;">
                 <br><br>
 
                 <div style="margin-bottom: 0px !important;" class="row">

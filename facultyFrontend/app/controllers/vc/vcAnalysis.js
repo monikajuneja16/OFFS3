@@ -3,6 +3,7 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 	$scope.vc = [];
 	$scope.viewElements = false;
 	$scope.selectedYear = '2018';
+	$scope.year = 'August 2018 - May 2019';
 	$scope.selected = {};
 	$scope.progress = false;
 	$scope.searching = false;
@@ -44,8 +45,17 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 
 	$scope.getFeedback = function() {
 
-		vcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(response) {
+		vcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(error,response) {
 
+			if(error){
+				//console.log(error.message);
+				alert(error.message);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			
+			}
 			$scope.viewElements = true;
 			$scope.vcfb = response;
 
@@ -116,6 +126,10 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 		arr[1] = { course: Course }
 		arr[2] = { stream: Streams }
 		arr[3] = { name: Teacher }
+		
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
 
 		var	subjectDetails = _.clone($scope.vcfb);
 
@@ -342,12 +356,13 @@ $scope.print = function (){
 
 					val[att] = tmp;
 				})
+				$scope.searching = false;
+		$scope.searched = true;
+
 			}
 		});
 
-		$scope.searching = false;
-		$scope.searched = true;
-
+		
 		if (final_res.length == 0) {
 			$scope.final_res = null;
 			alert("No feedback data exists");

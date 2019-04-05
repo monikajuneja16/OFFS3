@@ -210,11 +210,12 @@ f.no_of_students_evaluated`;
 					   	;
 					   	console.log(query);
 		    con.query(query,function(error,result){
-		    	if(error) {
-					console.log(error);
-					var obj = { status:400 , message :"There is error in query!"};
-					res.json(obj);       // Connection Error
-				}
+					if (error) {
+						console.log(error);
+						var obj = { message: 'Feedback not recorded for this year!' };
+						res.status(400).json(obj); // Connection Error
+						return;
+					}
 				else if(result[0]==null){
 					console.log("No VC Found");
 					var obj = { status:400 , message :"No Such User Found ! ."};
@@ -228,5 +229,15 @@ f.no_of_students_evaluated`;
 				}
 		    })
 		}
+	},
+
+	getInstructorImage: function(req,res){
+		var {school,id}=req.params;
+		console.log(req.params);
+		id=id.split('.')[0];
+		con.query('Select name from ?? where instructor_id=? and school=?',['employee',id,school],function(err,resp){
+			if(err){console.log(err);return;}
+			res.send(`Image does not exist for ${resp[0].name} of ${school.toUpperCase()}`);
+		})
 	}
 }

@@ -3,6 +3,7 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 	$scope.pvc = [];
 	$scope.viewElements = false;
 	$scope.selectedYear = '2018';
+	$scope.year = 'August 2018 - May 2019';
 	$scope.selected = {};
 	$scope.progress = false;
 	$scope.searching = false;
@@ -44,8 +45,17 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 
 	$scope.getFeedback = function() {
 
-		pvcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(response) {
+		pvcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(error,response) {
 
+			if(error){
+				//console.log(error.message);
+				alert(error.message);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			
+			}
 			$scope.viewElements = true;
 			$scope.pvcfb = response;
 
@@ -53,6 +63,29 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 			$scope.teacherlist = _.chain($scope.pvcfb).pluck('name').uniq().value().sort();
 			$scope.subjects = _.chain($scope.pvcfb).pluck('subject_name').uniq().value();
 			$scope.course = _.chain($scope.pvcfb).pluck('course').uniq().value();
+
+			/*if($scope.course.length==0){
+				alert(`Feedback not given by any student for ${$scope.selectedSchool.collegeCode.toUpperCase()} for the period of ${$scope.selectedYear}`);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			}*/
+
+			//for BTECH MTECH problem
+			$scope.bmtech=['B. TECH','M. TECH'];
+			$scope.course=$scope.course.map((course)=>{
+				if(course=='MTECH'){
+					$scope.bmtech[1]=course;
+					return 'M. TECH'
+				}else if(course=='BTECH'){
+					$scope.bmtech[0]=course;
+					return 'B. TECH'
+				}else{
+					return course;
+				}
+			})
+
 			$scope.stream = _.chain($scope.pvcfb).pluck('stream').uniq().value();
 			$scope.semester = _.chain($scope.pvcfb).pluck('semester').uniq().value();
 
@@ -85,6 +118,11 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 		var arr = [3];
 		arr[0] = {semester: Sem}
 		arr[1] =  {course: Course}
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 		arr[2] = {stream: Streams}
 		console.log(arr[0]);
 
@@ -116,6 +154,10 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 		arr[1] = { course: Course }
 		arr[2] = { stream: Streams }
 		arr[3] = { name: Teacher }
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
 
 		var	subjectDetails = _.clone($scope.pvcfb);
 

@@ -17,7 +17,7 @@
         </select>
     </div>
     <div class="col m5">
-        <select ng-model="year" ng-options="option for option in ['August 2017 - May 2018', 'August 2018 - May 2019']" ng-change="yearChange()">
+        <select ng-model="year" ng-options="option for option in ['August 2016 - May 2017','August 2017 - May 2018', 'August 2018 - May 2019']" ng-change="yearChange()">
             <option value="" disabled selected>Choose Academic Year</option>
         </select>
     </div>
@@ -133,12 +133,20 @@
                 </div>
                 <p>{{value.type}}</p>
             </div>
+            <div class="infoelement">
+                <div class="small-title">
+                    IMAGE LINK
+                </div>
+                <a ng-href="app/instructor_images/{{value.school}}/{{value.instructor_code}}.jpg" target="_blank">
+                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size:20px"></i>
+                </a>
+            </div>
         </div>
         <hr>
         <table class="bordered highlighted striped">
             <thead>
                 <tr>
-                    <th>Attributes</th>
+                    <th style="font-size:18px;"><sub>Questions</sub> <span style="font-size:30px">\</span> <sup>Feedback Scores</sup></th>
                     <th>1</th>
                     <th>2</th>
                     <th>3</th>
@@ -178,10 +186,15 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><span class="small-title">Total Marks Obtained  = </span> {{getTotal(value)}}/{{value. no_of_students_evaluated*75}}</td>
+                    <td ng-if="value.type=='Theory'"><span class="small-title">Total Marks Obtained  = </span> {{getTotal(value)}}/{{value. no_of_students_evaluated*75}}</td>
+                    <td ng-if="value.type=='Practical'"><span class="small-title">Total Marks Obtained  = </span> {{getTotal(value)}}/{{value. no_of_students_evaluated*40}}</td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="center">
+            <b> *Total=(1 * no. of students who gave 1 out of 5 ) + (2 * no. of students who gave 2 out of 5 ) + (3 * no. of students who gave 3 out of 5 ) + (4 * no. of students who gave 4 out of 5 ) + (5 * no. of students who gave 5 out of 5 )</b>
+         </div> 
 
         <div class="center">
             <div class="large-title">PERCENTAGE</div>

@@ -5,17 +5,6 @@
   <div>
     <div id="Signup">
       <div class="login_dropdown">
-        <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown1' style="background-color: white !important;color: black; width: 34em">
-            {{ college.collegeName || 'SELECT USS' }} <span class="caret pull-right">▼</span>
-        </button>
-
-          <ul id='dropdown1' class='dropdown-content' style="background-color: white;color: black; width: 34em">
-            <li><a class="single_school"> Select USS</a></li>
-            <li ng-repeat="singleCollege in collegeList"><a class="single_school" ng-click="setCollege(singleCollege)"> {{ singleCollege.collegeName }}</a></li>
-          </ul>
-      </div>
-
-      <div class="login_dropdown">
         <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown2' style="background-color: white !important;color: black; width: 34em">
             {{ displayed || 'CHOOSE AUTHENTICATION MODE' }} <span class="caret pull-right">▼</span>
         </button>
@@ -26,6 +15,17 @@
             <li ng-repeat="userCategory in userCategoryList" id="disableSome"><a class="single_school" ng-click="setUserCategory(userCategory)"> {{userCategory | uppercase}}</a></li>
           </ul>
         </div>
+      </div>
+
+      <div class="login_dropdown">
+        <button class='dropdown-button btn btn-primary' ng-disabled="notRequired" id="input_field" data-activates='dropdown1' style="background-color: white !important;color: black; width: 34em">
+            {{ college.collegeName || 'SELECT USS' }} <span class="caret pull-right">▼</span>
+        </button>
+
+          <ul id='dropdown1' class='dropdown-content' style="background-color: white;color: black; width: 34em">
+            <li><a class="single_school"> Select USS</a></li>
+            <li ng-repeat="singleCollege in collegeList"><a class="single_school" ng-click="setCollege(singleCollege)"> {{ singleCollege.collegeName }}</a></li>
+          </ul>
       </div>
 
       <div ng-if="user.category===undefined && college===undefined" style="margin-top:50px;">
@@ -158,11 +158,11 @@
      })
 </script>
 <style>
-  #disableSome:nth-child(5){
+  /*#disableSome:nth-child(5){
     color: #ccc;
     pointer-events:none;
     background-color: rgba(128, 128, 128, 0.349);
-  }
+  }*/
 </style>  
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <style>
