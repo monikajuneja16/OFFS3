@@ -43,8 +43,8 @@
 
 <div class="center" ng-hide="searching">
     <a class="waves-effect white black-text btn" ng-click="search()" style="margin-right:20px">SEARCH</a>
-    <a class="waves-effect white black-text btn" ng-click="print()" style="margin-left:20px">Print as PDF</a>
-    <button data-target="modal1" class="btn modal-trigger">Feedback Calculation Example</button>
+    <a class="waves-effect white black-text btn" ng-click="print()" ng-disabled="disabled" style="margin-left:20px margin-right:20px">Print as PDF</a>
+    <button data-target="modal1" class="waves-effect white black-text btn btn modal-trigger" style="margin-left:20px">Feedback Calculation Example</button>
     
 
     <div id="modal1" class="modal">

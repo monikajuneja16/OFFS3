@@ -8,6 +8,7 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 	$scope.progress = false;
 	$scope.searching = false;
 	$scope.searched = false;
+	$scope.disabled = true;
 
 	$scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
 		collegeCode : "usap"},
@@ -392,10 +393,12 @@ $scope.print = function (){
 		if (final_res.length == 0) {
 			$scope.final_res = null;
 			alert("No feedback data exists");
+			$scope.disabled =true;
 		}
 
 		else {
 			$scope.final_res = final_res;
+			$scope.disabled = false;
 		}
 
 	//		console.log(final_res);

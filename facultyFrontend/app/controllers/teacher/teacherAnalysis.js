@@ -5,6 +5,8 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 	$scope.year = 'August 2018 - May 2019';
 	$scope.searching = false;
 	$scope.searched = false;
+	$scope.disabled = true;
+
 	//$scope.steacher=$rootScope.teacher.instrctor_id;
 
 	$scope.populate = function() {
@@ -275,10 +277,12 @@ $scope.semesterList = function() {
 		if (final_res.length == 0) {
 			$scope.final_res = null;
 			alert("No feedback data exists");
+			$scope.disabled =true;
 		}
 
 		else {
 			$scope.final_res = final_res;
+			$scope.disabled = false;
 		}
 
 

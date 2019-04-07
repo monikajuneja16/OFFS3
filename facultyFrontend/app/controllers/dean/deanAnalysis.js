@@ -6,7 +6,7 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 	$scope.year = 'August 2018 - May 2019';
 	$scope.searching = false;
 	$scope.searched = false;
-
+	$scope.disabled = true;
 	$scope.getFeedback = function() {
 		console.log($localStorage);
 
@@ -467,13 +467,15 @@ const filename  = 'ThisIsYourPDFFilename.pdf';
 		if (final_res.length == 0) {
 			$scope.final_res = null;
 			alert("No feedback data exists");
+			$scope.disabled =true;
 		}
 
 		else {
 			$scope.final_res = final_res;
+			$scope.disabled = false;
 		}
 
-	//		console.log(final_res);
+			console.log(final_res);
 
 
 	}
