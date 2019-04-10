@@ -94,8 +94,11 @@
     <hr>
     <form>
         <button type="button" class="btn btn-success" ng-show="isHome" ng-click="addRow()">Add Row</button>
-        <button type="button" class="btn btn-default" ng-disabled="data.length < 2 || !selectedCollege || !selectedStream || !selectedCourse" ng-show="isHome" ng-click="submit()">Submit</button>
-    <!--     <br>
+        <button type="button" class="btn btn-default" ng-disabled="data.length < 2 || !selectedCollege || !selectedStream || !selectedCourse" ng-show="isHome && !showSpinner" ng-click="submit()">Submit</button>
+        <div ng-show="showSpinner" id="loaddiv" style="margin: auto; width: 17%;">
+            <img style="margin-top:5px;" src="./app/resources/images/5.gif" width="60px" />
+        </div>
+        <!--     <br>
         <br>
         <button type="button" class="btn btn-default" ng-show="isHome" ng-click="submit()">Submit</button> -->
     </form>
@@ -243,9 +246,9 @@
         color: #909;
     }
 
-    .sub-container ul:not(.browser-default) {}
+    /* .sub-container ul:not(.browser-default) {}
 
-    .sub-container ul:not(.browser-default) li {}
+    .sub-container ul:not(.browser-default) li {} */
 
     .sub-container .autocomplete-content {
         margin-top: 0px;

@@ -4,6 +4,7 @@ faculty.controller('studentDataCtrl', ['$http', '$scope', 'dataPortalService', '
 	$scope.data = [];
 	$scope.selectedYear = 2018;
 	$scope.file = "";
+	$scope.showSpinner=false;
 
 	$scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
 		collegeCode : "usap"},
@@ -119,13 +120,16 @@ faculty.controller('studentDataCtrl', ['$http', '$scope', 'dataPortalService', '
 	}
 
 	$scope.submit = function () {
+		$scope.showSpinner=!$scope.showSpinner;
 		if ($scope.data.length == 0) {
 			alert("student list is empty");
+			$scope.showSpinner=!$scope.showSpinner;
 			return;
 		}
 
 		if (!checkData()) {
 			alert('some fields are missing');
+			$scope.showSpinner=!$scope.showSpinner;
 			return;
 		}
 
@@ -135,9 +139,11 @@ faculty.controller('studentDataCtrl', ['$http', '$scope', 'dataPortalService', '
 				console.log(res.data);
 				if (res.data.status == 200) {
 					$window.alert("Student data recorded");
+					$scope.showSpinner=!$scope.showSpinner;
 					
 				} else {
 					$window.alert("Student Entry exists");
+					$scope.showSpinner=!$scope.showSpinner;
 					$location.path("/studentData");
 				}
 			}
