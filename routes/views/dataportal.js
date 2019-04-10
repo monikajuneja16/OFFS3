@@ -65,7 +65,7 @@ module.exports = {
       query,
       [
         college_name + "_batch_allocation",
-        college_name + "_subject_allocation",
+        college_name + "_subject_allocation_2016",
         course,
         stream,
         semester
@@ -81,21 +81,25 @@ module.exports = {
   },
 
   createFeedback: function(req, res) {
+    var spread=(...p)=>p;
     console.log("createFeedback");
     //console.log(req.query.data);
     var details = req.query;
     console.log(details);
     var Datas = details.data;
+    if(typeof Datas=='string'){
+      console.log("hit");
+      Datas=spread(Datas);   
+    }
     console.log(Datas);
-    //datas=JSON.parse(Datas);
+
     async.each(
       Datas,
       function(detail, callback) {
-        detail = JSON.parse(detail);
         console.log("*");
         console.log(detail);
-        //detail=JSON.parse(detail);
-
+        detail=JSON.parse(detail);
+        
         if (detail.teacher_name) {
           //console.log(typeof detail.teacher_name);
           //console.log(typeof detail);
