@@ -95,14 +95,7 @@ faculty.factory('dataPortalService',['$http', '$timeout', '$rootScope','$window'
 				}
 			}).then(function(response) {
 				if (callback) {
-					//console.log("RESPONSE : "+response);
-					$window.alert("Teachers Information recorded");
-
 					callback(response.data);
-					
-					$location.path("/");
-					location.reload();
-					
 				}
 			}, function(response) {
 				if (callback) {

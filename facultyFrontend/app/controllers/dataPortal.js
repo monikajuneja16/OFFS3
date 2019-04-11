@@ -1,6 +1,6 @@
 faculty.controller('dataPortalCtrl', ['$http', '$scope', 'dataPortalService', '$location',function($http, $scope, dataPortalService, $location) {
 
-	
+	$scope.disabled = false;
 
 	$scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
 		collegeCode : "usap"},
@@ -193,30 +193,31 @@ faculty.controller('dataPortalCtrl', ['$http', '$scope', 'dataPortalService', '$
 	
 	$scope.submit = function() {
 
+		$scope.disabled = true;
+
 		for(var i=0; i<$scope.check; i++){
 			if($scope.subjects_data[i].flag == 0){
 				alert("Kindly fill names of all faculty members");
+				$scope.disabled = false;
 				return;
 			}
 			else if($scope.subjects_data[i].flag == 1){
 				alert("Kindly fill names from dropdown only");
 				$scope.subjects_data[i].flag = 0;
+				$scope.disabled = false;
 				return;
 			}
 		}
 		
 		//$window.alert("Data recorded");
 		dataPortalService.sendSubjectData($scope.collegeCode, $scope.selectedCourse, $scope.selectedStream, $scope.selectedSem, $scope.subjects_data, function(res) {
-			if (res.data) {
-				if (res.data.status == 200) {
-					//console.log("Data recorded");
-					//$window.alert("Data recorded");
-					
-					
-				} else {
-					alert(res.data.message);
-					$location.path("/dataPortal");
+			if (res.status == 200) {
+				alert(res.message);
+				$location.path("/");
 				}
+			else {
+				alert("An error occured. Please try again");
+				location.reload();
 			}
 
 		})
