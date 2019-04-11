@@ -102,7 +102,7 @@
 
               <div class="row">
                 <div class="input-field col s4" ng-if="user.category=='student'">
-                  <input  id="semister" type="text" class="validate" ng-change="fieldTouch[2]=true" ng-model="user.semister" ng-disabled="true" maxlength="1" pattern="^\d{1,2}$" ng-blur="updateSemester()">
+                  <input  id="semister" type="text" class="validate" ng-change="fieldTouch[2]=true" ng-model="user.semister" maxlength="1" pattern="^\d{1,2}$" ng-blur="updateSemester()">
                   <span ng-show="user.semister=='---' && fieldTouch[2]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Entered enrollment number's year of admission is wrong</span>
                   <span class="rght" ng-show="user.semister!='---' && fieldTouch[2]"><i class="fa fa-check" aria-hidden="true"></i> Semester calculated correctly</span>
              <label for="semester" class="active">Current Semester</label>
