@@ -2,7 +2,6 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 	
 	$scope.feedback;
 	$scope.pointer  = 0;
-	$scope.pointer2 = -1;
 	$scope.seggregatedTeacherType = {}
 	$scope.feedbackGivenByTheUser = [];
 	$scope.disablenextattributes = true;
@@ -98,7 +97,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 
 			console.log(seggregatedTeacherType);
         	$scope.theoryTeacher = seggregatedTeacherType.Theory;
-        	$scope.practicalTeacher = seggregatedTeacherType.Practical;
+			$scope.practicalTeacher = seggregatedTeacherType.Practical;
 
         	if (!$scope.theoryTeacher) {
         		$scope.theoryTeacher = seggregatedTeacherType.theory;
@@ -111,7 +110,14 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
         	}
         	if (!$scope.practicalTeacher) {
         		$scope.practicalTeacher = seggregatedTeacherType.PRACTICAL;
-        	}
+			}
+			
+			if($scope.practicalTeacher == null || $scope.practicalTeacher == undefined) {
+				$scope.pointer2 = attributesList.practicals.length;	
+			}
+			else {
+				$scope.pointer2 = -1;	
+			}
 
         	console.log($scope.theoryTeacher);
         	console.log($scope.practicalTeacher)
