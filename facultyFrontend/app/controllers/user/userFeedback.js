@@ -111,16 +111,13 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
         	if (!$scope.practicalTeacher) {
         		$scope.practicalTeacher = seggregatedTeacherType.PRACTICAL;
 			}
-			
+
 			if($scope.practicalTeacher == null || $scope.practicalTeacher == undefined) {
-				$scope.pointer2 = attributesList.practicals.length;	
+				$scope.pointer2 = $scope.attributesList.practicals.length;	
 			}
 			else {
 				$scope.pointer2 = -1;	
 			}
-
-        	console.log($scope.theoryTeacher);
-        	console.log($scope.practicalTeacher)
 		})
 	}
 	var j=0,i=0;
