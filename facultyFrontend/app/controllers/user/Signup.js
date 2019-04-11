@@ -1,6 +1,8 @@
 faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'userService', 'facultyService', 'vcService', 'pvcService', 'teacherService','$localStorage','$window',function($scope, $http, $rootScope, $location, userService, facultyService, vcService, pvcService, teacherService,$localStorage,$window) {
   $scope.user = {};  
   $scope.name = "";
+  $scope.hider1 = false;
+  $scope.hider2 = false;
   //$scope.user.category='student';
   //$scope.displayed = 'Student';
   $scope.fieldTouch=[false,false,false,false];
@@ -127,6 +129,7 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
       autocompleteFields(scul,$scope.user.category);
       autocomp=!autocomp;
     }
+    $scope.hider2 = true;
   };
 
 
@@ -137,6 +140,7 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     $scope.displayed = userCategory;
     if(userCategory == 'Student') {
       $scope.user.category = 'student';
+      $scope.hider1 = true;
     }
     else if(userCategory == 'Vice Chancellor') {
       $scope.user.category = 'VC';
@@ -146,17 +150,21 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     }
     else {
       $scope.user.category = userCategory;
+      $scope.hider1 = true;
     }
 
     if ($scope.user.category == 'VC' || $scope.user.category == 'Pro VC') {
       var checker = 
       {
-        collegeName: "USS name not required",
-        collegeCode: "NR"
+        collegeName :"USS Not Required",
+		    collegeCode : "NR"
       }
       $scope.setCollege(checker);
-      $scope.notRequired=true;
-    }else{$scope.setCollege({});$scope.notRequired=false;}
+    }
+    else{
+      $scope.setCollege({});
+      $scope.hider2 = false;
+    }
 
     if($scope.college==undefined || $scope.college=="") {
       return;
