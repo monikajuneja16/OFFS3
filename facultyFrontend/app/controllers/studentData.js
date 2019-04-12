@@ -2,7 +2,8 @@ faculty.controller('studentDataCtrl', ['$http', '$scope', 'dataPortalService', '
 
 	$scope.disabled = false;
 	$scope.data = [];
-	$scope.selectedYear = 2018;
+	$scope.selectedYear = '2018';
+	$scope.year = 'August 2018 - May 2019';
 	$scope.file = "";
 	$scope.showSpinner=false;
 
@@ -226,8 +227,11 @@ faculty.controller('studentDataCtrl', ['$http', '$scope', 'dataPortalService', '
 		}
 		console.log($scope.data);
 		// $scope.addRow();
- 	}
-
+	 }
+	 
+	 $scope.yearChange = function () {
+		$scope.selectedYear = $scope.year.slice(7,11);
+	}
 
 	$scope.addRow = function (enrollment_no, name, email, phone, password) {
 
