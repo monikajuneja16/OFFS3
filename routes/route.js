@@ -81,6 +81,6 @@ router.get("/getSubjectStatus", routes.views.dataStatus.getSubjectStatus);
 // router.get("/getSubjectStatusByStream", routes.views.dataStatus.getSubjectStatusByStream);
 // router.get("/getSubjectStatusBySemester", routes.views.dataStatus.getSubjectStatusBySemester);
 
-router.get("/app/instructor_images/:school/:id",routes.views.vc.getInstructorImage);
+//router.get("/app/instructor_images/:school/:id",routes.views.vc.getInstructorImage);
 
 module.exports = router;

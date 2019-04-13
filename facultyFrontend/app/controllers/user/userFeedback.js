@@ -2,6 +2,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 	
 	$scope.feedback;
 	$scope.pointer  = 0;
+	$scope.pointer2=0;
 	$scope.seggregatedTeacherType = {}
 	$scope.feedbackGivenByTheUser = [];
 	$scope.disablenextattributes = true;
