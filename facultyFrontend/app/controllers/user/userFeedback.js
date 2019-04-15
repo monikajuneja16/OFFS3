@@ -2,6 +2,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 	
 	$scope.feedback;
 	$scope.pointer  = 0;
+	$scope.pointer2=0;
 	$scope.seggregatedTeacherType = {}
 	$scope.feedbackGivenByTheUser = [];
 	$scope.disablenextattributes = true;
@@ -127,6 +128,10 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 			return;
 		}
 		
+		if($scope.feedbackGivenByTheUser.length>0){
+			$scope.disablenextattributes = false;
+		}
+
 		if(isNaN($scope.feedbackGivenByTheUser[index])){
 			alert("Please enter a number between 1-5");
 			$scope.disablenextattributes = true;
@@ -142,8 +147,6 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 			// console.log("Reached else if");
 			return;
 		}
-
-		$scope.disablenextattributes = false;
 
 		var foundTeacher = _.find($scope.teacherFeedback, ['feedbackId', theoryTeacher.feedback_id]);
 		// var feedback = function($scope.feedbackGivenByTheUser);
@@ -219,9 +222,9 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 		
 		if (foundTeacher) {
 			if (foundTeacher.score[$scope.pointer2] == null) {
-				//foundTeacher.score.push($scope.feedbackGivenByTheUser[index]);
+				foundTeacher.score.push($scope.feedbackGivenByTheUser[index]);
 				
-				foundTeacher.score.push[$rootScope.pLength]=$scope.feedbackGivenByTheUser[index];
+				//foundTeacher.score.push[$rootScope.pLength]=$scope.feedbackGivenByTheUser[index];
 					//foundTeacher.score.push($scope.feedbackGivenByTheUser[index]);
 				//foundTeacher.score.push[$rootScope.pLength]="";
 					
@@ -229,6 +232,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 				// const data = JSON.parse(localStorage.getItem('stringFeedback');
 				console.log(foundTeacher);
 				console.log("Score : "+foundTeacher.score)
+				console.log("Length : "+foundTeacher.score.length)
 			} else {
 				foundTeacher.score[$scope.pointer2] = $scope.feedbackGivenByTheUser[index];
 			}

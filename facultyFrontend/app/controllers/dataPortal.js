@@ -210,14 +210,15 @@ faculty.controller('dataPortalCtrl', ['$http', '$scope', 'dataPortalService', '$
 		}
 		
 		//$window.alert("Data recorded");
-		dataPortalService.sendSubjectData($scope.collegeCode, $scope.selectedCourse, $scope.selectedStream, $scope.selectedSem, $scope.subjects_data, function(res) {
+		dataPortalService.sendSubjectData($scope.collegeCode, $scope.selectedCourse, $scope.selectedStream, $scope.selectedSem, $scope.subjects_data, async function(res) {
 			if (res.status == 200) {
 				alert(res.message);
-				$location.path("/");
+				await $location.path("/");
+				document.location.reload();
 				}
 			else {
 				alert("An error occured. Please try again");
-				location.reload();
+				//location.reload();
 			}
 
 		})
