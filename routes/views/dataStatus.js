@@ -4,7 +4,13 @@ module.exports = {
   getSubjectStatus: function(req, res) {
     var payload = {};
     let college = req.query.college;
-
+    var odd_even = -1;
+    if (process.env.odd_even == 1 ) {
+      odd_even = 1;
+    }
+    else if (process.env.odd_even == 2 ) {
+      odd_even = 0;
+    }
     //Check if subject allocation 2018 even exists
     var initQuery = "SHOW TABLES LIKE ?";
     con.query(
@@ -24,7 +30,7 @@ module.exports = {
               "?? as a " +
               "left join ?? as b " +
               "on b.batch_id = a.batch_id " +
-              "where b.instructor_code is null and semester%2<>0;";
+              "where b.instructor_code is null and semester%2 = "+odd_even+";";
             con.query(
               queryNoData,
               [
@@ -45,7 +51,7 @@ module.exports = {
                     "?? as a " +
                     "left join ?? as b " +
                     "on b.batch_id = a.batch_id " +
-                    "where b.semester % 2 <> 0 " +
+                    "where b.semester % 2 = "+odd_even +" "+
                     "order by batch_id asc;";
                   con.query(
                     queryData,
@@ -69,7 +75,7 @@ module.exports = {
               }
             );
           } else {
-            var noDataQuery = "SELECT * FROM ?? where semester % 2 <> 0;";
+            var noDataQuery = "SELECT * FROM ?? where semester % 2 = "+odd_even+";";
             con.query(noDataQuery, [college + "_batch_allocation"], function(
               err,
               List
