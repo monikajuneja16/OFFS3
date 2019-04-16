@@ -50,7 +50,7 @@
         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
             <div ng-repeat="singleTheoryTeacher in theoryTeacher track by $index" ng-if="pointer < attributesList.theory.length">
                 <div class="thumbnail image_groups" style="width: 125px; height: 150px; margin: 5px">
-                  <img ng-src="./app/instructor_images/{{college_name}}/{{singleTheoryTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
+                  <img ng-src="./app/instructor_images/{{singleTheoryTeacher.school}}/{{singleTheoryTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
                   <div class="caption" style="text-align: center">
                    <div class="row" style="height: 40px;">
                        {{ singleTheoryTeacher.teacher }}
@@ -79,7 +79,7 @@
 
             <div ng-repeat="singlePracticalTeacher in practicalTeacher track by $index" ng-if="pointer2 < attributesList.practicals.length && pointer2 >= 0">
                 <div class="thumbnail image_groups" style="width: 125px; height: 150px; margin: 5px">
-                  <img ng-src="./app/instructor_images/{{college_name}}/{{singlePracticalTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
+                  <img ng-src="./app/instructor_images/{{singlePracticalTeacher.school}}/{{singlePracticalTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
                   <div class="caption" style="text-align: center">
                     <div class="row" style="height: 40px">
                        {{ singlePracticalTeacher.teacher }}

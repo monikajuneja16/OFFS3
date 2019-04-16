@@ -73,7 +73,7 @@ module.exports = {
 
 	getFeedbackInfo: function(tablename1, tablename2, tablename3, course, stream, semester, callback) {
 		var query = 'select s.feedback_id,s.batch_id,s.subject_code,s.instructor_code, ' +
-                    's.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher '+
+                    's.subject_name,s.type,b.course,b.stream,b.semester,t.name as teacher, t.school '+
                 	'from ?? as s ' +
                 	'inner join ?? as b on s.batch_id = b.batch_id ' +
                 	'inner join ?? as t on t.instructor_id = s.instructor_code ' +
