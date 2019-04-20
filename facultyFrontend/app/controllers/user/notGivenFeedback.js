@@ -43,9 +43,9 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 	$scope.year = 'August 2018 - May 2019';
 
 	$scope.yearChange = function () {
-		$scope.selectedYear = $scope.year.slice(7,11);
+		$scope.Year = $scope.year.slice(7,11);
  	    console.log('changed');
- 	    $scope.populate();
+ 	    //$scope.populate();
     }
 
 	$scope.collegeSelected = function() {
