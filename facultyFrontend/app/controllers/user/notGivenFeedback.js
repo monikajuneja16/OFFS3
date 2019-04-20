@@ -39,7 +39,7 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 	$scope.listOfStudents = [];
 
 	$scope.searched = false;
-	$scope.selectedYear = '2018';
+	$scope.Year = '2018';
 	$scope.year = 'August 2018 - May 2019';
 
 	$scope.yearChange = function () {
@@ -109,6 +109,11 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 		}
 	}
 
+	$scope.semesterSelected=function(){
+		$scope.selectedYear= '20'+(Number($scope.Year.substring(2)) - Math.floor(Number($scope.selectedSem)/2.1));
+		console.log("YEAR : "+$scope.selectedYear);
+	}
+
 	$scope.getStudentList = function() {
 		$scope.searched = true;
 		userService.getStudentStatus($scope.collegeCode, $scope.selectedSem, $scope.selectedCourse, $scope.selectedStream,$scope.selectedYear,  function(response) {
@@ -117,10 +122,10 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 				$location.path("/status");
 
 			} else {
-				console.log(response);
+				//console.log(response);
 
 				var seggregatedStudentList = _.groupBy(response, function(result) {
-					console.log(result);
+					//console.log(result);
             		var type = "s_" + $scope.selectedSem;
             		console.log(type);
             		return result[type];
@@ -137,8 +142,8 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 					nonSelectedStudents = [];
 				}
 
-				console.log(selectedStudents);
-				console.log(nonSelectedStudents);
+				//console.log(selectedStudents);
+				//console.log(nonSelectedStudents);
 				$scope.selectedStudents = selectedStudents;
 				$scope.nonSelectedStudents = nonSelectedStudents;
 

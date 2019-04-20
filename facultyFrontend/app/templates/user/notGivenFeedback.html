@@ -11,8 +11,9 @@
         </select>
     </div>
     <div class="col m5">
-        <select ng-model="year" ng-options="option for option in ['August 2016 - May 2017','August 2017 - May 2018','August 2018 - May 2019']" ng-change="yearChange()" ng-disabled="true">
-            <option value="" disabled selected>Choose Academic Year</option>
+        <select ng-model="year" ng-change="yearChange()">
+            <option value="" selected>Choose Feedback Year</option>
+            <option ng-repeat = "options in ['August 2016 - May 2017','August 2017 - May 2018','August 2018 - May 2019']">{{options}}</option>
         </select>
     </div>
     </div>
@@ -41,7 +42,7 @@
     </div>
 </div>
 <div class="center"> 
-    <a class="btn btn-success" ng-click="getStudentList()" ng-disabled="!selectedYear || !selectedSem || !selectedCourse || !selectedStream || !selectedCollege">CHECK EVALUATION</a>
+    <a class="btn btn-success" ng-click="getStudentList()" ng-disabled="!selectedYear || !selectedSem || !selectedCourse || !selectedStream || !selectedCollege">CHECK FEEDBACK STATUS</a>
 </div>
 	<br>
 
