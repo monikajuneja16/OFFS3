@@ -6,6 +6,8 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 	$scope.seggregatedTeacherType = {}
 	$scope.feedbackGivenByTheUser = [];
 	$scope.disablenextattributes = true;
+	$scope.currCheck=[];
+	$scope.showSpinner=false;
 	
 	$scope.teacherFeedback = [
 	];
@@ -147,6 +149,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 			// console.log("Reached else if");
 			return;
 		}
+		$scope.currCheck[$scope.pointer]=true;
 
 		var foundTeacher = _.find($scope.teacherFeedback, ['feedbackId', theoryTeacher.feedback_id]);
 		// var feedback = function($scope.feedbackGivenByTheUser);
@@ -157,7 +160,6 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 		
 		// localStorage.setItem("stringFeedback[i]", JSON.stringify(feedback));
 		// console.log(foundTeacher);
-
 
 		if (foundTeacher) {
 			if (foundTeacher.score[$scope.pointer] == null) {
@@ -197,7 +199,6 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 			return;
 		}
 		// console.log("Proceed");
-		
 		if(isNaN($scope.feedbackGivenByTheUser[index])){
 			alert("Please enter a number between 1-5");
 			$scope.disablenextattributes = true;
@@ -214,6 +215,8 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 			// console.log("Reached else if");
 			return;
 		}
+
+		$scope.currCheck[$scope.pointer2]=true;
 
 		$scope.disablenextattributes = false;
 
@@ -251,7 +254,10 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 
 	$scope.increasePointer = function() {
 		$scope.pointer += 1;
-		$scope.disablenextattributes = true;
+		console.log($scope.currCheck[$scope.pointer]);
+		if($scope.currCheck[$scope.pointer]!=false && $scope.currCheck[$scope.pointer]!=undefined)
+			$scope.disablenextattributes = false;	
+		else $scope.disablenextattributes = true;
 		
 		for(var x=0;x<$scope.teacherFeedback.length;x++) {
 			if ($scope.teacherFeedback[x].type=="Theory") {
@@ -319,6 +325,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 		$scope.disablenextattributes = true;
 		console.log($scope.teacherFeedback);
 		$scope.pointer2 += 1;
+		$scope.currCheck=[];
 	}
 
 	$scope.logout = function() {
@@ -330,7 +337,10 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 
 	$scope.increasePointer2 = function() {
 		$scope.pointer2 += 1;
-		$scope.disablenextattributes = true;
+		console.log($scope.currCheck);
+		if($scope.currCheck[$scope.pointer2]!=false && $scope.currCheck[$scope.pointer2]!=undefined)
+			$scope.disablenextattributes = false;	
+		else $scope.disablenextattributes = true;
 		
 		for(var x=0;x<$scope.teacherFeedback.length;x++) {
 			if ($scope.teacherFeedback[x].type=="Practical") {
@@ -348,7 +358,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 	}
 
 	$scope.sendFeedbackEvaluation = function() {
-
+		$scope.showSpinner=true;
 		var object = {
 			college_name: $scope.college_name,
 			teacherFeedback: $scope.teacherFeedback,
@@ -359,6 +369,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 		console.log($scope.teacherFeedback);		//teacherFeedback.score
 		userService.sendFeedbackForEvaluation(object, function(response,error) {
 			if(response){
+				$scope.showSpinner=false;
 				console.log(response.message);
 				alert(response.message);
 				$location.path('/thankYouPage');
