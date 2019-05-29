@@ -41,7 +41,7 @@ router.get("/ddashboard", routes.views.dean.dashboard); // To get details of a B
 router.get("/dlogout", routes.views.dean.logout);
 router.post("/dupload_photo", routes.views.dean.upload_photo);
 router.post("/dupdateInfo",routes.views.dean.updateDeanInfo);
-router.post("/dpdf",routes.views.dean.pdf);
+
 
 
 router.post("/vinitials", routes.views.vc.initials); //To authenticate the dean

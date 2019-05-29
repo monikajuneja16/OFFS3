@@ -130,9 +130,9 @@ aXpw5GPjJPCbyUzb#dashboard  {
 .info :-ms-input-placeholder {
     color: #26a69a;
 }
-/*.info .row {
-    display: inline-flex;  equal height of the children 
-}*/
+.info .row {
+    display: flex;  equal height of the children 
+}
 
 .info .time {
     cursor: pointer;
@@ -155,10 +155,6 @@ aXpw5GPjJPCbyUzb#dashboard  {
     z-index: 999;
     margin-right: 1em;
 }
-
-
-
-
 
 .info .m9 .row {
     margin-bottom: 0 !important;
