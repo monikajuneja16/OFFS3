@@ -26,7 +26,8 @@
     "express-myconnection": "^1.0.4",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.1.2",
+    "html-pdf": "^2.2.0",
     "ip": "^1.1.5",
     "method-override": "^2.3.10",
     "mssql": "^4.1.0",
@@ -36,7 +37,9 @@
     "nodemailer": "^4.7.0",
     "nodemailer-smtp-transport": "^2.7.4",
     "nodemon": "^1.18.9",
+    "nunjucks": "^3.2.0",
     "request": "^2.88.0",
-    "sshpk": "^1.14.1"
+    "sshpk": "^1.14.1",
+    "webshot": "^0.18.0"
   }
 }

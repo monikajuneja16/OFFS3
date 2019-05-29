@@ -216,7 +216,28 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		                }
 		              , margins
 		            )
-	    }*/
+	    }
+
+	    $scope.print = function (){
+	    	this.openModal(‘Loading…’) // open modal
+	    	  return getPDF() // API call
+	    	    .then((response) => {
+	    	      const blob = new Blob([response.data], {type: 'application/pdf'})
+	    	      const link = document.createElement('a')
+	    	      link.href = window.URL.createObjectURL(blob)
+	    	      link.download = `your-file-name.pdf`
+	    	      link.click()
+	    	      this.closeModal() // close modal
+	    	    })
+	    	  .catch(err => /** error handling 
+		facultyService.createpdf(function(response) {
+			
+		})
+		
+	}
+
+	
+
 
 $scope.print = function (){
 	alert("PDF is getting downloaded,it may take some Time.");
@@ -263,7 +284,7 @@ $scope.print = function (){
                      //! now we declare that we're working on that page
                      pdf.setPage(i+1);
                      //! now we add content to that page!
-                     pdf.addImage(canvasDataURL, 'JPEG', 30, 40, (width*.62) - 400, (height*.62)-175,'','FAST');
+                     pdf.addImage(canvasDataURL, 'JPEG', 30, 40, (width*.62) - 400, (height*.62)-175,undefined,'FAST');
 
                     }
                  //! after the for loop is finished running, we save the pdf.
@@ -272,7 +293,7 @@ $scope.print = function (){
     }
 
 
-      /*
+    /*
 
 
 const filename  = 'ThisIsYourPDFFilename.pdf';
@@ -356,14 +377,91 @@ const filename  = 'ThisIsYourPDFFilename.pdf';
   document.body.appendChild(iframe);
   
   iframe.src = pdf.output('datauristring');
-} */
-       
+} 
+       $scope.print = function (selector, pdfData, doc){
+
+    var currentPart = pdfData.curPart;
+    var lastPart = pdfData.lastPart;
+    html2canvas( $(selector), {
+        onrendered: function (canvas){
+            Get page size data
+            if( doc == null ){
+                doc = jsPDF( 'p', 'mm', [pageWidth, pageHeight] );
+            }
+            //**Add the current page to the doc**
+            //If this is the last page, save
+            if( currentPart == lastPart ){
+                doc.save( pdfData.fileName + '.pdf' );
+            } else {
+                //Else call this function again, for the next page
+                $('.part' + currentPart ).hide();
+                $('.part' + ( currentPart + 1 ).show();
+                pdfData.curPart = currentPart + 1;
+   	             exportHTMLToPDF( selector, pdfData, doc );
+            }
+        }
+    } );
+}
 
 
    
 
 
+  */  
+
+   $scope.print = function (){	 
+	   /*	var divElements = document.getElementById('mycanvas').innerHTML;
+	            //Get the HTML of whole page
+	            var oldPage = document.body.innerHTML;
+
+	            //Reset the page's HTML with div's HTML only
+	            document.body.innerHTML = 
+	              "<html><head><title></title></head><body>" + 
+	              divElements + "</body>";
+
+	            //Print Page
+	            window.print();
+
+	            //Restore orignal HTML
+	            document.body.innerHTML = oldPage;*/
+
+          
+        
+
+
+	
+   var content_vlue = document.getElementById('mycanvas').outerHTML;
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        'table th, table td {' +
+        'border:1px solid #000;' +
+        'padding;0.5em;' +
+        '}' +
+        
+        '</style>';
+   content_vlue += htmlToPrint
+  var docprint=window.open("");
+ 
+   docprint.document.write('<head><title>feedback</title>');
+   docprint.document.write('<style type="text/css">body{ margin:0px;');
+   docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+   docprint.document.write('.inforow{display:flex;}');
+   docprint.document.write('.infoelement{flex:1; text-align:center; margin:10px;}');
+   docprint.document.write('.large-title {font-weight: 700;font-size: 16px;color: darkcyan;');
+   docprint.document.write('letter-spacing: 0.1em;text-transform: uppercase;padding: 0.5em;}');
+   docprint.document.write('.pct {font-size: 24px; font-weight: 700;}');
+   docprint.document.write('.small-title {font-weight: 700;font-size: 12px;color: darkcyan;letter-spacing: 0.1em;text-transform: uppercase;}');
+   docprint.document.write(' </style>');
+   docprint.document.write('</head><body onLoad="self.print()"><center><h2><u>Feedback Report</u></h2>');
+   docprint.document.write(content_vlue);
+   docprint.document.write('</center></body></html>');
+   docprint.print();
+   docprint.close();
+  
+}
+  
     
+   
 
 	$scope.search  = function () {
 

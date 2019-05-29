@@ -48,10 +48,11 @@
 <div class="center" ng-hide="searching">
  <div class="g-recaptcha hide" data-sitekey="6LcW-CcUAAAAAMSs6yu89PgIMvFyOT4Bps651gYE"></div>
     <a class="waves-effect white black-text btn" ng-click="search()" style="margin-right:20px" >SEARCH</a>
-    <a class="waves-effect white black-text btn" ng-click="print()" ng-disabled="disabled" style="margin-left:20px margin-right:20px">Print as PDF</a>
+
+   <a class="waves-effect white black-text btn" ng-click="print()" ng-disabled="disabled" style="margin-left:20px margin-right:20px">Print as PDF</a>
     <button data-target="modal1" class="waves-effect white black-text btn btn modal-trigger" style="margin-left:20px">Feedback Calculation Example</button>
     
-
+     <div id="t">  </div>
     <div id="modal1" class="modal">
       <div class="modal-content">
         <h4>Feedback score for each question is calculated as: </h4>
@@ -93,7 +94,8 @@
 <div class="wrapper" id="mycanvas">
 <div class="" style="padding: 2em;">
     <div class="card" ng-repeat="(key, value) in final_res" style="padding: 1em;margin-bottom: 100px;" >
-        <div class="row inforow">
+        <div class="inline">
+           <div class="row inforow">
             <div class="infoelement">
                 <div class="small-title">
                     ACADEMIC YEAR
@@ -157,6 +159,11 @@
                 </a>
             </div>
         </div>
+
+    </div>
+    
+
+  
         <hr>
         <table class="bordered highlighted striped">
             <thead>
@@ -260,8 +267,11 @@ th:nth-child(7), td:nth-child(7) {
 }
 
 .inforow {
-    display: flex;
+    display:flex;
+    
 }
+
+
 
 .infoelement {
     flex: 1;
@@ -299,4 +309,104 @@ th:nth-child(7), td:nth-child(7) {
                 $('.modal').modal();
     })
 
-</script>
+
+    (function () {  
+        var  
+         form = $('#mycanvas'),  
+         cache_width = form.width(),  
+         a4 = [595.28, 841.89]; // for a4 size paper width and height  
+  
+        $('#create_pdf').on('click', function () {  
+            $('body').scrollTop(0);  
+            createPDF();  
+        });  
+        //create pdf  
+        function createPDF() {  
+            getCanvas().then(function (canvas) {  
+                var  
+                 img = canvas.toDataURL("image/png"),  
+                 doc = new jsPDF({  
+                     unit: 'px',  
+                     format: 'a4'  
+                 });  
+                doc.addImage(img, 'JPEG', 20, 20);  
+                doc.save('Bhavdip-html-to-pdf.pdf');  
+                form.width(cache_width);  
+            });  
+        }  
+  
+        // create canvas object  
+        function getCanvas() {  
+            form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');  
+            return html2canvas(form, {  
+                imageTimeout: 2000,  
+                removeContainer: true  
+            });  
+        }  
+  
+    }());  
+
+    /* 
+ * jQuery helper plugin for examples and tests 
+ */  
+    (function ($) {  
+        $.fn.html2canvas = function (options) {  
+            var date = new Date(),  
+            $message = null,  
+            timeoutTimer = false,  
+            timer = date.getTime();  
+            html2canvas.logging = options && options.logging;  
+            html2canvas.Preload(this[0], $.extend({  
+                complete: function (images) {  
+                    var queue = html2canvas.Parse(this[0], images, options),  
+                    $canvas = $(html2canvas.Renderer(queue, options)),  
+                    finishTime = new Date();  
+  
+                    $canvas.css({ position: 'absolute', left: 0, top: 0 }).appendTo(document.body);  
+                    $canvas.siblings().toggle();  
+  
+                    $(window).click(function () {  
+                        if (!$canvas.is(':visible')) {  
+                            $canvas.toggle().siblings().toggle();  
+                            throwMessage("Canvas Render visible");  
+                        } else {  
+                            $canvas.siblings().toggle();  
+                            $canvas.toggle();  
+                            throwMessage("Canvas Render hidden");  
+                        }  
+                    });  
+                    throwMessage('Screenshot created in ' + ((finishTime.getTime() - timer) / 1000) + " seconds<br />", 4000);  
+                }  
+            }, options));  
+  
+            function throwMessage(msg, duration) {  
+                window.clearTimeout(timeoutTimer);  
+                timeoutTimer = window.setTimeout(function () {  
+                    $message.fadeOut(function () {  
+                        $message.remove();  
+                    });  
+                }, duration || 2000);  
+                if ($message)  
+                    $message.remove();  
+                $message = $('<div ></div>').html(msg).css({  
+                    margin: 0,  
+                    padding: 10,  
+                    background: "#000",  
+                    opacity: 0.7,  
+                    position: "fixed",  
+                    top: 10,  
+                    right: 10,  
+                    fontFamily: 'Tahoma',  
+                    color: '#fff',  
+                    fontSize: 12,  
+                    borderRadius: 12,  
+                    width: 'auto',  
+                    height: 'auto',  
+                    textAlign: 'center',  
+                    textDecoration: 'none'  
+                }).hide().fadeIn().appendTo('body');  
+            }  
+        };  
+    })(jQuery);  
+  
+</script>  

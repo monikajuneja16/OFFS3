@@ -52,6 +52,21 @@ faculty.factory('facultyService', ['$http', '$timeout', '$rootScope', function($
 			})
 		},
 
+		createpdf:function(deanData,callback){
+			$http({
+				method:"POST",
+				url:BACKEND + "/dpdf",
+				data:{
+					deanInfo:deanData
+				}
+			})
+			.then(function(response){
+				if(callback){callback(null,response.data)}
+			},function(error){
+				if(callback){callback(error.data);}
+			})
+		},
+
 		getDetails: function(callback) {
 			$http({
 				method: "GET",
