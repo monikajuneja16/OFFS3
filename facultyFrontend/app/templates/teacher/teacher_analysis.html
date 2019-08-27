@@ -195,6 +195,11 @@
             <span class="small-title"> (Total Marks Obtained X 100)/Maximum Marks </span> 
             <div ng-if="value.type=='Theory'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 75)) * 100 ).toFixed(2)}}%</div>
             <div ng-if="value.type=='Practical'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 40)) * 100 ).toFixed(2)}}%</div>
+            <div class="large-title">Grade Points</div>
+            <span class="small-title"> (Total Marks Obtained X 5)/Maximum Marks </span> 
+             <div ng-if="value.type=='Theory'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 75)) * 5 ).toFixed(2)}}/5</div>
+            
+            <div ng-if="value.type=='Practical'" class="pct">{{ ((getTotal(value) / (value.no_of_students_evaluated * 40)) * 5 ).toFixed(2)}}/5</div>
         </div>
     </div>
 </div>
