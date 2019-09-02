@@ -192,6 +192,7 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
         'table th, table td {' +
         'border:1px solid #000;' +
         'padding;0.5em;' +
+        'font-size:19.35px;' +
         '}' +
         
         '</style>';
@@ -206,9 +207,9 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
    docprint.document.write('.large-title {font-weight: 700;font-size: 16px;color: darkcyan;');
    docprint.document.write('letter-spacing: 0.1em;text-transform: uppercase;padding: 0.5em;}');
    docprint.document.write('.pct {font-size: 24px; font-weight: 700;}');
-   docprint.document.write('.small-title {font-weight: 700;font-size: 12px;color: darkcyan;letter-spacing: 0.1em;text-transform: uppercase;}');
+   docprint.document.write('.small-title {font-weight: 700;font-size: 14px;color: darkcyan;letter-spacing: 0.1em;text-transform: uppercase;}');
    docprint.document.write(' </style>');
-   docprint.document.write('</head><body onLoad="self.print()"><center><h2><u>Feedback Report</u></h2>');
+   docprint.document.write('</head><body onLoad="self.print()"><center><h1><u>Feedback Report</u></h1>');
    docprint.document.write(content_vlue);
    docprint.document.write('</center></body></html>');
    docprint.print();

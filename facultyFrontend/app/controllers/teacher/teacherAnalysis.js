@@ -341,7 +341,41 @@ $scope.semesterList = function() {
 
 	}
 
+
 	$scope.print = function (){
+
+    //Get the HTML of div
+            var content_vlue = document.getElementById('mycanvas').outerHTML;
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        'table th, table td {' +
+        'border:1px solid #000;' +
+        'padding;0.5em;' +
+        'font-size:19.35px;' +
+        '}' +
+        
+        '</style>';
+   content_vlue += htmlToPrint
+  var docprint=window.open("");
+ 
+   docprint.document.write('<head><title>feedback</title>');
+   docprint.document.write('<style type="text/css">body{ margin:0px;');
+   docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+   docprint.document.write('.inforow{display:flex;}');
+   docprint.document.write('.infoelement{flex:1; text-align:center; margin:10px;}');
+   docprint.document.write('.large-title {font-weight: 700;font-size: 16px;color: darkcyan;');
+   docprint.document.write('letter-spacing: 0.1em;text-transform: uppercase;padding: 0.5em;}');
+   docprint.document.write('.pct {font-size: 24px; font-weight: 700;}');
+   docprint.document.write('.small-title {font-weight: 700;font-size: 14px;color: darkcyan;letter-spacing: 0.1em;text-transform: uppercase;}');
+   docprint.document.write(' </style>');
+   docprint.document.write('</head><body onLoad="self.print()"><center><h1><u>Feedback Report</u></h1>');
+   docprint.document.write(content_vlue);
+   docprint.document.write('</center></body></html>');
+   docprint.print();
+   docprint.close();
+  
+}
+	/*$scope.print = function (){
 	alert("PDF is getting downloaded,it may take some Time.");
      var quotes = document.getElementById('mycanvas');
 
@@ -352,21 +386,21 @@ $scope.semesterList = function() {
                  //! MAKE YOUR PDF
                  var pdf = new jsPDF('l', 'pt','a4','true');
                  pdf.text(360, 30, "Feedback Report");
-                 for (var i = 0; i <= quotes.clientHeight/1300; i++) {
+                 for (var i = 0; i <= quotes.clientHeight/1100; i++) {
                      //! This is all just html2canvas stuff
                      var srcImg  = canvas;
                      var sX      = 0;
-                     var sY      = 1300*i; 
-                     var sWidth  = 2500;
-                     var sHeight = 1300;
+                     var sY      = 1100*i; 
+                     var sWidth  = 2600;
+                     var sHeight = 1100;
                      var dX      = 0;
                      var dY      = 0;
-                     var dWidth  = 2500;
-                     var dHeight = 1300;
+                     var dWidth  = 2600;
+                     var dHeight = 1100;
 
                      window.onePageCanvas = document.createElement("canvas");
-                     onePageCanvas.setAttribute('width', 2500);
-                     onePageCanvas.setAttribute('height', 1300);
+                     onePageCanvas.setAttribute('width', 2600);
+                     onePageCanvas.setAttribute('height', 1400);
                      var ctx = onePageCanvas.getContext('2d');
 
                      // https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Using_images#Slicing
@@ -386,14 +420,14 @@ $scope.semesterList = function() {
                      //! now we declare that we're working on that page
                      pdf.setPage(i+1);
                      //! now we add content to that page!
-                     pdf.addImage(canvasDataURL, 'JPEG', 30, 40, (width*.62) - 400, (height*.62)-175,'','FAST');
+                     pdf.addImage(canvasDataURL, 'JPEG', 30, 40, (width*.62) - 400, (height*.62)-155,'','FAST');
 
                     }
                  //! after the for loop is finished running, we save the pdf.
                 pdf.save('feedback_report.pdf');        
            });
     }
-
+*/
 
 
  $scope.getTotal = function (value) {
