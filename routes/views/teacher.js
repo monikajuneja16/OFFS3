@@ -2,8 +2,8 @@ var con = require('../../models/mysql'),
 	ses = require('node-ses'),
 	async = require('async'),
 	controller = require('../../models/config'),
-    multer=require('multer');
-
+	multer=require('multer');
+	
 module.exports = {
 	/**
 	 * [index description]
@@ -245,44 +245,65 @@ module.exports = {
 
 
     
-	populate: function(req, res) {
+	populate: async function(req, res) {
+		let colleges=['usap','usbas','usbt','usct','use','usem','ushss','usict','uslls','usmc','usms'];
+		
 		console.log("populate function called");
 		//console.log(req.session.ins);
 		console.log(req.query);
 		var ins_id = req.query.instructor_id;
 		var year = req.query.year;
-		var college_name = req.query.school;
+		//var college_name = req.query.school;
 
 		console.log('In populate');
 
-		var tables = {
-			batch_allocation: college_name + '_batch_allocation',
-			subject_allocation: college_name + '_subject_allocation_' + year,
-		};
-		console.log("tables");
-		console.log(tables);
-		var query =` select * from  ${tables.subject_allocation}  as s  inner join  ${tables.batch_allocation}
-			   		as b on s.batch_id = b.batch_id  where s.instructor_code = ?` ;
-		console.log("Query");
-		console.log(query);
+		//result=colleges.map(async college_name=>{
+			var finalQuery,insArr=[];
+		finalQuery=colleges.map((college_name,index)=>{
+			var tables = {
+				batch_allocation: college_name + '_batch_allocation',
+				subject_allocation: college_name + '_subject_allocation_' + year,
+			};
 
-		con.query(query,[ins_id], function(error, result) {
-			console.log("Result of query");
-			console.log(result);
-			if (error) {
-				console.log(error);
-				var obj = { status: 400, message: 'There is error in query!' };
-				res.json(obj);
-			} else if (result[0] == null) {
-				console.log("No ");
-				var obj = { status: 400, message: 'Oops ! .' };
-				res.json(obj);
-			} else {
-				//console.log(result);
-				var obj = { status: 200, message: 'Successfull', data: result };
-				res.json(obj); //Successfull
-			}
-		});
+			var query =`select * from  ${tables.subject_allocation}  as s  inner join  ${tables.batch_allocation} as b on s.batch_id = b.batch_id  where s.instructor_code = ?` ;
+			insArr.push(ins_id);
+			return query;
+		})
+
+		finalQuery=finalQuery.join(" union ");
+			
+				// console.log("tables");
+				console.log(finalQuery);
+				
+				// console.log("Query");
+				// console.log(query);
+		
+			con.query(finalQuery,insArr, function(error, result) {
+				console.log("Result of query");
+				console.log(result);
+				if (error) {
+					console.log(error);
+					var obj = { status: 400, message: 'There is error in query!' };
+					res.json(obj);
+					//return result;
+				} else if (result[0] == null) {
+					console.log("No ");
+					var obj = { status: 400, message: 'Oops ! .' };
+					res.json(obj);
+					//return [];
+				} else {
+					//console.log(result);
+					var obj = { status: 200, message: 'Successfull', data: result };
+					res.json(obj); //Successfull
+					//return result;
+				}
+			});
+		//})
+
+		// console.log("---------------POPULATION----------");
+		// result=Promise.all(result);
+		// console.log(result);
+		// res.json({ status: 200, message: 'Successfull', data: result });
 	},
 	/**
 	 * [dashboard description]
@@ -290,15 +311,24 @@ module.exports = {
 	 * @param  {[type]} res [description]
 	 * @return {[type]}     [description]
 	 */
-	dashboard: function(req, res) {
+	dashboard: async function(req, res) {
 		console.log('In dashboard');
+		var result=[];
 		var year = req.query.year;
 		var semester = Number(req.query.semester);
-		var college_name = req.query.school;
-		if (year == null || semester == null || college_name == null) {
+		var ins_id = req.query.instructor_id;
+
+		//var college_name = req.query.school;
+		let colleges=['usap','usbas','usbt','usct','use','usem','ushss','usict','uslls','usmc','usms'];
+		if (year == null || semester == null) {
 			var obj = { status: 400, message: 'Not All Fields Set' };
 			res.json(obj);
 		} else {
+
+			var finalQuery,insArr=[];
+
+		
+		finalQuery=colleges.map((college_name,ind)=>{
 			var tables = {
 				batch_allocation: college_name + '_batch_allocation',
 				subject_allocation: college_name + '_subject_allocation_' + year,
@@ -306,76 +336,48 @@ module.exports = {
 				employee: 'employee',
 			};
  
-         var ins_id = req.query.instructor_id;
-
+         	
 		
-		/*<<<<<<< HEAD
-		//		var college_name = req.query..college_name;
-		//		var subject_type  =req.query.subject_type;
-		//=======
-		var year = req.query.year;
-		var college_name = req.query.school;
-		//>>>>>>> a066d0d19f09d6fe28085ea6aff24763700e4738
-		var subject_name = req.query.subject_name;
-		var course = req.query.course;
-		var stream = req.query.stream;
-		var semester = Number(req.query.sem);
-		console.log('course' + course);
-		var ins_id = req.query.instructor_id;
+			var fin = `s.feedback_id,
+			s.batch_id,
+			s.subject_code,
+			s.instructor_code,
+			s.subject_name,
+			s.type,
+			b.batch_id,
+			b.course,
+			b.stream,
+			b.semester,
+			e.instructor_id,
+			e.name,
+			e.email,
+			e.phone,
+			e.date_of_joining,
+			e.password,
+			e.designation,
+			e.room_no,
+			e.school,
+			f.feedback_id,
+			f.instructor_id,
+			f.total,
+			f.at_1,
+			f.at_2,
+			f.at_3,
+			f.at_4,
+			f.at_5,
+			f.at_6,
+			f.at_7,
+			f.at_8,
+			f.at_9,
+			f.at_10,
+			f.at_11,
+			f.at_12,
+			f.at_13,
+			f.at_14,
+			f.at_15,
+			f.no_of_students_evaluated`;
 
-		if (year == null || course == null || stream == null || semester == null) {
-			console.log(year);
-			// console.log(subject_type)
-			var obj = { status: 400, message: 'Not All Fields Set' };
-			res.json(obj);
-		} else {
-			var tables = {
-				batch_allocation: college_name + '_batch_allocation',
-				subject_allocation: college_name + '_subject_allocation_' + year,
-				feedback: college_name + '_feedback_' + year,
-				employee: 'employee',
-			};
 
-			console.log(tables);*/
-
-var fin = `s.feedback_id,
-s.batch_id,
-s.subject_code,
-s.instructor_code,
-s.subject_name,
-s.type,
-b.batch_id,
-b.course,
-b.stream,
-b.semester,
-e.instructor_id,
-e.name,
-e.email,
-e.phone,
-e.date_of_joining,
-e.password,
-e.designation,
-e.room_no,
-e.school,
-f.feedback_id,
-f.instructor_id,
-f.total,
-f.at_1,
-f.at_2,
-f.at_3,
-f.at_4,
-f.at_5,
-f.at_6,
-f.at_7,
-f.at_8,
-f.at_9,
-f.at_10,
-f.at_11,
-f.at_12,
-f.at_13,
-f.at_14,
-f.at_15,
-f.no_of_students_evaluated`
 			var query =
 				' select '+fin+' from ' + tables.subject_allocation + ' as s  ' +
 				' inner join  ' +   tables.batch_allocation +
@@ -386,25 +388,35 @@ f.no_of_students_evaluated`
 				' inner join  ' +
 				tables.feedback +
 				' as f on s.feedback_id = f.feedback_id where f.no_of_students_evaluated !=0 and s.instructor_code = ?';
-			console.log(query);
-			con.query(query,[ins_id], function(error, result) {
+			
+
+			insArr.push(ins_id);
+			return query;
+		});
+
+		finalQuery=finalQuery.join(" union ");
+			
+			con.query(finalQuery,insArr, function(error, result) {
 				console.log(result);
 				if (error) {
 					console.log(error);
 					var obj = { status: 400, message: 'There is error in query!' };
 					res.json(obj); // Connection Error
+					//return null
 				} else if (result[0] == null) {
 					console.log('No Teacher Found');
 					var obj = { status: 400, message: 'No Such User Found ! .' };
 					res.json(obj); // Invalid Password or username
+					//return null;
 				} else {
 					console.log('Data fetched');
 					console.log(result);
 					res.json(result);
+					//return result;
 				}
-			});
+			//});
 
-			
+			})
 		}
 	},
 
