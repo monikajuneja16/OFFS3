@@ -258,7 +258,7 @@ module.exports = {
 		console.log('In populate');
 
 		//result=colleges.map(async college_name=>{
-			var finalQuery,insArr=[];
+		var finalQuery,insArr=[];
 		finalQuery=colleges.map((college_name,index)=>{
 			var tables = {
 				batch_allocation: college_name + '_batch_allocation',

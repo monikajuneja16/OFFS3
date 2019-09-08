@@ -141,15 +141,21 @@ logout: function(req, res) {
 	},
 	dashboard: function(req, res) {
 		console.log('In dashboard');
+		let colleges=['usap','usbas','usbt','usct','use','usem','ushss','usict','uslls','usmc','usms'];
+		
 		var year = req.query.year;
-		var college_name = req.query.college_name;
-
-		if (year == null || college_name == null) {
+		var school_name = req.query.college_name;
+		var finalQuery,insArr=[];
+	
+		if (year == null || school_name == null) {
 			console.log(year);
-			console.log(college_name);
+			console.log(school_name);
 			var obj = { status: 400, message: 'Not All Fields Set' };
 			res.json(obj);
 		} else {
+		
+		finalQuery=colleges.map(college_name=>{
+		
 			var tables = {
 				batch_allocation: college_name + '_batch_allocation',
 				subject_allocation: college_name + '_subject_allocation_' + year,
@@ -157,7 +163,7 @@ logout: function(req, res) {
 				employee: 'employee',
 			};
 
-			console.log(tables);
+			//console.log(tables);
 var fin = `s.feedback_id,
 s.batch_id,
 s.subject_code,
@@ -208,9 +214,13 @@ f.no_of_students_evaluated`;
 				' as e on s.instructor_code =e.instructor_id ' +
 				' inner join  ' +
 				tables.feedback +
-				' as f on s.feedback_id = f.feedback_id where no_of_students_evaluated != 0';
-			console.log(query);
-			con.query(query, function(error, result) {
+				' as f on s.feedback_id = f.feedback_id where e.school=? and no_of_students_evaluated != 0';
+			//console.log(query);
+			insArr.push(school_name);
+			return query;
+		})
+			finalQuery=finalQuery.join(" union ");
+			con.query(finalQuery,insArr, function(error, result) {
 				if (error) {
 					console.log(error);
 					var obj = { message: 'Feedback not recorded for this year!' };

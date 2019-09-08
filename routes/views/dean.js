@@ -9,17 +9,17 @@ module.exports = {
 	index: function(req, res) {},
 	
 	 logout: function(req, res) {
-    console.log("logout")
-    if (req.session.dean) {
-         req.session.destroy();
-         var obj={status:200,message:"Logged Out"};
-         console.log(obj);
-         res.json(obj);
-     } else{
-      console.log("No session detected");
-      var obj = { status: 200, message: "No session detected" };
-    }
-  },
+		console.log("logout")
+		if (req.session.dean) {
+				req.session.destroy();
+				var obj={status:200,message:"Logged Out"};
+				console.log(obj);
+				res.json(obj);
+			} else{
+			console.log("No session detected");
+			var obj = { status: 200, message: "No session detected" };
+		}
+	},
 
 	updateDeanInfo   :   function(req,res){
 		var {name,email,phone,date_of_joining,designation,room_no,school,instructor_id}=req.body.deanInfo;
@@ -157,74 +157,81 @@ module.exports = {
 		}
 	},
 	dashboard: function(req, res) {
+		let colleges=['usap','usbas','usbt','usct','use','usem','ushss','usict','uslls','usmc','usms'];
 		var year = req.query.year;
 		var semester = Number(req.query.semester);
-		var college_name = req.query.college_name;
+		var school_name = req.query.college_name;
 
-		if (year == null || semester == null || college_name == null) {
+		var finalQuery,insArr=[];
+		if (year == null || semester == null || school_name == null) {
 			var obj = { status: 400, message: 'Not All Fields Set' };
 			res.json(obj);
 		} else {
-			var tables = {
-				batch_allocation: college_name + '_batch_allocation',
-				subject_allocation: college_name + '_subject_allocation_' + year,
-				feedback: college_name + '_feedback_' + year,
-				employee: 'employee',
-			};
-var fin = `s.feedback_id,
-s.batch_id,
-s.subject_code,
-s.instructor_code,
-s.subject_name,
-s.type,
-b.batch_id,
-b.course,
-b.stream,
-b.semester,
-e.instructor_id,
-e.name,
-e.email,
-e.phone,
-e.date_of_joining,
-e.password,
-e.designation,
-e.room_no,
-e.school,
-f.feedback_id,
-f.instructor_id,
-f.total,
-f.at_1,
-f.at_2,
-f.at_3,
-f.at_4,
-f.at_5,
-f.at_6,
-f.at_7,
-f.at_8,
-f.at_9,
-f.at_10,
-f.at_11,
-f.at_12,
-f.at_13,
-f.at_14,
-f.at_15,
-f.no_of_students_evaluated`
-			console.log(tables);
-			var query =
-				' select '+fin+' from ' +
-				tables.subject_allocation +
-				' as s  ' +
-				' inner join  ' +
-				tables.batch_allocation +
-				' as b on s.batch_id = b.batch_id ' +
-				' inner join  ' +
-				tables.employee +
-				' as e on s.instructor_code =e.instructor_id ' +
-				' inner join  ' +
-				tables.feedback +
-				' as f on s.feedback_id = f.feedback_id where f.no_of_students_evaluated !=0';
-			console.log(query);
-			con.query(query, function(error, result) {
+
+			finalQuery=colleges.map(college_name=>{
+				var tables = {
+					batch_allocation: college_name + '_batch_allocation',
+					subject_allocation: college_name + '_subject_allocation_' + year,
+					feedback: college_name + '_feedback_' + year,
+					employee: 'employee'
+				};
+				var fin = `s.feedback_id,
+				s.batch_id,
+				s.subject_code,
+				s.instructor_code,
+				s.subject_name,
+				s.type,
+				b.batch_id,
+				b.course,
+				b.stream,
+				b.semester,
+				e.instructor_id,
+				e.name,
+				e.email,
+				e.phone,
+				e.date_of_joining,
+				e.password,
+				e.designation,
+				e.room_no,
+				e.school,
+				f.feedback_id,
+				f.instructor_id,
+				f.total,
+				f.at_1,
+				f.at_2,
+				f.at_3,
+				f.at_4,
+				f.at_5,
+				f.at_6,
+				f.at_7,
+				f.at_8,
+				f.at_9,
+				f.at_10,
+				f.at_11,
+				f.at_12,
+				f.at_13,
+				f.at_14,
+				f.at_15,
+				f.no_of_students_evaluated`
+				insArr.push(school_name);
+				var query =
+					' select '+fin+' from ' +
+					tables.subject_allocation +
+					' as s  ' +
+					' inner join  ' +
+					tables.batch_allocation +
+					' as b on s.batch_id = b.batch_id ' +
+					' inner join  ' +
+					tables.employee +
+					' as e on s.instructor_code =e.instructor_id ' +
+					' inner join  ' +
+					tables.feedback +
+					' as f on s.feedback_id = f.feedback_id where e.school=? and f.no_of_students_evaluated !=0';
+				return query;
+			})
+			
+			finalQuery=finalQuery.join(" union ");
+			con.query(finalQuery,insArr, function(error, result) {
 				console.log(result);
 				if (error) {
 					console.log(error);
