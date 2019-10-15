@@ -65,7 +65,7 @@ module.exports = {
       query,
       [
         college_name + "_batch_allocation",
-        college_name + "_subject_allocation_2016",
+        college_name + "_subject_allocation_2018",
         course,
         stream,
         semester

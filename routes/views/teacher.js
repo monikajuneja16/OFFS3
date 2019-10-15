@@ -395,6 +395,7 @@ module.exports = {
 		});
 
 		finalQuery=finalQuery.join(" union ");
+
 			
 			con.query(finalQuery,insArr, function(error, result) {
 				console.log(result);

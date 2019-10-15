@@ -39,6 +39,7 @@ faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teac
 			//console.log(typeof"$scope.course");
 			//console.log(c);
 			$scope.stream 	= _.chain($scope.teacherfb.data).pluck('stream').uniq().value();
+			console.log($scope.stream);
 			$scope.semester = _.chain($scope.teacherfb.data).pluck('semester').uniq().value();
 			//$scope.years 	= ['2014', '2015', '2016', '2017','2018'];
 			// init all selects
@@ -163,8 +164,8 @@ $scope.semesterList = function() {
 		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
 		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
 
-
-		var StreamDetails = _.where($scope.teacherfb.data, {course:course});
+		console.log(course);
+		var StreamDetails = _.where($scope.teacherfb.data, {course});
 		console.log(StreamDetails);
 		$scope.stream =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
 		console.log($localStorage.stream);

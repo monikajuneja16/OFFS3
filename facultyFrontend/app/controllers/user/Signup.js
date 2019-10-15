@@ -6,7 +6,6 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
   //$scope.user.category='student';
   //$scope.displayed = 'Student';
   $scope.fieldTouch=[false,false,false,false];
-  $scope.odd_even=2;
   
   $scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
 		collegeCode : "usap"},
@@ -188,7 +187,8 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
       console.log(typeof(year));
       year = year + 4;
     } */  
-    $scope.user.semister = (18 - year) * 2 + $scope.odd_even;
+
+    $scope.user.semister = ((CURR_YEAR-2000) - year) * 2 + ODD_EVEN;
     
     //for students with more than 8 sems MTECH
     if($scope.user.semister>8){
