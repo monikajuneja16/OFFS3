@@ -2,8 +2,8 @@ faculty.controller("vcAnalysisCtrl", function($scope, $rootScope, $location, vcS
 
 	$scope.vc = [];
 	$scope.viewElements = false;
-	$scope.selectedYear = '2018';
-	$scope.year = 'August 2018 - May 2019';
+	$scope.selectedYear = '2019';
+	$scope.year = 'August 2019 - May 2020';
 	$scope.selected = {};
 	$scope.progress = false;
 	$scope.searching = false;

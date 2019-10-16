@@ -1,8 +1,8 @@
 faculty.controller("tAnalysisCtrl", function($scope, $rootScope, $location, teacherService,$localStorage) {
 
 	$scope.teacher = [];
-	$scope.selectedYear = '2018';
-	$scope.year = 'August 2018 - May 2019';
+	$scope.selectedYear = '2019';
+	$scope.year = 'August 2019 - May 2020';
 	$scope.searching = false;
 	$scope.searched = false;
 	$scope.disabled = true;

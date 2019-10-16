@@ -39,8 +39,8 @@ faculty.controller('notGivenFeedbackCtrl', function ($scope, $location, userServ
 	$scope.listOfStudents = [];
 
 	$scope.searched = false;
-	$scope.Year = '2018';
-	$scope.year = 'August 2018 - May 2019';
+	$scope.Year = '2019';
+	$scope.year = 'August 2019 - May 2020';
 
 	$scope.yearChange = function () {
 		$scope.Year = $scope.year.slice(7,11);
