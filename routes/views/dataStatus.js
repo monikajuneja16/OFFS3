@@ -35,7 +35,7 @@ module.exports = {
               queryNoData,
               [
                 college + "_batch_allocation",
-                college + "_subject_allocation_2018"
+                college + "_subject_allocation_"+process.env.year
               ],
               function(err, List) {
                 if (err) {
