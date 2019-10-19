@@ -21,6 +21,36 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 				}
 			})
 		},
+		logout : function(callback){
+		 	$http({
+		 		method:"GET",
+		 		url: BACKEND + "/vlogout",
+		 	}).then(function(response) {
+				if (callback) {
+					callback(response.data);
+				}
+			}, function(response) {
+				if (callback) {
+					console.error(response.data);
+					callback(data);
+				}
+			})
+		},
+    
+    updateVcInfo:function(vcData,callback){
+			$http({
+				method:"POST",
+				url:BACKEND + "/vupdateInfo",
+				data:{
+					vcInfo:vcData
+				}
+			})
+			.then(function(response){
+				if(callback){callback(response.data)}
+			},function(error){
+				if(error){callback(error.data)}
+			})
+		},
 
 		getDetails: function(callback) {
 			$http({
@@ -30,10 +60,10 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 				if (callback) {
 					callback(response.data);
 				}
-			}, function(response) {
+			}, function(error) {
 				if (callback) {
-					console.error(response.data);
-					callback(data);
+					console.error(error);
+					callback(error);
 				}
 			})
 		},
@@ -48,12 +78,12 @@ faculty.factory('vcService', ['$http', '$timeout', '$rootScope', function($http,
 				}
 			}).then(function(response) {
 				if (callback) {
-					callback(response.data);
+					callback(null,response.data);
 				}
 			}, function(response) {
 				if (callback) {
 					console.error(response.data);
-					callback(data);
+					callback(response.data);
 				}
 			})
 		},

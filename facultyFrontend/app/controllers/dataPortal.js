@@ -1,16 +1,12 @@
-faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, $location) {
+faculty.controller('dataPortalCtrl', ['$http', '$scope', 'dataPortalService', '$location',function($http, $scope, dataPortalService, $location) {
 
 	$scope.disabled = false;
 
-	$scope.collegeList = [ {
-		collegeName : "University School of Law and Legal Studies",
-		collegeCode :"uslls"},
+	$scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
+		collegeCode : "usap"},
 
-		{ collegeName :"University School of Management Studies",
-		collegeCode: "usms" },
-
-	    { collegeName :"University School of Education",
-		collegeCode:  "use" },
+		{collegeName :"University School of Basic and Applied Sciences",
+		collegeCode :  "usbas"},
 
 		{collegeName :"University School of BioTechnology",
 		collegeCode : "usbt"},
@@ -18,30 +14,52 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 		{collegeName :"University School of Chemical Technology",
 		collegeCode : "usct"},
 
+		{ collegeName :"University School of Education",
+		collegeCode:  "use" },
+
 		{collegeName :"University School of Environment Management",
 	    collegeCode : "usem"},
 
-	    {collegeName :"University School of Mass Communication",
-		collegeCode : "usmc"},
-
-		{collegeName :"University School of Basic and Applied Sciences",
-		collegeCode :  "usbas"},
-
-		{collegeName :"University School of Architecture and Planning",
-		collegeCode : "usap"},
-
-		{collegeName :"University School of Humanities and Social",
+		{collegeName :"University School of Humanities and Soc Sciences",
 		collegeCode : "ushss"},
 
 		{collegeName :"University School of Info.,Comm. and Technology",
-		collegeCode : "usict"}
+		collegeCode : "usict"},
+
+		{collegeName : "University School of Law and Legal Studies",
+		collegeCode :"uslls"},
+
+		{collegeName :"University School of Mass Communication",
+		collegeCode : "usmc"},
+
+		{ collegeName :"University School of Management Studies",
+		collegeCode: "usms" },
 	];
 
 	$scope.semesterList= [1,2,3,4,5,6,7,8]
 
 	$scope.courseList = [];
 
+	$scope.check = 0;
+
 	$scope.stream = [];
+	var data_value  = {};
+	$scope.searched = false;
+	// $scope.disabledataPortal=true;
+
+	$scope.changeFlag = function(item) {
+		if(!(angular.isUndefined(item.teacher_name))) {
+			item.flag = 1;
+			dataPortalService.getTeacher(function(res) {
+				res.forEach(function(val) {
+					if(item.teacher_name == (val.name + ' ' + val.instructor_id)){
+						item.flag = 2;
+						return;
+					}
+				})
+			})
+		}
+	}
 
 	$scope.collegeSelected = function() {
 		if (!$scope.selectedCollege) {
@@ -67,7 +85,7 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 					$scope.courseList = responce;
 					// $scope.courseList = JSON.parse(responce);
 					console.log(typeof $scope.courseList);
-
+					//console.log("Courses:: "+$scope.courseList);
 				$(document).ready(function () {
 					$('select').material_select();
 				})
@@ -77,7 +95,7 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 
 		}
 
-		// console.log($scope.selectedCollege);
+		 console.log($scope.selectedCollege);
 	}
 
 
@@ -101,10 +119,10 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 		}
 	}
 
-
+	
 	$scope.getTeachers = function() {
 		dataPortalService.getTeacher(function(res) {
-			var data_value  = {}
+			
 			res.forEach(function(val) {
 				data_value[val.name + ' ' + val.instructor_id] = null;
 
@@ -112,12 +130,15 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 				$(document).ready(function(){
 					 $('input.autocomplete').autocomplete({
 						 data : data_value,
+						 
 					 });
+					 
 				 });
 
 
 			})
 		})
+		
 	}
 
 
@@ -128,10 +149,17 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 	}
 
 	$scope.search = function() {
+		
+		$scope.searched = true;
+
 		dataPortalService.getSubjects($scope.collegeCode, $scope.selectedCourse, $scope.selectedStream, $scope.selectedSem, function(response) {
 			console.log(response)
 			if (response) {
 				$scope.subjects_data = response;
+				$scope.check = $scope.subjects_data.length;
+				for(var i=0; i<$scope.check; i++){
+					$scope.subjects_data[i].flag = 0;
+				}
 				$(document).ready(function () {
 					$('select').material_select();
 				})
@@ -142,25 +170,55 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 
 			}
 		})
+
+		
+		
+		
 	}
 
 	$scope.deleteSubject = function(index) {
 		$scope.subjects_data.splice(index, 1);
+		$scope.check = ($scope.check)-1;
 	}
 
+	// function checkData(){
+		
+	// 	if(Object.getOwnPropertyNames(data).length>0)
+	// 	$scope.disabledataPortal=false;
+
+	// }
+
+		
+
+	
 	$scope.submit = function() {
 
 		$scope.disabled = true;
 
-		dataPortalService.sendSubjectData($scope.collegeCode, $scope.selectedCourse, $scope.selectedStream, $scope.selectedSem, $scope.subjects_data, function(res) {
-			if (res.data) {
-				if (res.data.status == 200) {
-					alert(res.data.message);
-					$location.path("/");
-				} else {
-					alert(res.data.message);
-					$location.path("/dataPortal");
+		for(var i=0; i<$scope.check; i++){
+			if($scope.subjects_data[i].flag == 0){
+				alert("Kindly fill names of all faculty members");
+				$scope.disabled = false;
+				return;
+			}
+			else if($scope.subjects_data[i].flag == 1){
+				alert("Kindly fill names from dropdown only");
+				$scope.subjects_data[i].flag = 0;
+				$scope.disabled = false;
+				return;
+			}
+		}
+		
+		//$window.alert("Data recorded");
+		dataPortalService.sendSubjectData($scope.collegeCode, $scope.selectedCourse, $scope.selectedStream, $scope.selectedSem, $scope.subjects_data, async function(res) {
+			if (res.status == 200) {
+				alert(res.message);
+				await $location.path("/");
+				document.location.reload();
 				}
+			else {
+				alert("An error occured. Please try again");
+				//location.reload();
 			}
 
 		})
@@ -174,7 +232,8 @@ faculty.controller('dataPortalCtrl', function($http, $scope, dataPortalService, 
 			'subject_code' : '',
 			'teacher_name' : '',
 		})
+		$scope.check = ($scope.check)+1;
 		$scope.getTeachers();
 	}
 
-})
+}])

@@ -5,12 +5,20 @@
   
   </div>
   <div class="row">
-    <div class="col s4">
-    </div>
+    <div style="position:relative; left:10%">
+    <h4><strong>INSTRUCTIONS</strong></h4>
+        <h6><strong>
+        <ol>
+          <li>Please fill each entry for every teacher who teaches you a subject</li>
+          <li>Entires have be filled with a number between 1-5, both included, with 1 being the lowest and 5 being the highest</li>
+           <li>The feedback for theory and practicals is different</li>
+        </ol>
+      </strong></h6>
+      </div>
     <div class="col s4" style="text-align: center; font-family: ROBERTO" ng-if=" pointer <attributesList.theory.length">
       <h3><strong>THEORY SECTION <strong></h3>
     </div>
-    <div class="col s4" style="text-align: center; font-family: ROBERTO" ng-if="pointer >= attributesList.theory.length && pointer2 >= 0">
+    <div class="col s4" style="text-align: center; font-family: ROBERTO" ng-if="pointer >= attributesList.theory.length && pointer2 >= 0 && pointer2 !=attributesList.practicals.length">
       <h3><strong>PRACTICAL SECTION <strong></h3>
     </div>
     <div class="col s4">
@@ -21,11 +29,11 @@
     <div id="grad" class="container student-card card">
     <div class=" card-content row">
         <div class="col s1">
-          <center ng-if="pointer < attributesList.theory.length">
-            <h3>#{{ pointer + 1 }}</h3>
-          </center>
-          <center style="color: #26a69a" ng-if="pointer2 < attributesList.practicals.length && pointer2 >=0">
-            <h3>#{{ pointer2  + 1 }}</h3>
+          <center style="color: #26a69a" ng-if="pointer < attributesList.theory.length">
+            <h3>#{{pointer+1}}/{{attributesList.theory.length }}</h3>
+           </center> 
+          <center style="color: #26a69a" ng-if="(pointer2 < attributesList.practicals.length) && (pointer2 >=0)">
+            <h3>#{{pointer2+1}}/{{attributesList.practicals.length }}</h3>
           </center>
         </div>
         <div class="col s11" style="color:black;">
@@ -42,7 +50,7 @@
         <div class="row text-center" style="display:flex; flex-wrap: wrap;">
             <div ng-repeat="singleTheoryTeacher in theoryTeacher track by $index" ng-if="pointer < attributesList.theory.length">
                 <div class="thumbnail image_groups" style="width: 125px; height: 150px; margin: 5px">
-                  <img ng-src="./app/instructor_images/{{college_name}}/{{singleTheoryTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
+                  <img ng-src="./app/instructor_images/{{singleTheoryTeacher.school}}/{{singleTheoryTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
                   <div class="caption" style="text-align: center">
                    <div class="row" style="height: 40px;">
                        {{ singleTheoryTeacher.teacher }}
@@ -60,8 +68,10 @@
                     <div class="row">  
                       <div class="col s12">
 
-                          <input placeholder="1-5" type="text" min="1" max="5" maxlength="1" ng-model="feedbackGivenByTheUser[$index]" ng-blur="addFeedbackToTheoryTeacher(singleTheoryTeacher, $index)" style="text-align: center">
+                          <input placeholder="1-5" type="text" min="1" max="5" maxlength="1" ng-model="feedbackGivenByTheUser[$index]" ng-blur="addFeedbackToTheoryTeacher(singleTheoryTeacher, $index)" ng style="text-align: center" required>
+                          
                       </div>
+
                     </div>
                   </div>
                 </div>
@@ -69,7 +79,7 @@
 
             <div ng-repeat="singlePracticalTeacher in practicalTeacher track by $index" ng-if="pointer2 < attributesList.practicals.length && pointer2 >= 0">
                 <div class="thumbnail image_groups" style="width: 125px; height: 150px; margin: 5px">
-                  <img ng-src="./app/instructor_images/{{college_name}}/{{singlePracticalTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
+                  <img ng-src="./app/instructor_images/{{singlePracticalTeacher.school}}/{{singlePracticalTeacher.instructor_code}}.jpg" onerror="this.src='./app/instructor_images/not.jpg'" style="height: 150px; width: 125px;">
                   <div class="caption" style="text-align: center">
                     <div class="row" style="height: 40px">
                        {{ singlePracticalTeacher.teacher }}
@@ -88,7 +98,7 @@
                       <div class="row">
                         <div class="col s12">
 
-                          <input type="text" placeholder="1-5" min="1" max="5" maxlength="1" ng-model="feedbackGivenByTheUser[$index]" ng-blur="addFeedbackToPracticalTeacher(singlePracticalTeacher, $index)" style="text-align: center;">
+                          <input type="text" placeholder="1-5" min="1" max="5" maxlength="1" ng-model="feedbackGivenByTheUser[$index]" ng-blur="addFeedbackToPracticalTeacher(singlePracticalTeacher, $index)" style="text-align: center;" required>
                       </div>
                     </div>
                   </div>
@@ -96,36 +106,40 @@
             </div>
         </div>
         <br>
+        <!-- <span>Pointers : {{pointer}} {{pointer2}}</span>  -->
         <div class="container">
-          <a id="button" onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light right" ng-click="increasePointer()" ng-if="pointer < attributesList.theory.length">
+          <button id="button" onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light right" ng-click="increasePointer()" ng-if="pointer < attributesList.theory.length" ng-disabled="disablenextattributes">
               Next Attribute
               <i class="material-icons right">navigate_next</i>
-          </a>
+          </button>
 
-          <a id="button" onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light left" ng-click="decreasePointer()" ng-if="pointer > 0 && pointer2 == -1">
+          <button id="button" onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light left" ng-click="decreasePointer()" ng-if="pointer > 0 && pointer < attributesList.theory.length">
                 Previous Attribute
               <i class="material-icons right">navigate_before</i>
-          </a>
-
-          <a onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light right" ng-click="switchPointer()" ng-if="pointer==attributesList.theory.length&&pointer2 < 0" ng-disabled="checkDisabled">
+          </button>
+          
+          <button onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light right" ng-click="switchPointer()" ng-if="pointer==attributesList.theory.length && (pointer2 == -1)" ng-disabled="checkDisabled">
               switch to practicals
               <i class="material-icons right">navigate_next</i>
-          </a>
+          </button>
 
-          <a  onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light right" ng-click="increasePointer2()" ng-if="pointer2>=0&&pointer==attributesList.theory.length&&pointer2 < attributesList.practicals.length">
+          <button  onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light right" ng-click="increasePointer2()" ng-if="pointer2>=0 && pointer==attributesList.theory.length && pointer2 < attributesList.practicals.length" ng-disabled="disablenextattributes">
               Next Attributes
               <i class="material-icons right">navigate_next</i>
-          </a>
+          </button>
 
-          <a  onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light left" ng-click="decreasePointer2()" ng-if="pointer2>=0&&pointer==attributesList.theory.length&&pointer2 < attributesList.practicals.length">
+          <button  onclick="myFunction()" class="proceed-to-feedback btn waves-effect waves-light left" ng-click="decreasePointer2()" ng-if="pointer2>0 && pointer==attributesList.theory.length && pointer2 < attributesList.practicals.length">
               Previous Attributes
               <i class="material-icons right">navigate_before</i>
-          </a>
+          </button>
 
-          <a class="proceed-to-feedback btn waves-effect waves-light" ng-click="sendFeedbackEvaluation()" ng-if="pointer2==attributesList.practicals.length" ng-disabled="disabled">
+          <button class="proceed-to-feedback btn waves-effect waves-light" ng-click="sendFeedbackEvaluation();" ng-if="pointer2==attributesList.practicals.length && pointer==attributesList.theory.length">
               Complete your Evaluation
               <i class="material-icons right">navigate_next</i>
-          </a>
+          </button>
+          <div ng-show="showSpinner" class="pull-right" id="loaddiv" style="margin: auto; width: 17%;">
+            <img style="margin-top:5px;" src="./app/resources/images/5.gif" width="60px" />
+          </div>
         </div>
         <br>
         <br>
@@ -133,4 +147,3 @@
 </div>
 </div>
 </div>
-

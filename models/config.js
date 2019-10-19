@@ -1,6 +1,5 @@
 var controller = {
-	year  : "2017",
-}
-
+  year: "2019"
+};
 
 module.exports = controller;

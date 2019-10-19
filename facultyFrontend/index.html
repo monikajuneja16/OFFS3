@@ -4,11 +4,12 @@
 
 	<title> GGSIPU </title>
 
-
+    <link rel="icon" type="image/png" href="public/logos/logomain.png">
     <link rel="stylesheet" type="text/css" href="./app/styles/main.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.1/js/materialize.min.js"></script>
-    <scipt  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></scipt>
+    <script  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
@@ -20,7 +21,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.4/angular-animate.js"></script>
 
 
+<script src=" https://printjs-4de6.kxcdn.com/print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js"></script>
+
+    <script src="http://kendo.cdn.telerik.com/2017.2.621/js/kendo.all.min.js"></script> 
+ 
+
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
 
     <script src="./app/app.js"></script>
     <script src="./app/controllers/user/Signup.js"></script>
@@ -28,6 +40,8 @@
     <script src="./app/controllers/user/dashboard.js"></script>
     <script src="./app/controllers/user/userFeedback.js"></script>
     <script src="./app/controllers/user/notGivenFeedback.js"></script>
+    <script src="./app/controllers/user/dataStatus.js"></script>
+    <script src="./app/controllers/user/resetPassword.js"></script>
 
     <script src="./app/controllers/dean/dean.js"></script>
     <script src="./app/controllers/dean/deanAnalysis.js"></script>
@@ -38,10 +52,12 @@
     <script src="./app/controllers/pro_vc/pvc.js"></script>
     <script src="./app/controllers/pro_vc/pvcAnalysis.js"></script>
 
-    <script src="./app/controllers/teacher.js"></script>
-    <script src="./app/controllers/teacherAnalysis.js"></script>
-
+    <script src="./app/controllers/teacher/teacher.js"></script>
+    <script src="./app/controllers/teacher/teacherAnalysis.js"></script>
+    <script src="./app/controllers/studentData.js"></script>
     <script src="./app/controllers/dataPortal.js"></script>
+    <script src="./app/controllers/newTeacher.js"></script>
+    
 
     <script src="./app/services/userService.js"></script>
     <script src="./app/services/facultyService.js"></script>
@@ -49,6 +65,9 @@
     <script src="./app/services/pvcService.js"></script>
     <script src="./app/services/teacherService.js"></script>
     <script src ="./app/services/dataPortal.js"></script>
+    <script src ="./app/services/dataStatus.js"></script>
+    <script src="./app/services/studentDataService.js"></script>
+    <script src="./app/services/resetPassword.js"></script>
 
     <script src="./app/config.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
@@ -59,6 +78,10 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    
 
 </head>
 <body ng-app="faculty">
@@ -92,7 +115,7 @@
         <div class="container center">
 
             <p class="footer-disclaimer center">
-                The OFFS Portal, Designed and Developed
+                The FFS Portal, Designed and Developed
                 by the Software Development Cell, University School of Information, Communication &amp; Technology (USICT).
             Suggestions/Discrepancies (if any) mail at :- rahul@ipu.ac.in</p>
 

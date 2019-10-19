@@ -21,7 +21,37 @@ faculty.factory('facultyService', ['$http', '$timeout', '$rootScope', function($
 				}
 			})
 		},
+		logout : function(callback){
+		 	$http({
+		 		method:"GET",
+		 		url: BACKEND + "/dlogout",
+		 	}).then(function(response) {
+				if (callback) {
+					callback(response.data);
+				}
+			}, function(response) {
+				if (callback) {
+					console.error(response.data);
+					callback(data);
+				}
+			})
+		},
 
+		updateDeanInfo:function(deanData,callback){
+			$http({
+				method:"POST",
+				url:BACKEND + "/dupdateInfo",
+				data:{
+					deanInfo:deanData
+				}
+			})
+			.then(function(response){
+				if(callback){callback(null,response.data)}
+			},function(error){
+				if(callback){callback(error.data);}
+			})
+		},
+		
 		getDetails: function(callback) {
 			$http({
 				method: "GET",

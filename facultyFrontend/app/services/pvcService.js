@@ -1,5 +1,6 @@
-faculty.factory('pvcService', ['$http', '$timeout', '$rootScope', function($http, $timeout, $rootScope) {
-	return {
+faculty.factory('pvcService',['$http','$localStorage', '$timeout', '$rootScope', function($http, $localStorage,$timeout, $rootScope) {
+	return  {
+
 		send_details : function(college, user, callback) {
 			$http({
 				method: "POST",
@@ -21,7 +22,21 @@ faculty.factory('pvcService', ['$http', '$timeout', '$rootScope', function($http
 				}
 			})
 		},
-
+        logout : function(callback){
+		 	$http({
+		 		method:"GET",
+		 		url: BACKEND + "/pvclogout",
+		 	}).then(function(response) {
+				if (callback) {
+					callback(response.data);
+				}
+			}, function(response) {
+				if (callback) {
+					console.error(response.data);
+					callback(data);
+				}
+			})
+		},
 		getDetails: function(callback) {
 			$http({
 				method: "GET",
@@ -38,6 +53,21 @@ faculty.factory('pvcService', ['$http', '$timeout', '$rootScope', function($http
 			})
 		},
 
+		updatePvcInfo:function(pvcData,callback){
+			$http({
+				method:"POST",
+				url:BACKEND + "/pvcupdateInfo",
+				data:{
+					pvcInfo:pvcData
+				}
+			})
+			.then(function(response){
+				if(callback){callback(response.data)}
+			},function(error){
+				if(callback){callback(error.data)}
+			})
+		},
+
 		getFeedback: function(college, year, callback) {
 			$http({
 				method: "GET",
@@ -48,12 +78,12 @@ faculty.factory('pvcService', ['$http', '$timeout', '$rootScope', function($http
 				}
 			}).then(function(response) {
 				if (callback) {
-					callback(response.data);
+					callback(null,response.data);
 				}
-			}, function(response) {
+			}, function(response){
 				if (callback) {
 					console.error(response.data);
-					callback(data);
+					callback(response.data);
 				}
 			})
 		}

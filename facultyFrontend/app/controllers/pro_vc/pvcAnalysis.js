@@ -2,19 +2,19 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 
 	$scope.pvc = [];
 	$scope.viewElements = false;
-	$scope.selectedYear = '2017';
+	$scope.selectedYear = '2019';
+	$scope.year = 'August 2019 - May 2020';
 	$scope.selected = {};
 	$scope.progress = false;
+	$scope.searching = false;
+	$scope.searched = false;
+	$scope.disabled = true;
 
-	$scope.collegeList = [
-		{collegeName : "University School of Law and Legal Studies",
-		collegeCode :"uslls"},
+	$scope.collegeList = [ {collegeName :"University School of Architecture and Planning",
+		collegeCode : "usap"},
 
-		{collegeName :"University School of Management Studies",
-		collegeCode: "usms"},
-
-	 	{collegeName :"University School of Education",
-		collegeCode:  "use"},
+		{collegeName :"University School of Basic and Applied Sciences",
+		collegeCode :  "usbas"},
 
 		{collegeName :"University School of BioTechnology",
 		collegeCode : "usbt"},
@@ -22,29 +22,41 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 		{collegeName :"University School of Chemical Technology",
 		collegeCode : "usct"},
 
+		{ collegeName :"University School of Education",
+		collegeCode:  "use" },
+
 		{collegeName :"University School of Environment Management",
-		collegeCode : "usem"},
+	    collegeCode : "usem"},
+
+		{collegeName :"University School of Humanities and Soc Sciences",
+		collegeCode : "ushss"},
+
+		{collegeName :"University School of Info.,Comm. and Technology",
+		collegeCode : "usict"},
+
+		{collegeName : "University School of Law and Legal Studies",
+		collegeCode :"uslls"},
 
 		{collegeName :"University School of Mass Communication",
 		collegeCode : "usmc"},
 
-		{collegeName :"University School of Basic and Applied Sciences",
-		collegeCode :  "usbas"},
-
-		{collegeName :"University School of Architecture and Planning",
-		collegeCode : "usap"},
-
-		{collegeName :"University School of Humanities and Social",
-		collegeCode : "ushss"},
-
-		{collegeName :"University School of Info.,Comm. and Technology",
-		collegeCode : "usict"}
+		{ collegeName :"University School of Management Studies",
+		collegeCode: "usms" },
 	];
 
 	$scope.getFeedback = function() {
 
-		pvcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(response) {
+		pvcService.getFeedback($scope.selectedSchool, $scope.selectedYear, function(error,response) {
 
+			if(error){
+				//console.log(error.message);
+				alert(error.message);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			
+			}
 			$scope.viewElements = true;
 			$scope.pvcfb = response;
 
@@ -52,6 +64,29 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 			$scope.teacherlist = _.chain($scope.pvcfb).pluck('name').uniq().value().sort();
 			$scope.subjects = _.chain($scope.pvcfb).pluck('subject_name').uniq().value();
 			$scope.course = _.chain($scope.pvcfb).pluck('course').uniq().value();
+
+			/*if($scope.course.length==0){
+				alert(`Feedback not given by any student for ${$scope.selectedSchool.collegeCode.toUpperCase()} for the period of ${$scope.selectedYear}`);
+				$scope.selectedYear="";
+				$scope.progress = false;
+				$scope.viewElements = true;
+				return;
+			}*/
+
+			//for BTECH MTECH problem
+			$scope.bmtech=['B. TECH','M. TECH'];
+			$scope.course=$scope.course.map((course)=>{
+				if(course=='MTECH'){
+					$scope.bmtech[1]=course;
+					return 'M. TECH'
+				}else if(course=='BTECH'){
+					$scope.bmtech[0]=course;
+					return 'B. TECH'
+				}else{
+					return course;
+				}
+			})
+
 			$scope.stream = _.chain($scope.pvcfb).pluck('stream').uniq().value();
 			$scope.semester = _.chain($scope.pvcfb).pluck('semester').uniq().value();
 
@@ -66,6 +101,7 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 	}
 
 	$scope.yearChange = function () {
+		$scope.selectedYear = $scope.year.slice(7,11);
 		$scope.final_res = {};
 		console.log('changed');
 		if($scope.selectedSchool) {
@@ -83,7 +119,13 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 		var arr = [3];
 		arr[0] = {semester: Sem}
 		arr[1] =  {course: Course}
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 		arr[2] = {stream: Streams}
+		console.log(arr[0]);
 
 		var teacherWithDetails = _.clone($scope.pvcfb);
 
@@ -114,6 +156,10 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 		arr[2] = { stream: Streams }
 		arr[3] = { name: Teacher }
 
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 		var	subjectDetails = _.clone($scope.pvcfb);
 
 		for (var x =0;x<arr.length;x++) {
@@ -132,6 +178,46 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 		})
 	}
 
+$scope.logout = function(req,res) {
+		pvcService.logout(function(response) {
+			
+		})
+		$location.path("/");
+	}
+
+$scope.print = function (){
+	
+                var content_vlue = document.getElementById('mycanvas').outerHTML;
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        'table th, table td {' +
+        'border:1px solid #000;' +
+        'padding;0.5em;' +
+        'font-size:19px;' +
+        '}' +
+        
+        '</style>';
+   content_vlue += htmlToPrint
+  var docprint=window.open("");
+ 
+   docprint.document.write('<head><title>feedback</title>');
+   docprint.document.write('<style type="text/css">body{ margin:0px;');
+   docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+   docprint.document.write('.inforow{display:flex;}');
+   docprint.document.write('.infoelement{flex:1; text-align:center; margin:10px;}');
+   docprint.document.write('.large-title {font-weight: 700;font-size: 16px;color: darkcyan;');
+   docprint.document.write('letter-spacing: 0.1em;text-transform: uppercase;padding: 0.5em;}');
+   docprint.document.write('.pct {font-size: 24px; font-weight: 700;}');
+   docprint.document.write('.small-title {font-weight: 700;font-size: 14px;color: darkcyan;letter-spacing: 0.1em;text-transform: uppercase;}');
+   docprint.document.write(' </style>');
+   docprint.document.write('</head><body onLoad="self.print()"><center><h1><u>Feedback Report</u></h1>');
+   docprint.document.write(content_vlue);
+   docprint.document.write('</center></body></html>');
+   docprint.print();
+   docprint.close();
+  
+}
+    
 
 
 	$scope.streamList = function(course) {
@@ -186,9 +272,9 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 			"The experiments generated enough interest and helped in developing/strengthening your concepts.",
 		    "Created sufficient opportunity for students to practice their skill.",
 		    "Adequate time was devoted to interactive sessions to discuss analyze the results and clarify doubts of students.",
-			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically",
+			"The teacher helped you build your capability to think and plan the experiments independently and analyze the results critically.",
 			"Encourages and makes you feel comfortable about asking questions.",
-			"Provides enthusiastic, clear and satisfactory response to student s questions."
+			"Provides enthusiastic, clear and satisfactory response to student's questions."
 		]
 
 	}
@@ -203,6 +289,7 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 
 		console.log($scope.pvcfb);
 
+		$scope.searching = true;		
 		var course = selectedCourse;
 		var sem = selectedSem;
 		var stream = selectedStream;
@@ -281,7 +368,19 @@ faculty.controller("pvcAnalysisCtrl", function($scope, $rootScope, $location, pv
 			}
 		});
 
-		$scope.final_res = final_res;
+		$scope.searching = false;
+		$scope.searched = true;
+
+		if (final_res.length == 0) {
+			$scope.final_res = null;
+			alert("No feedback data exists");
+			$scope.disabled =true;
+		}
+
+		else {
+			$scope.final_res = final_res;
+			$scope.disabled = false;
+		}
 
 	//		console.log(final_res);
 

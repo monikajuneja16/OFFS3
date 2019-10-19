@@ -109,6 +109,12 @@ h4 {
 	margin-top: 2em;
 }
 
+/*.div-disabled
+{
+  pointer-events: none;
+  background-color: rgb(219, 213, 213);
+}*/
+
 #grad {
 	margin-left: auto;
     margin-right: auto;

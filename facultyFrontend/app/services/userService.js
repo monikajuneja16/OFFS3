@@ -1,4 +1,4 @@
-faculty.factory('userService', ['$http', '$timeout', '$rootScope', function($http, $timeout, $rootScope) {
+faculty.factory('userService', ['$http', '$timeout', '$rootScope','$location', function($http, $timeout, $rootScope,$location) {
 	return {
 		send_details: function(collegeName, user, callback) {
 		  $http({
@@ -20,6 +20,22 @@ faculty.factory('userService', ['$http', '$timeout', '$rootScope', function($htt
             }, function(response) {
                 console.error(response);
             });
+        },
+
+        logout : function(){
+            $http({
+                method:"GET",
+                url: BACKEND + "/slogout",
+            }).then(function(response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function(response) {
+                if (callback) {
+                    console.error(response.data);
+                    callback(data);
+                }
+            })
         },
 
         verifyUser: function(otp, tablename, enrollment_no, semester, callback) {
@@ -101,19 +117,20 @@ faculty.factory('userService', ['$http', '$timeout', '$rootScope', function($htt
         },
 
         sendFeedbackForEvaluation: function(teachersFeedback, callback) {
-            $http.post(BACKEND + '/feedback',
-                       teachersFeedback, {
-                       headers: { 'Content-Type': 'application/json' }
+            //console.log("Feedback for teachers"+teachersFeedback);
+            $http.post(
+                BACKEND + '/feedback',
+                teachersFeedback, {
+                headers: { 'Content-Type': 'application/json' }
             }).then(function(response) {
-                if (callback) {
-                    callback(response.data);
-                }
-            }, function(response) {
-                console.error(response);
+                callback(response.data);
+            }, function(error) {
+                console.error(error.data);
+                callback(null,error.data);
             })
         },
 
-        getStudentStatus: function(collegeName, semester, course, stream,  callback) {
+        getStudentStatus: function(collegeName, semester, course, stream, year,  callback) {
             $http({
                 method: 'GET',
                 url: BACKEND + '/getStudentStatus',
@@ -121,7 +138,8 @@ faculty.factory('userService', ['$http', '$timeout', '$rootScope', function($htt
                     collegeName: collegeName,
                     semester: semester,
                     course: course,
-                    stream: stream
+                    stream: stream,
+                    year: year
                 }
             }).then(function(response) {
                 if (callback) {

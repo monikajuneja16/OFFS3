@@ -1,77 +1,52 @@
-<div>
-	<br>
-	<div class="row">
-		<div class="col s1">
-		</div>
-		<div class="card container col s10">
-			<div class="card-content">
-				<div class="row">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 
-					<div class="col s2">
-						<div class="login_dropdown">
-							<button class="btn btn-primary dropdown-button2" id="input_field" data-activates="dropdown2" style="background-color: white !important;color: black;">
-								{{ semester || 'sem' }} <span class="caret pull-right">▼</span>
-							</button>
-
-							<ul id="dropdown2" class="dropdown-content" style="background-color: white;color: black;">
-								<li ng-repeat="semester in semesterList" ng-click="setSemester(semester)" style="text-align: center;"> {{ semester }}</li>
-							</ul>
-						</div>
-					</div>
-
-					<div class="col s6">
-						<div class="login_dropdown">
-					        <button class='btn btn-primary dropdown-button2' id="input_field" data-activates='dropdown1' style="background-color: white !important;color: black; width: 30em">
-					            {{ college.collegeName || 'select school' }} <span class="caret pull-right">▼</span>
-					        </button>
-
-					        <ul id='dropdown1' class='dropdown-content' style="background-color: white;color: black; width: 30em;">
-				            	<li><a> Search your college</a></li>
-				            	<li ng-repeat="singleCollege in collegeList"><a ng-click="setCollege(singleCollege)"> {{ singleCollege.collegeName }}</a></li>
-					        </ul>
-		      			</div>
-					</div>
-
-
-
-					<div class="col s2">
-						<div class="login_dropdown">
-					        <button class='btn btn-primary dropdown-button2' id="input_field" data-activates='dropdown3' style="background-color: white !important;color: black;width: 170px;">
-					             {{ courseName.course || 'course'}} <span class="caret pull-right">▼</span>
-					        </button>
-
-					        <ul id='dropdown3' class='dropdown-content' style="background-color: white;color: black;width:170px">
-				            	<li ng-repeat="courseName in courseList"><a ng-click="setCourseName(courseName)"> {{ courseName.course }} </a></li>
-					        </ul>
-		      			</div>
-					</div>
-
-					<div class="col s2">
-						<div class="login_dropdown">
-					        <button class='btn btn-primary dropdown-button2' id="input_field" data-activates='dropdown4' style="background-color: white !important;color: black;width: 170px;">
-					        	{{ streamName.stream || 'stream' }} <span class="caret pull-right">▼</span>
-					        </button>
-
-					        <ul id='dropdown4' class='dropdown-content' style="background-color: white;color: black;width:170px">
-				            	<li ng-repeat="streamName in streamList"><a ng-click="setStreamName(streamName)"> {{ streamName.stream }} </a></li>
-					        </ul>
-		      			</div>
-					</div>
-				</div>
-			</div>
-
-			<div>
-				<button class="btn btn-primary right" ng-click="getStudenelist()">
-					Check Evaluation <i class="material-icons right">send</i>
-				</button>
-				<br><br><br>
-			</div>
-		</div>
-		<div class="col s1"></div>
-	</div>
-	<br>
+<br>
 
 	<div class="row">
+    <div class="row">
+    <div class="col m5 offset-m1">
+        <select ng-model="selectedCollege" ng-change="collegeSelected()">
+            <option value="" selected>Choose USS</option>
+            <option ng-repeat = "college in collegeList">{{college.collegeName}}</option>
+        </select>
+    </div>
+    <div class="col m5">
+        <select ng-model="year" ng-change="yearChange()">
+            <option value="" selected>Choose Feedback Year</option>
+            <option ng-repeat = "options in ['August 2016 - May 2017','August 2017 - May 2018','August 2018 - May 2019', 'August 2019 - May 2020']">{{options}}</option>
+        </select>
+    </div>
+    </div>
+    <div class="row">
+            <div class="col s1">
+        
+            </div>
+    <div class="col s4">
+         <select ng-model="selectedCourse" ng-change="courseSelected()">
+            <option value="" selected>Choose Course</option>
+            <option ng-repeat = "course in courseList">{{course.course}}</option>
+        </select>
+    </div>
+    <div class="col s3">
+        <select ng-model="selectedStream" ng-change="streamSelected()">
+            <option value=""  selected>Choose Stream</option>
+            <option ng-repeat="stream in streamList">{{stream.stream }}</option>
+        </select>
+    </div>
+    <div class="col s3">
+        <select ng-model="selectedSem" ng-change="semesterSelected()">
+            <option value=""  selected>Choose Semester</option>
+            <option ng-repeat="semester in [1,2,3,4,5,6,7,8,9,10]">{{semester}}</option>
+        </select>
+    </div>
+    </div>
+</div>
+<div class="center"> 
+    <a class="btn btn-success" ng-click="getStudentList()" ng-disabled="!selectedYear || !selectedSem || !selectedCourse || !selectedStream || !selectedCollege">CHECK FEEDBACK STATUS</a>
+</div>
+	<br>
+
+	<div class="row" ng-show="searched">
 		<div class="col s1"></div>
 		<div class="card container" style="margin-left:auto; margin-right: auto;">
 			<div class="row">
@@ -79,14 +54,14 @@
 					<div class="col s10">
 						<div class="row">
 							<div class="col s6">
-								<label> Students not filled the form </label>
+								<h3> Feedback completed </h3>
 								<table>
 								  <thead>
 								    <th>S.No.</th>
-								    <th>enrollment_no</th>
+								    <th>Enrollment No.</th>
 								    <th>Name</th>
 								  </thead>
-								  <tr ng-repeat="value in nonSelectedStudents track by $index">
+								  <tr ng-repeat="value in selectedStudents track by $index">
 								    <td>{{ $index  + 1}}</td>
 								    <td>{{ value.enrollment_no }}</td>
 								    <td>{{ value.name }}</td>
@@ -95,14 +70,14 @@
 							</div>
 
 							<div class="col s6">
-								<label> Students filled the form </label>
+								<h3> Feedback remaining </h3>
 								<table>
 								  <thead>
 								    <th>S.No.</th>
-								    <th>enrollment_no</th>
+								    <th>Enrollment No.</th>
 								    <th>Name</th>
 								  </thead>
-								  <tr ng-repeat="value in selectedStudents track by $index">
+								  <tr ng-repeat="value in nonSelectedStudents track by $index">
 								    <td>{{ $index  	+ 1 }}</td>
 								    <td>{{ value.enrollment_no }}</td>
 								    <td>{{ value.name }}</td>
@@ -116,17 +91,129 @@
 		</div>
 		<div class="col s1"></div>
 	</div>
-</div>
 
+	<style type="text/css">
+    .select-wrapper input.select-dropdown {
+    position: relative;
+    cursor: pointer;
+    background-color: aliceblue;
+    border: none;
+    border-bottom: 0 !important;
+    outline: none;
+    height: 3rem;
+    line-height: 3rem;
+    width: 100%;
+    font-size: 1rem;
+    margin: 0 0 20px 0;
+    padding: 0;
+    display: block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-indent: 1em;
+}
+td, th {
+    max-width: 200px;
+}
+td:nth-child(1) {
+  /* your stuff here */
+  padding-right: 3em;
+}
+th:nth-child(n+2):nth-child(-n+6), td:nth-child(n+2):nth-child(-n+6) {
+    text-align: center
+}
+th:nth-child(7), td:nth-child(7) {
+  /* your stuff here */
+  max-width: 90px;
+  text-align: right;
+  padding-right: 2em;
+}
+.inforow {
+    display: flex;
+}
+.infoelement {
+    flex: 1;
+    text-align: center;
+}
+.select-wrapper span.caret {
+    color: initial;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    height: 10px;
+    margin: auto 0;
+    font-size: 10px;
+    line-height: 10px;
+    z-index: 99;
+    cursor: pointer;
+}
+.large-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: darkcyan;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5em;
+}
+.pct {
+    font-size: 24px;
+    font-weight: 700;
+}
+.input-field.col.s12 {
+    margin-top: 0 !important;
+}
+.sub-container .row:nth-child(even) {
+  background: lightcyan
+}
+.sub-container .row:nth-child(odd) {
+  background: mintcream;
+}
+input.no-margin {
+  margin-bottom: 0 !important;
+}
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default) {
+    height:3rem;
+}
+/* https://stackoverflow.com/questions/2610497/change-an-html5-inputs-placeholder-color-with-css */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #909;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #909;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #909;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #909;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #909;
+}
+::placeholder { /* Most modern browsers support this now. */
+   color:    #909;
+}
+.sub-container ul:not(.browser-default) {
+}
+.sub-container ul:not(.browser-default) li {
+}
+.sub-container .autocomplete-content {
+    margin-top: 0px;
+}
+.autocomplete-content {
+    margin-bottom: 0;
+}
+.close-div:hover {
+    background: red !important;
+    color: white;
+    cursor: pointer;
+}
+</style>
 <script type="text/javascript">
- $('.dropdown-button2').dropdown({
-      inDuration: 300,
-      outDuration: 225,
-      constrainWidth: false, // Does not change width of dropdown to that of the activator
-      gutter: 0, // Spacing from edge
-      belowOrigin: false, // Displays dropdown below the button
-      alignment: 'left', // Displays dropdown with edge aligned to the left of button
-      stopPropagation: false // Stops event propagation
-    }
-  );
+	$(document).ready(function () {
+			$('select').material_select();
+	})
 </script>

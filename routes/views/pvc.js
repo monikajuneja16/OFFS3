@@ -2,10 +2,54 @@ var con = require('../../models/mysql'),
 	ses = require('node-ses'),
 	async = require('async'),
 	controller = require('../../models/config'),
-	nodemailer = require('nodemailer');
+	nodemailer = require('nodemailer'),
+	multer=require('multer');
 
 module.exports = {
 	index: function(req, res) {},
+
+	upload_photo: function(req, res) {
+        
+         console.log("in upload section");
+          var storage = multer.diskStorage({
+           destination: function (req, file, cb) {
+           	console.log("destination");
+          cb(null, './facultyFrontend/app/instructor_images/pro_vc/')
+          },
+          filename: function (req, file, cb) {
+          cb(null, 'pro_vc.jpg')
+         }
+       });
+
+        var upload = multer({ 
+        	fileFilter: function (req, file, cb) {
+        		console.log("check");
+
+                  var filetypes = /jpeg|jpg/;
+                  var mimetype = filetypes.test(file.mimetype);
+                  var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+
+                         if (mimetype && extname) {
+                             return cb(null, true);
+                         }else{
+                   cb("Error: File upload only supports the following filetypes - " + filetypes);
+                    console.log("nvalidate");}
+             }, storage: storage }).single('photo');
+
+         upload(req, res, function (err) {
+            if(err) {
+              console.log(err);
+              var obj = { status: 400, message: "Image can't be uploaded" };
+                    res.json(obj);
+            }
+            else{
+            	
+             console.log("Image uploaded");
+             var obj = { status: 200, message: "Image uploaded successfully" };
+             res.json(obj);
+            }
+        })    
+    },
 
 	initials: function(req, res) {
 		console.log('pvc initials');
@@ -13,7 +57,7 @@ module.exports = {
 		var college_name = req.query.college_name;
 		var pvc_id = req.query.pvc_id;
 		var password = req.query.password;
-		var query = 'select * from ' + 'pro_vc where instructor_id = ? and password = ?';
+		var query = 'select * from employee where instructor_id = ? and password = ? and designation="pro vc"';
 		console.log(college_name, pvc_id, password);
 		if (college_name != null && pvc_id != null && password != null) {
 			//Check For all fields
@@ -23,7 +67,7 @@ module.exports = {
 					var obj = { status: 400, message: 'There is error in query!' };
 					res.json(obj);
 				} else if (result[0] == null) {
-					var obj = { status: 400, message: 'No Such User Found ! .' };
+					var obj = { status: 400, message: 'Wrong credentials entered for Pro Vice Chancellor' };
 					res.json(obj); // Invalid Password or username
 				} else {
 					req.session.pvc = result[0];
@@ -40,6 +84,49 @@ module.exports = {
 		}
 	},
 
+	updatePvcInfo   :   function(req,res){
+		var {name,email,phone,date_of_joining,designation,room_no,school,instructor_id}=req.body.pvcInfo;
+		var wrong_info="";
+
+		if(name==undefined || name==""){wrong_info+=", Name";}
+		if(email==undefined ||email==""){wrong_info+=", Email";} 
+		if(phone==undefined || phone==0){wrong_info+=", Phone";} 
+		if(date_of_joining==undefined || date_of_joining=="" || date_of_joining=="0000-00-00"){wrong_info+=", Date of Joining";}
+		if(designation==undefined){wrong_info+=", Designation";}
+		if(room_no==undefined || room_no==""){wrong_info+=", Room Number";}
+		if(instructor_id==undefined){wrong_info+="Instructor Id"}
+		
+		if(wrong_info.length>2){
+			        console.log(wrong_info);
+					console.log("Wrong PVC information");
+					res.status(400).json({'message' : 'Please provide valid input for'+wrong_info.substr(1)+' to record information. Please hover over the input fields to check for format of information.'});
+					return;
+		}
+		console.log(name+" - "+email+" - "+phone+" - "+date_of_joining+" - "+designation+" - "+room_no+" - "+school+" - "+instructor_id);
+		var query="update ?? set name=?,email=?,phone=?,date_of_joining=?,designation=?,room_no=?,school=? where instructor_id=?"
+		con.query(query,['employee',name,email,phone,date_of_joining,designation,room_no,school,instructor_id],
+			function(err,done){
+				if(err){console.log(err);return;}
+				else if(done){
+				console.log("pvc information updated");
+				res.status(200).json({'message':'Pro Vice Chancellor Information Updated'});
+				}
+		})
+	},
+
+logout: function(req, res) {
+    console.log("logout")
+    if (req.session.pvc) {
+         req.session.destroy();
+         var obj={status:200,message:"Logged Out"};
+         console.log(obj);
+         res.json(obj);
+     } else{
+      console.log("No session detected");
+      var obj = { status: 200, message: "No session detected" };
+    }
+  },
+
 	checksession: function(req, res) {
 		/*  This route is just to check if sessions are working .
 			Hit this url once you have logged in.	*/
@@ -54,15 +141,21 @@ module.exports = {
 	},
 	dashboard: function(req, res) {
 		console.log('In dashboard');
+		let colleges=['usap','usbas','usbt','usct','use','usem','ushss','usict','uslls','usmc','usms'];
+		
 		var year = req.query.year;
-		var college_name = req.query.college_name;
-
-		if (year == null || college_name == null) {
+		var school_name = req.query.college_name;
+		var finalQuery,insArr=[];
+	
+		if (year == null || school_name == null) {
 			console.log(year);
-			console.log(college_name);
+			console.log(school_name);
 			var obj = { status: 400, message: 'Not All Fields Set' };
 			res.json(obj);
 		} else {
+		
+		finalQuery=colleges.map(college_name=>{
+		
 			var tables = {
 				batch_allocation: college_name + '_batch_allocation',
 				subject_allocation: college_name + '_subject_allocation_' + year,
@@ -70,7 +163,7 @@ module.exports = {
 				employee: 'employee',
 			};
 
-			console.log(tables);
+			//console.log(tables);
 var fin = `s.feedback_id,
 s.batch_id,
 s.subject_code,
@@ -121,13 +214,18 @@ f.no_of_students_evaluated`;
 				' as e on s.instructor_code =e.instructor_id ' +
 				' inner join  ' +
 				tables.feedback +
-				' as f on s.feedback_id = f.feedback_id where no_of_students_evaluated != 0';
-			console.log(query);
-			con.query(query, function(error, result) {
+				' as f on s.feedback_id = f.feedback_id where e.school=? and no_of_students_evaluated != 0';
+			//console.log(query);
+			insArr.push(school_name);
+			return query;
+		})
+			finalQuery=finalQuery.join(" union ");
+			con.query(finalQuery,insArr, function(error, result) {
 				if (error) {
 					console.log(error);
-					var obj = { status: 400, message: 'There is error in query!' };
-					res.json(obj); // Connection Error
+					var obj = { message: 'Feedback not recorded for this year!' };
+					res.status(400).json(obj); // Connection Error
+					return;
 				} else if (result[0] == null) {
 					console.log('No pvc Found');
 					var obj = { status: 400, message: 'No Such User Found ! .' };

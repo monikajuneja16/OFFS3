@@ -5,35 +5,41 @@
   <div>
     <div id="Signup">
       <div class="login_dropdown">
-        <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown1' style="background-color: white !important;color: black; width: 34em">
-            {{ college.collegeName || 'SELECT SCHOOL' }} <span class="caret pull-right">▼</span>
-        </button>
-
-          <ul id='dropdown1' class='dropdown-content' style="background-color: white;color: black; width: 34em">
-            <li><a class="single_school"> Search your college</a></li>
-            <li ng-repeat="singleCollege in collegeList"><a class="single_school" ng-click="setCollege(singleCollege)"> {{ singleCollege.collegeName }}</a></li>
-          </ul>
-      </div>
-
-      <div class="login_dropdown">
         <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown2' style="background-color: white !important;color: black; width: 34em">
-            {{ user.category || 'CHOOSE AUTHENTICATION MODE' }} <span class="caret pull-right">▼</span>
+            {{ displayed || 'CHOOSE AUTHENTICATION MODE' }} <span class="caret pull-right">▼</span>
         </button>
 
 
         <div id='dropdown2' class='dropdown-content' style="background-color: white;color: black; width: 34em">
           <ul class="school_list">
-            <li ng-repeat="userCategory in userCategoryList"><a class="single_school" ng-click="setUserCategory(userCategory)"> {{ userCategory }}</a></li>
+            <li ng-repeat="userCategory in userCategoryList" id="disableSome"><a class="single_school" ng-click="setUserCategory(userCategory)"> {{userCategory | uppercase}}</a></li>
           </ul>
         </div>
       </div>
+      <div ng-show="hider1">
+        <div class="login_dropdown">
+          <button class='dropdown-button btn btn-primary' id="input_field" data-activates='dropdown1' style="background-color: white !important;color: black; width: 34em">
+              {{ college.collegeName || 'SELECT USS' }} <span class="caret pull-right">▼</span>
+          </button>
 
-    <div class="card" id="Signup">
+            <ul id='dropdown1' class='dropdown-content' style="background-color: white;color: black; width: 34em">
+              <li><a class="single_school"> Select USS</a></li>
+              <li ng-repeat="singleCollege in collegeList"><a class="single_school" ng-click="setCollege(singleCollege)"> {{ singleCollege.collegeName }}</a></li>
+            </ul>
+        </div>
+      </div>
+      <!-- <div ng-if="user.category===undefined && college===undefined" style="margin-top:50px;">
+          <h4>
+            Please select <b>USS</b> and <b>Authentication mode</b> from dropdowns to use the Faculty Feedback System.
+          </h4>
+        </div> -->
+    <div ng-show="hider2">
+    <div class="card" id="Signup" ng-hide="user.category==undefined">
         <div class="Signup_head" style="height: 3em">
           <div class="row">
             <div class="col s12">
               <span>
-                <h4 style = "color: #1A237E; padding-left: 0.5em;"> <strong>{{ user.category.charAt(0).toUpperCase() + user.category.slice(1) }} Login</strong></h4>
+                <h4 style = "color: #1A237E; padding-left: 0.5em;"> <strong>{{ displayed.charAt(0).toUpperCase() + displayed.slice(1) }} Login</strong></h4>
               </span>
             </div>
 
@@ -41,23 +47,49 @@
         </div>
 
         <div class="Signup_body">
+          
           <div class="row">
             <form class="col s12">
               <div class="row">
+                
                 <div class="input-field col s12" ng-if="user.category=='student'">
-                  <input id="rollno" type="text" class="validate" ng-model="user.rollno" ng-blur="findSemister()">
+                  <input id="rollno" type="text" class="roll validate" ng-focus="fieldTouch[0]=true" title="Length of Roll Number should be 11" ng-model="user.rollno" pattern="[0-9]{10}[1-9]{1}" maxlength="11" ng-blur="findSemister()">
+                  <span ng-show="(user.rollno==undefined || user.rollno.length==0) && fieldTouch[0]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Roll Number should be 11 digits long</span>
+                  <span class="rght" ng-show="(user.rollno!=undefined && user.rollno.length!=0) && fieldTouch[0]"><i class="fa fa-check" aria-hidden="true"></i> Roll number entered correctly</span>
                   <label for="rollno"> Your 11 Digit Enrollment Number</label>
                 </div>
-                <div class="input-field col s12" ng-if="user.category!=='student'">
-                  <input id="rollno" type="text" class="validate" ng-model="user.rollno">
-                  <label for="rollno"> {{ $scope.audience || 'User Id' }}</label>
+
+                <div ng-if="user.category=='Teacher'" >
+                  <span style="color:blue; display: block;font-size:12px;margin:10px;">Kindly select the teacher name from the dropdown which appears after typing initials</span>
+                  
+                  <div class="input-field col s12" ng-if="user.category!='student'">
+                      <input id="userName" type="text" class="validate" ng-model="user.name" ng-blur="getNameId(user.name)">
+                      <label for="rollno"> {{ $scope.audience || 'Type initials of your name' }}</label>
+                  </div>
                 </div>
+
+                <div ng-if="user.category!='Teacher' && user.category!='student'">
+                    <div class="input-field col s12" ng-if="user.category!='student'">
+                        <input id="userName" type="text" class="validate" ng-model="user.name" ng-disabled="true" ng-blur="getNameId(user.name)">
+                        <label for="rollno"> {{ $scope.audience }}</label>
+                    </div>
+                </div>
+
+                <div class="input-field col s12" ng-if="user.category!='student'">
+                    <input id="rollno" type="text" class="validate" ng-model="user.rollno" ng-disabled="true" placeholder="UserId">
+                    <label for="rollno"> {{ $scope.audience }}</label>
+                  </div>
+
+                
               </div>
 
               <div class="row" ng-if="user.category=='student'">
                 <div class="input-field col s12">
-                  <input id="email" type="text" class="validate" ng-model="user.email">
+                  <input id="email" type="email" class="validate" ng-focus="fieldTouch[1]=true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ng-model="user.email">
                   <label for="email"> Email </label>
+                  <span ng-show="(user.email==undefined || user.email.length==0) && fieldTouch[1]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Enter email in the correct format</span>
+                  <span class="rght" ng-show="user.email!=undefined && user.email.length!=0 && fieldTouch[1]"><i class="fa fa-check" aria-hidden="true"></i> Email entered correctly</span>
+  
                 </div>
               </div>
 
@@ -70,27 +102,39 @@
 
               <div class="row">
                 <div class="input-field col s4" ng-if="user.category=='student'">
-                  <input  id="semister" type="text" class="validate" ng-model="user.semister" ng-blur="updateSemester()">
-             <label for="semester" class="active">Current Semester</label> 
+                  <input  id="semister" type="text" class="validate" ng-change="fieldTouch[2]=true" ng-model="user.semister" maxlength="1" pattern="^\d{1,2}$" ng-blur="updateSemester()">
+                  <span ng-show="user.semister=='---' && fieldTouch[2]" class="wrong"><i class="fa fa-times" aria-hidden="true"></i> Entered enrollment number's year of admission is wrong</span>
+                  <span class="rght" ng-show="user.semister!='---' && fieldTouch[2]"><i class="fa fa-check" aria-hidden="true"></i> Semester calculated correctly</span>
+             <label for="semester" class="active">Current Semester</label>
                 </div>
               </div>
 
               <div class="row">
-            
+
               <div class="g-recaptcha hide" data-sitekey="6LcW-CcUAAAAAMSs6yu89PgIMvFyOT4Bps651gYE"></div>
                 <div class="input-field col s12">
                   <p ng-if="user.category=='student'"><strong>This feedback is anonymous</strong></p>
-                  <button  ng-click="LoginUser()" ng-hide="hidebutton" class="btn waves-effect waves-light pull-right" id="form_button" type="submit" name="action">Submit
-                    <i class="material-icons right">send</i>
+                  <p ng-if="user.category=='student'">Kindly click <a href="https://goo.gl/forms/pjKx9ZdWTuWXbtsV2" target="_blank">here</a> if you cannot login</p>
+                  <button ng-if="user.category=='student'" ng-click="LoginUser()" ng-disabled= "!college.collegeName || !user.category || !user.rollno || !user.email || !user.semister" ng-hide="hidebutton" class="btn waves-effect waves-light pull-right" id="form_button" type="submit" name="action">Submit
+                    <!--<i class="material-icons right">send</i>-->
                   </button>
+                  <button ng-if="user.category=='Dean' || user.category=='Teacher'" ng-click="LoginUser()" ng-disabled= "!college.collegeName || !user.category || !user.rollno || !user.password" ng-hide="hidebutton" class="btn waves-effect waves-light pull-right" id="form_button" type="submit" name="action">Submit
+                    <!--<i class="material-icons right">send</i>-->
+                  </button>
+                  <button ng-if="user.category=='VC' || user.category=='Pro VC'" ng-click="LoginUser()" ng-disabled= "!user.category || !user.rollno || !user.password" ng-hide="hidebutton" class="btn waves-effect waves-light pull-right" id="form_button" type="submit" name="action">Submit
+                      <!--<i class="material-icons right">send</i>-->
+                  </button>
+                  <a ng-if="user.category=='Teacher' || user.category=='Dean' || user.category=='VC' || user.category=='Pro VC'" href="#/resetPassword">Forgot/Reset Password</a>
                 </div>
                 <div ng-show="showSpinner" class="pull-right" id="loaddiv" style="margin: auto; width: 17%;">
                     <img style="margin-top:5px;" src="./app/resources/images/5.gif" width="60px" />
                 </div>
               </div>
             </form>
+         
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -106,6 +150,42 @@
       stopPropagation: false // Stops event propagation
     }
   );
-</script>
 
+  $(".roll").eq(0).keypress(function(e){
+    alert("crekcr");    
+    if(e.which<48 || e.which>57){   
+          e.preventDefault();
+        }
+     })
+</script>
+<style>
+  /* #disableSome:nth-child(1),#disableSome:nth-child(2),#disableSome:nth-child(3),#disableSome:nth-child(4){
+    color: #ccc;
+    pointer-events:none;
+    background-color: rgba(128, 128, 128, 0.349);
+  } */
+</style>  
 <script src='https://www.google.com/recaptcha/api.js'></script>
+<style>
+  .wrong{
+      color:red;
+      display: block;
+      font-size:12px;
+      margin:10px;
+  }
+
+  .wrong>i{
+      font-size: 16px;
+  }
+
+  .rght{
+      color:rgb(97, 161, 54);
+      display: block;
+      font-size:12px;
+      margin:10px;
+  }
+
+  .rght>i{
+      font-size: 16px;
+  }
+</style>

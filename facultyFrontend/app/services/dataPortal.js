@@ -1,4 +1,5 @@
-faculty.factory('dataPortalService',['$http', '$timeout', '$rootScope', function($http, $timeout, $rootScope) {
+faculty.factory('dataPortalService',['$http', '$timeout', '$rootScope','$window','$location', function($http, $timeout, $rootScope,$window,$location){
+	/*data portal*/ 
 	return {
 		getCourse: function(college, callback) {
 			$http({

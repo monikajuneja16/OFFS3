@@ -6,13 +6,13 @@
 
     <div class="col m4 offset-m1">
         <select ng-model="selectedCollege" ng-change="collegeSelected()">
-            <option value="" disabled selected>Choose School</option>
+            <option value="" selected>Choose USS</option>
             <option ng-repeat = "college in collegeList">{{college.collegeName}}</option>
         </select>
     </div>
     <div class="col s2">
          <select ng-model="selectedCourse" ng-change="courseSelected()">
-            <option value="" disabled selected>Choose Course</option>
+            <option value="" selected>Choose Course</option>
             <option ng-repeat = "course in courseList">{{course.course}}</option>
         </select>
     </div>
@@ -30,7 +30,13 @@
     </div>
 </div>
 <div class="center">
+    
     <a class="waves-effect white black-text btn" ng-click="search()" ng-disabled="!selectedSem || !selectedCourse || !selectedStream || !selectedCollege">SEARCH</a>
+    
+    <p id="hide" ng-show="searched"><br><b>If you are not be able to find the names of a particular faculty or a Guest Faculty in the dropdown, Please fill out the given below form seperately with relevant information about the same, if any.
+        <br><u><a href="#/newTeacher" target="_blank">Form for Guest Faculty</a></u>
+        <br>NOTE: If more than one teacher is teaching the same subject, use 'ADD SUBJECT' button to replicate the row and fill out the details for other teachers teaching the same subject. Please ensure that details of all the teachers are filled out and no teacher is left.</b>
+        </p>
 </div>
 <br>
 <div class="container sub-container">
@@ -55,7 +61,7 @@
 
       <div class="col m3">
         <div class="input-field col s12">
-          <input id="teacher_name" type="text" class="autocomplete no-margin" ng-model="item.teacher_name" placeholder="Faculty Name">
+          <input id="teacher_name" type="text" class="autocomplete no-margin" ng-model="item.teacher_name" ng-blur="changeFlag(item)" ng-required="true" placeholder="Faculty Name">
         </div>
       </div>
 
@@ -67,7 +73,7 @@
 
 <br>
 
-<div class="row center">
+<div class="row center" ng-show="searched">
   <div class="col m6">
       <a class="waves-effect white black-text btn" ng-click="add()" ng-disabled="!selectedSem || !selectedCourse || !selectedStream || !selectedCollege">ADD SUBJECT</a>
   </div>
@@ -108,12 +114,10 @@
 td, th {
     max-width: 200px;
 }
-
 td:nth-child(1) {
   /* your stuff here */
   padding-right: 3em;
 }
-
 th:nth-child(n+2):nth-child(-n+6), td:nth-child(n+2):nth-child(-n+6) {
     text-align: center
 }
@@ -123,11 +127,9 @@ th:nth-child(7), td:nth-child(7) {
   text-align: right;
   padding-right: 2em;
 }
-
 .inforow {
     display: flex;
 }
-
 .infoelement {
     flex: 1;
     text-align: center;
@@ -169,7 +171,6 @@ th:nth-child(7), td:nth-child(7) {
 input.no-margin {
   margin-bottom: 0 !important;
 }
-
 input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default) {
     height:3rem;
 }
@@ -190,21 +191,16 @@ input:not([type]), input[type=text]:not(.browser-default), input[type=password]:
 ::-ms-input-placeholder { /* Microsoft Edge */
    color:    #909;
 }
-
 ::placeholder { /* Most modern browsers support this now. */
    color:    #909;
 }
-.sub-container ul:not(.browser-default) {
+/*.sub-container ul:not(.browser-default) {
 }
-
 .sub-container ul:not(.browser-default) li {
-
-}
-
+}*/
 .sub-container .autocomplete-content {
     margin-top: 0px;
 }
-
 .autocomplete-content {
     margin-bottom: 0;
 }

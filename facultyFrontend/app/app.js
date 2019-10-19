@@ -1,4 +1,4 @@
-window.faculty = angular.module('faculty', ['ngAnimate', 'ngRoute', 'ui.bootstrap'])
+window.faculty = angular.module('faculty', ["ngStorage",'ngAnimate', 'ngRoute', 'ui.bootstrap'])
 .config(['$routeProvider', '$locationProvider', '$httpProvider',
     function($routeProvider, $locationProvider, $httpProvider) {
         $routeProvider
@@ -60,7 +60,23 @@ window.faculty = angular.module('faculty', ['ngAnimate', 'ngRoute', 'ui.bootstra
         .when('/dataPortal', {
             controller: 'dataPortalCtrl',
             templateUrl: './app/templates/dataPortal/dataPortal.html'
-        });
+        })
+        .when('/studentData', {
+            controller: 'studentDataCtrl',
+            templateUrl: './app/templates/studentData/studentData.html'
+        })
+        .when('/dataStatus',{
+            controller:'dataStatusCtrl',
+            templateUrl: './app/templates/user/dataStatus.html'
+        })
+        .when('/resetPassword',{
+            controller:'resetPasswordCtrl',
+            templateUrl:'./app/templates/resetPassword.html'
+        })
+        .when('/newTeacher',{
+            controller:'newTeacherCtrl',
+            templateUrl:'./app/templates/teacher/newTeacher.html'
+        })
 
     }
 ]);
@@ -69,11 +85,3 @@ window.faculty = angular.module('faculty', ['ngAnimate', 'ngRoute', 'ui.bootstra
 faculty.config(['$locationProvider', function($locationProvider) {
   $locationProvider.hashPrefix('');
 }]);
-
-
-// bhai eakk min mila hai kuch let me try
-//okay
-//samajh rha hun..
-//ab upload karten hain..
-// bhai mei he kar deta hun
-//but isse previous data erase to nhi hoga ?

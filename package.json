@@ -16,7 +16,7 @@
   },
   "homepage": "https://github.com/SDC-USICT/OFFS3_Backend#readme",
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^2.6.1",
     "bcrypt": "^1.0.3",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
@@ -25,13 +25,21 @@
     "express": "^4.16.2",
     "express-myconnection": "^1.0.4",
     "express-session": "^1.15.6",
+    "fs": "0.0.1-security",
+    "handlebars": "^4.1.2",
+    "html-pdf": "^2.2.0",
     "ip": "^1.1.5",
     "method-override": "^2.3.10",
     "mssql": "^4.1.0",
+    "multer": "^1.4.1",
     "mysql": "^2.15.0",
-    "node-ses": "^2.0.5",
-    "nodemailer": "^4.6.4",
-    "request": "^2.83.0",
-    "sshpk": "^1.14.1"
+    "node-ses": "^2.1.0",
+    "nodemailer": "^4.7.0",
+    "nodemailer-smtp-transport": "^2.7.4",
+    "nodemon": "^1.18.9",
+    "nunjucks": "^3.2.0",
+    "request": "^2.88.0",
+    "sshpk": "^1.14.1",
+    "webshot": "^0.18.0"
   }
 }

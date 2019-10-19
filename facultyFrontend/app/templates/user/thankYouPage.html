@@ -35,7 +35,6 @@ h3 {
   font-weight: 600;
   color: #EEE;
 }
-
 </style>
 
 <div id="wrapper" class="animated zoomIn" style="margin-top: 0">
@@ -47,20 +46,22 @@ h3 {
 </h1>
 <h3>
   Confirmation Email Sent to your email ID.
-</h3>
-</div>
+</h3><br><br>
+<button class="btn waves-effect waves-light left" style="position: relative; left : 35%" id="redirect">Back to Home Page</button>
+  </div>
 
 <script type="text/javascript">
-  $( document ).ready(function() {
-
-$("h1").hover(function() {
-  $( this ).addClass("animated infinite pulse");
-  // we add pulse animation and to infinite
-}, function() {
-  // when user no longer hover on the h1
-  $( this ).removeClass("animated infinite pulse");
-  // we remove the pulse
+$( document ).ready(function() {
+  $("h1").hover(function() {
+    $( this ).addClass("animated infinite pulse");
+    // we add pulse animation and to infinite
+  }, function() {
+    // when user no longer hover on the h1
+    $( this ).removeClass("animated infinite pulse");
+    // we remove the pulse
+  });
+    $("#redirect").click(function(){
+    window.location.href="/#/";
+  })
 });
-});
-
 </script>

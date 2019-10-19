@@ -1,12 +1,16 @@
-faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, facultyService) {
+faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $localStorage, facultyService) {
+    
 
 	$scope.dean = [];
-	$scope.selectedYear = '2017';
-
+	$scope.selectedYear = '2019';
+	$scope.year = 'August 2019 - May 2020';
+	$scope.searching = false;
+	$scope.searched = false;
+	$scope.disabled = true;
 	$scope.getFeedback = function() {
-		console.log($rootScope);
+		console.log($localStorage);
 
-		facultyService.getFeedback($rootScope.college.collegeCode, $scope.selectedYear, function(response) {
+		facultyService.getFeedback($localStorage.college.collegeCode, $scope.selectedYear, function(response) {
 			$scope.deanfb = response;
 			console.log($scope.deanfb);
 
@@ -14,6 +18,21 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 			$scope.teacherlist = _.chain($scope.deanfb).pluck('name').uniq().value().sort();
 			$scope.subjects = _.chain($scope.deanfb).pluck('subject_name').uniq().value();
 			$scope.course = _.chain($scope.deanfb).pluck('course').uniq().value();
+			
+			//for BTECH MTECH problem
+			$scope.bmtech=['B. TECH','M. TECH'];
+			$scope.course=$scope.course.map((course)=>{
+				if(course=='MTECH'){
+					$scope.bmtech[1]=course;
+					return 'M. TECH'
+				}else if(course=='BTECH'){
+					$scope.bmtech[0]=course;
+					return 'B. TECH'
+				}else{
+					return course;
+				}
+			});
+
 			$scope.stream = _.chain($scope.deanfb).pluck('stream').uniq().value();
 			$scope.semester = _.chain($scope.deanfb).pluck('semester').uniq().value();
 
@@ -31,6 +50,11 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 		 arr[0] = {semester: $scope.selectedSem}
 		 arr[1] =  {course: $scope.selectedCourse}
 		arr[2] = {stream: $scope.selectedStream}
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 
 		var teacherWithDetails = _.clone($scope.deanfb);
 
@@ -60,7 +84,12 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 		arr[2] = {stream: $scope.selectedStream}
 		arr[3] = {name: $scope.selectedTeacher}
 
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
+		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
+
 		var	subjectDetails = _.clone($scope.deanfb);
+		console.log(subjectDetails);
 
 		for (var x =0;x<arr.length;x++) {
 			var key = Object.keys(arr[x]);
@@ -70,7 +99,7 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 			}
 			 
 		}
-
+        console.log(subjectDetails);
 		$scope.subjects =  _.chain(subjectDetails).pluck('subject_name').uniq().value().sort();
 
 		$(document).ready(function () {
@@ -82,6 +111,11 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 
 	$scope.streamList = function() {
 		var course = $scope.selectedCourse;
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
+		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
+
 
 		var StreamDetails = _.where($scope.deanfb, {course:course});
 		$scope.stream =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
@@ -99,11 +133,12 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 	// }
 
 	$scope.yearChange = function () {
+		$scope.selectedYear = $scope.year.slice(7,11);
 		console.log('changed');
 		$scope.getFeedback();
 	}
 
-	$rootScope.attributesList = {
+	$scope.attributesList = {
 		theory: [
 			"Coverage of all the topics prescribed in the syllabus, with adequate depth and detail.",
 			"Compliance with the number of teaching hours allotted and actual hours taught.",
@@ -138,15 +173,68 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 
 	}
 
+	$scope.logout = function(req,res) {
+		facultyService.logout(function(response) {
+			
+		})
+		$location.path("/");
+	}
+	
+
+  
+
+
+   $scope.print = function (){	 
+	
+   var content_vlue = document.getElementById('mycanvas').outerHTML;
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        'table th, table td {' +
+        'border:1px solid #000;' +
+        'padding;0.5em;' +
+        'font-size:19.35px;' +
+        '}' +
+        
+        '</style>';
+   content_vlue += htmlToPrint
+  var docprint=window.open("");
+ 
+   docprint.document.write('<head><title>feedback</title>');
+   docprint.document.write('<style type="text/css">body{ margin:0px;');
+   docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+   docprint.document.write('.inforow{display:flex;}');
+   docprint.document.write('.infoelement{flex:1; text-align:center; margin:10px;}');
+   docprint.document.write('.large-title {font-weight: 700;font-size: 16px;color: darkcyan;');
+   docprint.document.write('letter-spacing: 0.1em;text-transform: uppercase;padding: 0.5em;}');
+   docprint.document.write('.pct {font-size: 24px; font-weight: 700;}');
+   docprint.document.write('.small-title {font-weight: 700;font-size: 14px;color: darkcyan;letter-spacing: 0.1em;text-transform: uppercase;}');
+   docprint.document.write(' </style>');
+   docprint.document.write('</head><body onLoad="self.print()"><center><h1><u>Feedback Report</u></h1>');
+   docprint.document.write(content_vlue);
+   docprint.document.write('</center></body></html>');
+   docprint.print();
+   docprint.close();
+  
+}
+  
+    
+   
+
 	$scope.search  = function () {
 
 		console.log($scope.deanfb);
 
+		$scope.searching = true;
 		var course = $scope.selectedCourse;
 		var sem = $scope.selectedSem;
 		var stream = $scope.selectedStream;
 		var subject = $scope.selectedSubject;
 		var teacher = $scope.selectedTeacher;
+
+		//Only to resolve MTECH and BTECH problem aaawwww!!!
+		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
+		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
+
 
 		console.log(sem)
 		console.log(course)
@@ -188,6 +276,11 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 				val.type="Practical"
 			}
 
+			if(val.course=='BTECH'){
+				val.course='B. TECH';
+			}else if(val.course=='MTECH'){
+				val.course='M. TECH';
+			}
 
 			if(val.type=="Theory") {
 				var atts = []
@@ -223,9 +316,21 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, f
 			}
 		});
 
-		$scope.final_res = final_res;
+		$scope.searching = false;
+		$scope.searched = true;
 
-	//		console.log(final_res);
+		if (final_res.length == 0) {
+			$scope.final_res = null;
+			alert("No feedback data exists");
+			$scope.disabled =true;
+		}
+
+		else {
+			$scope.final_res = final_res;
+			$scope.disabled = false;
+		}
+
+			console.log(final_res);
 
 
 	}

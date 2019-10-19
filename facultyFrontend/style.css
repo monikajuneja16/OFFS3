@@ -7,6 +7,12 @@ h6 {
   font-family: Roboto;
 }
 
+.btn__back{
+  display: block;
+  position: relative;
+  margin: 10px;
+}
+
 html {
   font-family: Roboto;
 }

@@ -12,37 +12,36 @@
 
             <div class="student-enroll"> {{ user.enrollment_no }}</div>
         </div>
-        <div class="col s4">
+        <!-- <div class="col s4">
             <center>
                 <img height=100 width=149 id="stud-img" class="student-main-image" src="http://placehold.it/180x200">
-
+                
                 <div style="margin-bottom: 0px !important;" class="row">
-
+                    
                     <form name="name" action="savefile" method="post" enctype="multipart/form-data">
                         <input class="file-input" id="upload-photo" type='file' name="file" value="file"/>
                         <label id="upload-photo-label" for="upload-photo" class="custom-file-upload"> Choose Image </label>
                         <br>
                         <br>
                         <input name="submit" class="waves-effect waves-light  btn" type="submit" value="Upload File">
-                    </form>
+                    </form> 
                     <div class="form-instructions">FORMAT: your-enrollment-number.jpg
                     </div>
-                </div>
+                </div> 
             </center>
-
-        </div>
-        <div class="col s4">
+        </div>  -->
+        <!-- <div class="col s4 right" style="margin-top:75px;">
             <a class="logout btn waves-effect waves-light right" ng-click="logout()">LOG OUT </a>
-        </div>
+        </div> -->
     </div>
 
     <div class="card-action">
         <div class="row">
 
             <div class="col s3">
-                <div class="small-title">SCHOOL</div>
+                <div class="small-title">USS</div>
 
-                <div class="small-content school">{{ user.college_name }}</div>
+                <div class="small-content school">{{ user.school }}</div>
 
             </div>
 
@@ -84,6 +83,9 @@
         <a class="proceed-to-feedback btn waves-effect waves-light" ng-click="feedbackProcess()">
             PROCEED TO FEEDBACK PROCESS
         </a>
+         <button class="logout btn waves-effect waves-light right" ng-click="logout()">LOG OUT
+               <i class="fas fa-sign-out-alt"></i>
+         </button>
     </div>
 </div>
 </div>
