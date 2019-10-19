@@ -527,7 +527,8 @@ module.exports = {
                   readHTMLFile('./facultyFrontend/app/templates/feedback_email.html', function(err, html) {
                       var template = handlebars.compile(html);
                       var replacements = {
-                           username: req.session.student.name
+                           username: req.session.student.name,
+                           link:process.env.link
                       };
                       var htmlToSend = template(replacements);
                       var mailOptions = {
@@ -668,12 +669,22 @@ module.exports = {
 
  
   console.log(req.query);
-  var enrNo=JSON.parse(req.query.data[0]).enrollment_no;
+
+  var spread=(...p)=>p;
+  
+  var students=req.query.data;
+  if(typeof students=='string'){
+    console.log("hit");
+    students=spread(students);   
+  }
+  var enrNo=JSON.parse(students[0]).enrollment_no;
   var admYr="20"+enrNo.slice(enrNo.length-2);
   //var year= process.env.year - ( - process.env.odd_even)/2;
   var college_name = req.query.college;
   var course = req.query.course;
   var stream = req.query.stream;
+
+  
 
   if (process.env.year) {
     var tableName = `${college_name}_student_${admYr}`;
@@ -689,7 +700,10 @@ module.exports = {
           })
         );
       }else{
-        async.each(req.query.data,(singleStudent, callback) => {
+
+        
+      
+        async.each(students,(singleStudent, callback) => {
           // console.log("Student : "+singleStudent)
              
           
@@ -704,7 +718,7 @@ module.exports = {
              con.query(
                query,
                [
-                 tableName,
+                 tableName, 
                  student.enrollment_no,
                  student.name,
                  student.email,

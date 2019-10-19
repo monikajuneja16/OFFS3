@@ -86,17 +86,17 @@ logout : function(){
 				}
 			}).then(function(response) {
 				if (callback) {
-					$window.alert("Student data recorded");
-					callback(response.data);
-					$location.path("/");
-					location.reload();
+					// $window.alert("Student data recorded");
+					callback(response);
+					// $location.path("/");
+					// location.reload();
 				}
 			}, function(response) {
 				if (callback) {
-					$window.alert("Student Entry exists");
+					// $window.alert("Student Entry exists");
 					console.error(response);
 					callback(response);
-					$location.path("/studentData");
+					// $location.path("/studentData");
 				}
 			})
 		}

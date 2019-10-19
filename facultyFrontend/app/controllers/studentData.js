@@ -138,10 +138,11 @@ faculty.controller('studentDataCtrl', ['$http', '$scope', 'dataPortalService', '
 		studentDataService.sendData($scope.collegeCode, $scope.selectedCourse, $scope.selectedStream, $scope.selectedYear, $scope.data, function (res) {
 			if (res.data) {
 				console.log(res.data);
-				if (res.data.status == 200) {
+				if (res.data.dataInserted) {
 					$window.alert("Student data recorded");
 					$scope.showSpinner=!$scope.showSpinner;
-					
+					window.location="/";
+					// $location.path("/");
 				} else {
 					$window.alert("Student Entry exists");
 					$scope.showSpinner=!$scope.showSpinner;
