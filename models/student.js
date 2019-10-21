@@ -4,7 +4,7 @@ module.exports = {
  
  	checkLogin: function(college_name, year, semester, enrollment_no, callback) {
  
- 
+		console.log(year);
  		var student_table = college_name + '_student_' + year;
  		var enrollment_no = Number(enrollment_no);
         var query = 'select * from ?? where enrollment_no = ?';

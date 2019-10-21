@@ -188,6 +188,7 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
       year = year + 4;
     } */  
 
+    console.log(CURR_YEAR);
     $scope.user.semister = ((CURR_YEAR-2000) - year) * 2 + ODD_EVEN;
     
     //for students with more than 8 sems MTECH
