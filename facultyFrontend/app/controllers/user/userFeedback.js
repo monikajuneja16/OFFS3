@@ -43,8 +43,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 		]
 
 	}
-	// 
-	// localStorage.clear();
+	
 
 	$scope.getInstructorsForFeedback = function() {
 
@@ -63,26 +62,16 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 		// var semester = "1";
 		
 		var course = $localStorage.userInfo.course;
-		// localStorage.setItem("course", JSON.stringify($rootScope.userInfo.course));
+	
 		
 		
 
 		var stream = $localStorage.userInfo.stream;
-		// localStorage.setItem("stream", JSON.stringify($rootScope.userInfo.stream));
 		var semester = $localStorage.semester;
-		// localStorage.setItem("semester", JSON.stringify($rootScope.semester));
-		// var data = ["course", "stream", "semester"];
-		// localStorage.setItem("studentInfo",JSON.stringify(data));
+		
 		console.log($localStorage);
 		
-		// var obj = {
-		//     email: userInfo.email,
-		//     course: userInfo.course,
-		//     stream: userInfo.stream,
-		//     semester: userInfo.semester
-		// };	
-		// localStorage.setItem("studentInfo",JSON.stringify(obj));
-		// console.log(studentInfo);
+		
 		console.log(course, stream, semester);
 		userService.getInstructorsForFeedback($scope.college_name, course, stream, semester, function(response) {
 			$scope.feedback = response;
@@ -253,6 +242,9 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 	}
 
 	$scope.increasePointer = function() {
+		console.log('Feedbakc:',$scope.feedbackGivenByTheUser);
+		localStorage.setItem('Feedback'+j, $scope.feedbackGivenByTheUser);
+				j++;
 		$scope.pointer += 1;
 		console.log($scope.currCheck[$scope.pointer]);
 		if($scope.currCheck[$scope.pointer]!=false && $scope.currCheck[$scope.pointer]!=undefined)
@@ -336,6 +328,8 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 	}
 
 	$scope.increasePointer2 = function() {
+		localStorage.setItem('Feedback'+j, $scope.feedbackGivenByTheUser);
+		j++;
 		$scope.pointer2 += 1;
 		console.log($scope.currCheck);
 		if($scope.currCheck[$scope.pointer2]!=false && $scope.currCheck[$scope.pointer2]!=undefined)
@@ -372,8 +366,9 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 				$scope.showSpinner=false;
 				console.log(response.message);
 				alert(response.message);
-				$location.path('/thankYouPage');
 				$localStorage.clear();
+				$location.path('/thankYouPage');
+				
 			}else if(error){
 				console.log(error.message);
 				alert(error.message);
