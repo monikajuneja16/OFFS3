@@ -135,7 +135,7 @@ module.exports = {
 
     var year = process.env.year - (req.query.semester - process.env.odd_even)/2;
     var masters_year  = Number('20'+req.query.enrollment_no.slice(req.query.enrollment_no.length-2));
-    if(masters_year==year-4 || masters_year==year-5){
+    if((masters_year==year-4 || masters_year==year-5)){
           year=masters_year;
     };
     year = year.toString();
@@ -164,9 +164,10 @@ module.exports = {
           console.log(result[0]);
           var temp=tablename.split("_");
 
-          if(result[0].year_of_admission==Number(process.env.year)-4 || 
-            result[0].year_of_admission==Number(process.env.year)-5
-             && result[0].course=="B. TECH"){              
+          // for USICT students' entries in M. TECH course transformed from B. TECH issue
+          if((result[0].year_of_admission==Number(process.env.year)-4 || 
+            result[0].year_of_admission==Number(process.env.year)-5) && result[0].course=="B. TECH"){     
+               con         
               result[0].course='M. TECH';    
               student.updateInformation(tablename,enrollment_no,"M. TECH",function(err){
               if(err){throw err;}

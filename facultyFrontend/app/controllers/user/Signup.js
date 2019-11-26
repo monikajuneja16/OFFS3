@@ -191,12 +191,14 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
     console.log(CURR_YEAR);
     $scope.user.semister = ((CURR_YEAR-2000) - year) * 2 + ODD_EVEN;
     
+    console.log("CollCode : ",$scope.college.collegeCode)
     //for students with more than 8 sems MTECH
-    if($scope.user.semister>8){
+    if(($scope.user.semister>8 || $scope.user) && $scope.college.collegeCode=="usict"){
       $scope.user.semister-=8;
     }
 
-    if($scope.user.semister>8 || $scope.user.semister<1){
+    if(((($scope.user.semister>8 || $scope.user.semister<1) && $scope.college.collegeCode=="usict")) ||
+    ($scope.user.semister>10 || $scope.user.semister<1)){
       $scope.user.semister='---';
     }
     $localStorage.semester = $scope.user.semister;

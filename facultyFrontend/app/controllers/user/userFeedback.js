@@ -366,7 +366,7 @@ faculty.controller('feedbackCtrl',['$scope', '$rootScope', '$uibModal', '$log', 
 				$scope.showSpinner=false;
 				console.log(response.message);
 				alert(response.message);
-				$localStorage.clear();
+				localStorage.clear();
 				$location.path('/thankYouPage');
 				
 			}else if(error){
