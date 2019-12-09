@@ -7,6 +7,19 @@
        <i class="fas fa-sign-out-alt"></i>
     </button>
 </div>
+
+
+<div class="row">
+    <div class="col s11 centerTab">
+      <ul class="tabs tabs-fixed-width">
+        <li class="tab col s3"><a href="#tab1" class="active">All Feedbacks</a></li>
+        <li class="tab col s3"><a href="#tab2">Feedback Analysis</a></li>
+      </ul>
+    </div>
+   
+<div id="tab1">
+
+
 <div class="row">
     <div class="col m4 offset-m1">
         <select ng-model="year" ng-options="option for option in ['August 2016 - May 2017','August 2017 - May 2018', 'August 2018 - May 2019', 'August 2019 - May 2020']" ng-change="yearChange()">
@@ -229,6 +242,57 @@
     </div>
 </div>
 </div>
+</div>
+<div id="tab2" class="col s10 centerTab">
+    <div style="display:flex;align-items:center">
+    <div class="col m4 offset-m1">
+        <select ng-model="year" ng-options="option for option in years" ng-change="yearChange()">
+            <option value="" disabled selected>Choose Academic Year</option>
+        </select>
+    </div>
+<!-- 
+    <div class="col s2">
+        <select ng-model="analysis.selectedCourse" ng-options="option for option in analysis.courses" ng-change="getAnalysisStreams()">
+            <option value=""  selected>All Course</option>
+        </select>
+    </div>
+    <div class="col s2">
+        <select ng-model="analysis.selectedStream" ng-options="option for option in analysis.streams" ng-change="">
+            <option value=""  selected>All Stream</option>
+        </select>
+    </div>
+     -->
+    <a class="waves-effect white black-text btn" ng-click="analyseFeedback()">ANALYSE FEEDBACK</a>
+    </div>
+    <div ng-show="showAnalysis">
+            <table class="striped">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Stream</th>
+                    <th>Semester</th>
+                    <th>Students with Feedback</th>
+                    <th>Total Students</th>
+                    <th>% Feedback</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <tr ng-repeat="batch in allBatches">
+                    <td>{{batch.course}}</td>
+                    <td>{{batch.stream}}</td>
+                    <td>{{batch.semester}}</td>
+                    <td>{{batch.filled}}</td>
+                    <td>{{batch.total}}</td>
+                    <td>{{batch.percentageFb}} %</td>
+                </tr>
+            </tbody>
+            </table>
+                        
+    </div>
+
+</div>
+</div>
 
 
 <style type="text/css">
@@ -305,12 +369,47 @@ th:nth-child(7), td:nth-child(7) {
     font-size: 24px;
     font-weight: 700;
 }
+
+.centerTab{
+    position: relative;
+    left: 50% !important;
+    transform: translate(-50%);
+}
+
+.centerTab ul{
+    overflow-x:hidden
+}
+
+
+.tabs .tab a{
+    color:#283593;
+    font-weight: bold;
+} /*Black color to the text*/
+
+.tabs .tab a:hover {
+    background-color:#eee;
+    color:#283593;
+} /*Text color on hover*/
+
+.tabs .tab a.active {
+    color:#283593;
+} /*Background and text color when a tab is active*/
+
+.tabs .indicator {
+    background-color:#283593;
+} /*Color of underline*/
+
 </style>
-<script type="text/javascript">
+<script>
     $(document).ready(function () {
-                $('select').material_select();
-                $('.modal').modal();
+        $('select').material_select();
+        $('.modal').modal();
+
+        $('.tabs').tabs({
+            swipable:true
+        });
+
     })
-(jQuery);  
+
   
 </script>  

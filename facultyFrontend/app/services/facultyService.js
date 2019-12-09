@@ -87,5 +87,31 @@ faculty.factory('facultyService', ['$http', '$timeout', '$rootScope', function($
 				}
 			})
 		},
+
+		getBatchData: function(collegeName,year,course,stream,semester){
+			return $http({
+				method: "GET",
+				url: BACKEND + "/getStudentStatus",
+				params: { year,collegeName,course,semester,stream }
+			})
+			.then(function(response) {
+				return Promise.resolve(response.data);
+			})
+			
+		},
+
+		getBatches:function(school){
+			return $http({
+				method:"get",
+				url: BACKEND + "/dgetBatches",
+				params:{school}
+			})
+			.then(({data})=>{
+				return Promise.resolve(data)
+			})
+			.catch(({response})=>{
+				return Promise.reject(response.data.message);
+			})
+		}
  	}
 }]);

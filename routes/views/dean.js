@@ -52,6 +52,10 @@ module.exports = {
 	},
 
 
+
+	
+
+
 	
 
   upload_photo: function(req, res) {
@@ -156,6 +160,20 @@ module.exports = {
 			var obj = { status: 200, message: 'No session detected' };
 		}
 	},
+
+	getBatches:(req,res)=>{
+		let {school}=req.query;
+		let table=school+"_batch_allocation";
+		con.query("SELECT * FROM "+table+" WHERE semester%2="+process.env.odd_even%2+" ORDER BY course,stream,semester",(err,result)=>{
+			if(err){
+				console.log(err);
+				res.status(404).send({message:"No table exists"});
+				return;
+			}
+			res.send(result);
+		})
+	},
+
 	dashboard: function(req, res) {
 		let colleges=['usap','usbas','usbt','usct','use','usem','ushss','usict','uslls','usmc','usms'];
 		var year = req.query.year;
