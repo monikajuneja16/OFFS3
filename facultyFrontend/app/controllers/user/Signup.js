@@ -118,7 +118,9 @@ faculty.controller('SignupCtrl',['$scope','$http', '$rootScope', '$location', 'u
   }
 }
 
-  $scope.userCategoryList = ["Vice Chancellor", "Pro Vice Chancellor", "Dean", "Teacher", "Student"];
+  $scope.userCategoryList = ["Vice Chancellor", 
+	// "Pro Vice Chancellor", 
+	"Dean", "Teacher", "Student"];
 
   $scope.setCollege = function(singleCollege) {
     $scope.college = singleCollege;
