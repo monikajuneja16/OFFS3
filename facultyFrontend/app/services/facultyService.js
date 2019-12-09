@@ -61,10 +61,9 @@ faculty.factory('facultyService', ['$http', '$timeout', '$rootScope', function($
 					callback(response.data);
 				}
 			}, function(response) {
-				if (callback) {
+				
 					console.error(response.data);
-					callback(data);
-				}
+				
 			})
 		},
 
