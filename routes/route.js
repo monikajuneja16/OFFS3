@@ -39,6 +39,7 @@ router.post("/dinitials", routes.views.dean.initials); //To authenticate the dea
 router.get("/dchecksession", routes.views.dean.checksession); //This is a temporary route.
 router.get("/ddashboard", routes.views.dean.dashboard); // To get details of a BACH .
 router.get("/dlogout", routes.views.dean.logout);
+router.get("/dgetBatches", routes.views.dean.getBatches);
 router.post("/dupload_photo", routes.views.dean.upload_photo);
 router.post("/dupdateInfo",routes.views.dean.updateDeanInfo);
 

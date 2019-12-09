@@ -1,5 +1,6 @@
 faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $localStorage, facultyService) {
-    
+	
+	
 
 	$scope.dean = [];
 	$scope.selectedYear = '2019';
@@ -7,33 +8,50 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 	$scope.searching = false;
 	$scope.searched = false;
 	$scope.disabled = true;
+	$scope.selectedTabIndex=0;
+	$scope.showAnalysis=false;
+
+
+	$(".tabs").on("click",'a',function(){
+		setTimeout(function(){
+			let index=Number($("ul.tabs a.active").attr("href").substr(4))-1;
+			$scope.selectedTabIndex= index;
+		},50)
+	})
+
+	
+	$scope.years=[
+		'August 2016 - May 2017',
+		'August 2017 - May 2018',
+		'August 2018 - May 2019',
+		'August 2019 - May 2020'
+	];
+
+	$scope.analysis={
+		college:$localStorage.college.collegeCode,
+		selectedYear:$scope.selectedYear,
+		courses:[],
+		streams:[]
+	}
+
 	$scope.getFeedback = function() {
 		console.log($localStorage);
 
 		facultyService.getFeedback($localStorage.college.collegeCode, $scope.selectedYear, function(response) {
 			$scope.deanfb = response;
-			console.log($scope.deanfb);
-
+			
 			//get unique teachers
 			$scope.teacherlist = _.chain($scope.deanfb).pluck('name').uniq().value().sort();
 			$scope.subjects = _.chain($scope.deanfb).pluck('subject_name').uniq().value();
 			$scope.course = _.chain($scope.deanfb).pluck('course').uniq().value();
 			
-			//for BTECH MTECH problem
-			$scope.bmtech=['B. TECH','M. TECH'];
-			$scope.course=$scope.course.map((course)=>{
-				if(course=='MTECH'){
-					$scope.bmtech[1]=course;
-					return 'M. TECH'
-				}else if(course=='BTECH'){
-					$scope.bmtech[0]=course;
-					return 'B. TECH'
-				}else{
-					return course;
-				}
-			});
-
 			$scope.stream = _.chain($scope.deanfb).pluck('stream').uniq().value();
+			$scope.analysis={
+				...$scope.analysis,
+				course:$scope.course,
+				stream:$scope.stream,	
+			}
+
 			$scope.semester = _.chain($scope.deanfb).pluck('semester').uniq().value();
 
 			// init all selects
@@ -45,17 +63,15 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		})
 	}
 
+	
+
 	$scope.teacherList = function() {
 		var arr = [3];
 		 arr[0] = {semester: $scope.selectedSem}
 		 arr[1] =  {course: $scope.selectedCourse}
 		arr[2] = {stream: $scope.selectedStream}
 
-		//Only to resolve MTECH and BTECH problem aaawwww!!!
-		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
-		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
-
-
+	
 		var teacherWithDetails = _.clone($scope.deanfb);
 
 		for (var x =0;x<arr.length;x++) {
@@ -84,10 +100,6 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		arr[2] = {stream: $scope.selectedStream}
 		arr[3] = {name: $scope.selectedTeacher}
 
-		//Only to resolve MTECH and BTECH problem aaawwww!!!
-		if(arr[1].course=='B. TECH' && $scope.bmtech[0]=='BTECH'){arr[1].course=$scope.bmtech[0];}
-		else if(arr[1].course=='M. TECH' && $scope.bmtech[1]=='MTECH'){arr[1].course=$scope.bmtech[1];}
-
 		var	subjectDetails = _.clone($scope.deanfb);
 		console.log(subjectDetails);
 
@@ -111,14 +123,15 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 
 	$scope.streamList = function() {
 		var course = $scope.selectedCourse;
-
-		//Only to resolve MTECH and BTECH problem aaawwww!!!
-		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
-		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
-
+		
 
 		var StreamDetails = _.where($scope.deanfb, {course:course});
-		$scope.stream =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
+		let streams =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
+		
+		
+		$scope.stream=streams;
+		
+		console.log($scope.analysis);
 		
 		$(document).ready(function () {
 			$('select').material_select();
@@ -133,8 +146,9 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 	// }
 
 	$scope.yearChange = function () {
-		$scope.selectedYear = $scope.year.slice(7,11);
-		console.log('changed');
+		let selectedYear=$scope.year.slice(7,11);
+		
+		$scope.selectedYear=selectedYear;
 		$scope.getFeedback();
 	}
 
@@ -231,9 +245,6 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		var subject = $scope.selectedSubject;
 		var teacher = $scope.selectedTeacher;
 
-		//Only to resolve MTECH and BTECH problem aaawwww!!!
-		if(course=='B. TECH' && $scope.bmtech[0]=='BTECH'){course=$scope.bmtech[0];}
-		else if(course=='M. TECH' && $scope.bmtech[1]=='MTECH'){course=$scope.bmtech[1];}
 
 
 		console.log(sem)
@@ -365,6 +376,97 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		})
 	}
 
+
+
+	// Feedback analysis
+
+
+	$scope.analysisUtility=async function(payload){
+		return Promise.all(payload.map(async ({course,stream,semester})=>{
+			let year='20'+(Number($scope.analysis.selectedYear.toString().substring(2)) - Math.floor(semester/2.1));
+			
+			let data=await facultyService.getBatchData(
+				$scope.analysis.college,year,
+				course,stream,semester
+			)
+
+			data={
+				college:$scope.analysis.college,
+				year,studentData:data,
+				course,stream,semester,
+			}
+
+			return data;
+			
+		}))
+
+	}
+
+	$scope.getBatches=async function(){
+		let batches=await facultyService.getBatches($localStorage.college.collegeCode);
+		// $scope.$apply(function(){
+			$scope.allBatches=batches;
+			$scope.analysis.courses=_.chain(batches).pluck('course').uniq().value().sort();
+			$scope.analysis.streams=[];
+		// })
+	}
+
+	$scope.getAnalysisStreams=function(){
+		console.log({course:$scope.analysis.selectedCourse});
+
+		var StreamDetails = _.where($scope.allBatches, {course:$scope.analysis.selectedCourse});
+		// console.log(StreamDetails);
+		let streams =  _.chain(StreamDetails).pluck('stream').uniq().value().sort();
+		// $scope.$apply(function(){
+			$scope.analysis.streams=streams;
+			console.log($scope.analysis.streams);
+			// $scope.$apply();
+
+		// })
+	}
+
+	// $scope.$watch();
+
+	$scope.analyseFeedback=function(){
+		
+
+		$scope.analysisUtility($scope.allBatches)
+		.then(data=>{
+			$scope.analysisData=data;
+			$scope.analysisData.forEach((data,ind)=>{
+				try{
+					let sem;
+					(Object.keys(data.studentData[0]).some(function(key){
+						if(/s_/.test(key)) {sem=key;return key;}
+					}));
+	
+					let filled=(_.filter(data.studentData,function(stu){return stu[sem]==1;})).length;
+					let total=data.studentData.length;
+					let percentageFb=(filled*100/total).toFixed(2);
+
+					$scope.$apply(function(){
+						$scope.allBatches[ind]={
+							...$scope.allBatches[ind],
+							percentageFb,total,filled
+						}
+					})
+				} catch(err){
+					$scope.$apply(function(){
+						$scope.allBatches[ind]={
+							...$scope.allBatches[ind],
+							percentageFb:"0.00",
+							total:data.studentData.length,
+							filled:data.studentData.length
+						}
+						$scope.showAnalysis=true;
+					});
+				}
+			})
+		})
+	}
+
 	$scope.getDetails();
 	$scope.getFeedback();
+
+	$scope.getBatches();
 })

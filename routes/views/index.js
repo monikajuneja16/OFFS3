@@ -132,7 +132,7 @@ module.exports = {
       res.send("400");
       return;
     }
-console.log("SEmester : ",req.query.semester);
+
     var year = process.env.year - (req.query.semester - process.env.odd_even)/2;
     var masters_year  = Number('20'+req.query.enrollment_no.slice(req.query.enrollment_no.length-2));
     if((masters_year==year-4 || masters_year==year-5)){
