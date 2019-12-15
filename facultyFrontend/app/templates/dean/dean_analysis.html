@@ -246,7 +246,7 @@
 <div id="tab2" class="col s10 centerTab">
     <div style="display:flex;align-items:center">
     <div class="col m4 offset-m1">
-        <select ng-model="year" ng-options="option for option in years" ng-change="yearChange()">
+        <select ng-model="analysis.showYear" ng-options="option for option in years" ng-change="yearChangeA()">
             <option value="" disabled selected>Choose Academic Year</option>
         </select>
     </div>
@@ -263,8 +263,9 @@
     </div>
      -->
     <a class="waves-effect white black-text btn" ng-click="analyseFeedback()">ANALYSE FEEDBACK</a>
+    <a class="waves-effect white black-text btn" ng-click="printAnalysis()" ng-disabled="!showAnalysis">PRINT</a>
     </div>
-    <div ng-show="showAnalysis">
+    <div ng-show="showAnalysis" id="analysisCanvas">
             <table class="striped">
             <thead>
                 <tr>

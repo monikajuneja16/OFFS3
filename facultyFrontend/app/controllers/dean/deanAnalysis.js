@@ -30,6 +30,7 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 	$scope.analysis={
 		college:$localStorage.college.collegeCode,
 		selectedYear:$scope.selectedYear,
+		showYear:$scope.years[$scope.years.length-1],
 		courses:[],
 		streams:[]
 	}
@@ -152,6 +153,12 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
 		$scope.getFeedback();
 	}
 
+
+	$scope.yearChangeA = function () {
+		let selectedYear=$scope.analysis.showYear.slice(7,11);
+		$scope.analysis.selectedYear=selectedYear;
+	}
+
 	$scope.attributesList = {
 		theory: [
 			"Coverage of all the topics prescribed in the syllabus, with adequate depth and detail.",
@@ -198,7 +205,7 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
   
 
 
-   $scope.print = function (){	 
+	$scope.print = function (){	 
 	
    var content_vlue = document.getElementById('mycanvas').outerHTML;
     var htmlToPrint = '' +
@@ -230,7 +237,30 @@ faculty.controller("deanAnalysisCtrl", function($scope, $rootScope, $location, $
    docprint.close();
   
 }
+
+
+$scope.printAnalysis = function (){	 
+	var content_vlue = document.getElementById('analysisCanvas').outerHTML;
+	 var htmlToPrint = '' +
+		 '<style type="text/css">' +
+		 'table th, table td {' +
+		 'padding:0.5em;border-spacing:0;'+
+		 'border:1px solid #000;' +
+		 'font-size:19.35px;}' +
+		 '</style>';
+	content_vlue += htmlToPrint
+   var docprint=window.open("");
   
+	docprint.document.write('<head><title>Feedback Analysis</title>');
+	docprint.document.write('<style type="text/css">body{ margin:0px;');
+	docprint.document.write('font-family:Verdana, Geneva, sans-serif; font-size:12px;}');
+	docprint.document.write(' </style>');
+	docprint.document.write(`</head><body onLoad="self.print()"><center><h2><u>Feedback Report - ${$localStorage.college.collegeCode.toUpperCase()}, ${CURR_YEAR}-${CURR_YEAR+1}, ${ODD_EVEN%2 ? 'Odd semester':'Even semester'}</u></h2>`); 
+	docprint.document.write(content_vlue);
+	docprint.document.write('</center></body></html>');
+	docprint.print();
+	docprint.close();
+ }
     
    
 
