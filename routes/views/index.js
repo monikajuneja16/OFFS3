@@ -6,7 +6,8 @@ var con         = require("../../models/mysql"),
     student     = require('../../models/student'),
      smtpTransport = require('nodemailer-smtp-transport'),
   handlebars = require('handlebars'),
-     fs = require('fs');
+     fs = require('fs'),
+     _ = require('lodash');
 
      
 
@@ -576,6 +577,12 @@ module.exports = {
 
     var query = "select enrollment_no, name, s_" + semester + " from "  + collegeName + "_student_" + year + " where" +
      " course='" + course + "' AND stream='" + stream + "'";
+
+    if(course=="M. TECH" && _.includes(['usbt','usct','usict'],collegeName)){
+      // in case of M tech only
+      query+=" union "+"select enrollment_no, name, s_" + semester + " from "  + collegeName + "_student_" + (year-4) + " where" +
+      " course='" + course + "' AND stream='" + stream + "'"
+    }
 
     console.log(query);
 
