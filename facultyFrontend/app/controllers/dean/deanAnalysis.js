@@ -479,6 +479,7 @@ $scope.printAnalysis = function (){
 							...$scope.allBatches[ind],
 							percentageFb,total,filled
 						}
+						$scope.showAnalysis=true;
 					})
 				} catch(err){
 					$scope.$apply(function(){

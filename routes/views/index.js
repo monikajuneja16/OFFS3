@@ -300,6 +300,10 @@ module.exports = {
       var table3 = req.session.student.college_name + '_student_' + year;
       console.log(enrollment_no);
 
+
+      if(_.includes(['usbt','usct','usict'],req.session.student.college_name) && req.session.student.course=="M. TECH" && semester>8){
+	semester-=8;	
+      }
       //------------------semester ----------------------//
       console.log("Semester : "+semester);
       //var hanu =0;
