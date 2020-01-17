@@ -231,7 +231,7 @@ module.exports = {
 				f.at_14,
 				f.at_15,
 				f.no_of_students_evaluated`
-				insArr.push(school_name);
+				if(school_name!=college_name) insArr.push(school_name);
 				var query =
 					' select '+fin+' from ' +
 					tables.subject_allocation +
@@ -244,7 +244,7 @@ module.exports = {
 					' as e on s.instructor_code =e.instructor_id ' +
 					' inner join  ' +
 					tables.feedback +
-					' as f on s.feedback_id = f.feedback_id where e.school=? and f.no_of_students_evaluated !=0';
+					' as f on s.feedback_id = f.feedback_id where '+ (college_name!=school_name ? 'e.school=? and ':'') +'f.no_of_students_evaluated !=0';
 				return query;
 			})
 			
